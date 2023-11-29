@@ -1,0 +1,145 @@
+USE studentcompass
+
+GO
+
+-- Departamento: Todos
+
+-- Materias transversales HCS:
+
+INSERT INTO app.subject
+(code, description, weekly_hours,
+ year_level, career_plan_id, is_optional,
+ is_annual, is_elective)
+VALUES
+(0911, 'Computación I', 4, 0, 0, 0, 0, 0),
+(0912, 'Computación II', 4, 0, 0, 0, 0, 0),
+(0901, 'Inglés I', 4, 0, 0, 0, 0, 0),
+(0902, 'Inglés II', 4, 0, 0, 0, 0, 0),
+(0903, 'Inglés III', 4, 0, 0, 0, 0, 0),
+(0904, 'Inglés IV', 4, 0, 0, 0, 0, 0);
+
+-- Departamento: Ingeniería
+
+-- Carrera: Ingeniería Informática
+
+-- Plan 2023:
+
+INSERT INTO app.subject
+(code, description, weekly_hours,
+ year_level, career_plan_id, is_optional,
+ is_annual, is_elective)
+VALUES
+(3621, 'Matemática Discreta', 4, 1, 1, 0, 0, 0),
+(3622, 'Análisis Matemático I', 4, 1, 1, 0, 0, 0),
+(3623, 'Programación Inicial', 4, 1, 1, 0, 0, 0),
+(3624, 'Introducción a los Sistemas de Información', 4, 1, 1, 0, 0, 0),
+(3625, 'Sistemas de Numeración', 4, 1, 1, 0, 0, 0),
+(3626, 'Principios de Calidad de Software', 4, 1, 1, 0, 0, 0),
+(3627, 'Álgebra y Geometría Analítica I', 4, 1, 1, 0, 0, 0),
+(3628, 'Física I', 4, 1, 1, 0, 0, 0),
+(3629, 'Programación Estructurada Básica', 4, 1, 1, 0, 0, 0),
+(3630, 'Introducción a la Gestión de Requisitos', 4, 1 , 1, 0, 0, 0),
+(3631, 'Fundamentos de Sistemas Embebidos', 4, 1, 1, 0, 0, 0),
+(3632, 'Introducción a los Proyectos Informáticos', 4, 1, 1, 0, 0, 0),
+(3633, 'Análisis Matemático II', 4, 2, 1, 0, 0, 0),
+(3634, 'Física II', 4, 2, 1, 0, 0, 0),
+(3635, 'Tópicos de Programación', 4, 2, 1, 0, 0, 0),
+(3636, 'Base de Datos', 4, 2, 1, 0, 0, 0),
+(3637, 'Análisis de Sistemas', 4, 2, 1, 0, 0, 0),
+(3638, 'Arquitectura de Computadoras', 4, 2, 1, 0, 0, 0),
+(3676, 'Responsabilidad Social Universitaria', 4, 2, 1, 0, 0, 0),
+(3639, 'Análisis Matemático III', 4, 2, 1, 0, 0, 0),
+(3640, 'Algoritmos y Estructuras de Datos', 4, 2, 1, 0, 0, 0),
+(3641, 'Base de Datos Aplicada', 4, 2, 1, 0, 0, 0),
+(3642, 'Principios de Diseño de Sistemas', 4, 2, 1, 0, 0, 0),
+(3643, 'Redes de Computadoras', 4, 2, 1, 0, 0, 0),
+(3644, 'Gestión de las Organizaciones', 4, 2, 1, 0, 0, 0),
+(3680, 'Taller de Integración', 4, 2, 1, 1, 0, 0),
+(3645, 'Algebra y Geometría Analítica II', 4, 2, 1, 0, 0, 0),
+(3646, 'Paradigmas de Programación', 4, 3, 1, 0, 0, 0),
+(3647, 'Requisitos Avanzados', 4, 3, 1, 0, 0, 0),
+(3648, 'Diseño de Software', 4, 3, 1, 0, 0, 0),
+(3649, 'Sistemas Operativos', 4, 3, 1, 0, 0, 0),
+(3650, 'Seguridad de la Información', 4, 3, 1, 0, 0, 0),
+(3675, 'Práctica Profesional Supervisada', 4, 3, 1, 0, 0, 0),
+(3651, 'Probabilidad y Estadística', 4, 3, 1, 0, 0, 0),
+(3652, 'Programación Avanzada', 4, 3, 1, 0, 0, 0),
+(3653, 'Arquitecturas de Sistemas Software', 4, 3, 1, 0, 0, 0),
+(3654, 'Virtualización de Hardware', 4, 3, 1, 0, 0, 0),
+(3655, 'Auditoría y Legislación', 4, 3, 1, 0, 0, 0),
+(3656, 'Estadística Aplicada', 4, 4, 1, 0, 0, 0),
+(3657, 'Autómatas y Gramática', 4, 4, 1, 0, 0, 0),
+(3658, 'Programación Concurrente', 4, 4, 1, 0, 0, 0),
+(3659, 'Gestión Aplicada al Desarrollo de Software I', 4, 4, 1, 0, 0, 0),
+(3660, 'Sistemas Operativos Avanzados', 4, 4, 1, 0, 0, 0),
+(3661, 'Gestión de Proyectos', 4, 4, 1, 0, 0, 0),
+(3662, 'Matemática Aplicada', 4, 4, 1, 0, 0, 0),
+(3663, 'Lenguajes y Compiladores', 4, 4, 1, 0, 0, 0),
+(3664, 'Inteligencia Artificial', 4, 4, 1, 0, 0, 0),
+(3665, 'Gestión Aplicada al Desarrollo de Software II', 4, 4, 1, 0, 0, 0),
+(3666, 'Seguridad Aplicada y Forensía', 4, 4, 1, 0, 0, 0),
+(3667, 'Gestión de la Calidad en Procesos de Sistemas', 4, 4, 1, 0, 0, 0),
+(3668, 'Inteligencia Artificial Aplicada', 4, 5, 1, 0, 0, 0),
+(3669, 'Innovación y Emprendedorismo', 4, 5, 1, 0, 0, 0),
+(3670, 'Ciencia de Datos', 4, 5, 1, 0, 0, 0),
+(3671, 'Proyecto Final de Carrera', 4, 5, 1, 0, 1, 0),
+(3672, 'Electiva I', 4, 5, 1, 0, 0, 0),
+(3673, 'Electiva II', 4, 5, 1, 0, 0, 0),
+(3674, 'Electiva III', 4, 5, 1, 0, 0, 0),
+(3677, 'Lenguaje Orientado a Negocios', 4, 0, 1, 0, 0, 1),
+(3678, 'Tecnologías en Seguridad', 4, 0, 1, 0, 0, 1),
+(3679, 'Visión Artificial', 4, 0, 1, 0, 0, 1);
+
+-- Plan 2009:
+
+INSERT INTO app.subject
+(code, description, weekly_hours,
+ year_level, career_plan_id, is_optional,
+ is_annual, is_elective)
+VALUES
+(1023, 'Análisis Matemático I', 8, 1, 2, 0, 0, 0),
+(1024, 'Elementos de Programación', 8, 1, 2, 0, 0, 0),
+(1025, 'Sistemas de Representación', 4, 1, 2, 0, 0, 0),
+(1026, 'Tecnología, Ingeniería y Sociedad', 4, 1, 2, 0, 0, 0),
+(1027, 'Álgebra y Geometría Analítica I', 8, 1, 2, 0, 0, 0),
+(1028, 'Matemática Discreta', 4, 1, 2, 0, 0, 0),
+(1029, 'Química General', 4, 1, 2, 0, 0, 0),
+(1030, 'Fundamentos de TICs', 8, 1, 2, 0, 0, 0),
+(1031, 'Física I', 8, 2, 2, 0, 0, 0),
+(1032, 'Álgebra y Geometría analítica II', 4, 2, 2, 0, 0, 0),
+(1033, 'Análisis Matemático II', 8, 2, 2, 0, 0, 0),
+(1035, 'Física II', 8, 2, 2, 0, 0, 0),
+(1108, 'Requerimientos para la Ingeniería', 4, 3, 2, 0, 0, 0),
+(1109, 'Arquitectura de Computadoras', 6, 3, 2, 0, 0, 0),
+(1110, 'Programación', 10, 3, 2, 0, 0, 0),
+(1111, 'Probabilidad y Estadística', 4, 3, 2, 0, 0, 0),
+(1112, 'Auditoría y Seguridad Informática', 4, 3, 2, 0, 0, 0),
+(1113, 'Programación Avanzada', 10, 3, 2, 0, 0, 0),
+(1114, 'Base de Datos', 6, 3, 2, 0, 0, 0),
+(1115, 'Sistemas Operativos', 8, 4, 2, 0, 0, 0),
+(1116, 'Análisis de Sistemas', 10, 4, 2, 0, 0, 0),
+(1117, 'Cálculo Numérico', 4, 4, 2, 0, 0, 0),
+(1118, 'Ingeniería de Requerimientos', 4, 4, 2, 0, 0, 0),
+(1119, 'Comunicación de Datos', 4, 4, 2, 0, 0, 0),
+(1120, 'Diseño de Sistemas', 10, 4, 2, 0, 0, 0),
+(1121, 'Análisis de Software', 4, 4, 2, 0, 0, 0),
+(1122, 'Redes de Computadoras', 8, 5, 2, 0, 0, 0),
+(1123, 'Sistemas Operativos Avanzados', 4, 5, 2, 0, 0, 0),
+(1124, 'Lenguajes y Compiladores', 4, 5, 2, 0, 0, 0),
+(1125, 'Gestión Organizacional', 8, 5, 2, 0, 0, 0),
+(1126, 'Ingeniería de Software', 10, 5, 2, 0, 0, 0),
+(1127, 'Elementos de Inteligencia Artificial', 4, 5, 2, 0, 0, 0),
+(1128, 'Electiva I', 4, 5, 2, 0, 0, 0),
+(1129, 'Autómatas y Lenguajes Formales', 6, 5, 2, 0, 0, 0),
+(1130, 'Electiva II', 4, 5, 2, 0, 0, 0),
+(1131, 'Electiva III', 4, 5, 2, 0, 0, 0),
+(1132, 'Proyecto de fin de carrera', 4, 5, 2, 0, 0, 0),
+(1134, 'Sistemas de Transmisión y Conmutación', 8, 0, 2, 0, 0, 1),
+(1135, 'Laboratorio de Teleinformática', 8, 0, 2, 0, 0, 1),
+(1136, 'Seguridad en Redes', 4, 0, 2, 0, 0, 1),
+(1137, 'Lenguajes Descriptivos de Hardware', 4, 0, 2, 0, 0, 1),
+(1138, 'Proceso de Software', 8, 0, 2, 0, 0, 1),
+(1139, 'Data Mining y Data Warehouse', 4, 0, 2, 0, 0, 1),
+(1140, 'Programación de Páginas Web', 4, 0, 2, 0, 0, 1),
+(1133, 'Práctica Profesional Supervisada', 12, 5, 2, 0, 0, 0); -- 12.5
+
