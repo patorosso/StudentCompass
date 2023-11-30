@@ -94,7 +94,7 @@ CREATE TABLE app.correlative(
 );
 
 CREATE TABLE app.course_status(
-	id TINYINT IDENTITY(1,1),
+	id TINYINT IDENTITY(0,1),
 	description NVARCHAR(25),
 	CONSTRAINT pk_course_status PRIMARY KEY (id)
 );
