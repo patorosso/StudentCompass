@@ -8,7 +8,7 @@ namespace Api.Services.Helpers
         public static IServiceCollection AddRepositories(this IServiceCollection services)
         {
             services.AddScoped<IStudentRepository, StudentRepository>();
-            services.AddSingleton<IAcademicRepository, AcademyRepository>(); //singleton because ... ?
+            services.AddScoped<IAcademicRepository, AcademyRepository>(); //singleton ... ?
 
             return services;
         }
