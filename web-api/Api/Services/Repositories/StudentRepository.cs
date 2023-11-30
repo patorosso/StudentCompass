@@ -1,8 +1,8 @@
-﻿using Api.Contracts;
-using Api.Dto;
+﻿using Api.Data.Dtos;
+using Api.Services.Contracts;
 using Microsoft.Data.SqlClient;
 
-namespace Api.Services
+namespace Api.Services.Repositories
 {
     public class StudentRepository : IStudentRepository
     {

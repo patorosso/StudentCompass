@@ -1,4 +1,4 @@
-﻿using Api.Contracts;
+﻿using Api.Services.Contracts;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers

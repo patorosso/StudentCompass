@@ -1,6 +1,6 @@
-﻿using Api.Dto;
+﻿using Api.Data.Dtos;
 
-namespace Api.Contracts
+namespace Api.Services.Contracts
 {
     public interface IStudentRepository
     {

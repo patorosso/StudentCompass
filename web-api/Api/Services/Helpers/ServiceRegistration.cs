@@ -1,7 +1,7 @@
-﻿using Api.Contracts;
-using Api.Services;
+﻿using Api.Services.Contracts;
+using Api.Services.Repositories;
 
-namespace Api.Helpers
+namespace Api.Services.Helpers
 {
     public static class ServiceRegistration
     {
