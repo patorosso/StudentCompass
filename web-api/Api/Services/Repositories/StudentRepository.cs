@@ -14,23 +14,23 @@ namespace Api.Services.Repositories
             _logger = logger;
         }
 
-        public Task<IEnumerable<StudentDto>> GetStudents()
+        public async Task<IEnumerable<StudentDto>> GetStudents()
         {
             try
             {
                 var connectionString = _configuration.GetConnectionString("DefaultConnection");
 
-                using var connection = new SqlConnection(connectionString);
+                await using var connection = new SqlConnection(connectionString);
 
                 const string sql = "SELECT * FROM app.student";
 
-                using var command = new SqlCommand(sql, connection);
+                await using var command = new SqlCommand(sql, connection);
 
                 connection.Open();
 
                 _logger.LogInformation("Connection opened");
 
-                using var reader = command.ExecuteReader();
+                await using var reader = await command.ExecuteReaderAsync();
 
                 var students = new List<StudentDto>();
 
@@ -46,7 +46,7 @@ namespace Api.Services.Repositories
                     students.Add(student);
                 }
 
-                return Task.FromResult(students.AsEnumerable());
+                return students.AsEnumerable();
             }
             catch (Exception e)
             {
