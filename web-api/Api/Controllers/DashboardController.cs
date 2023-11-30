@@ -17,11 +17,11 @@ namespace Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> IndexGet()
+        public async Task<IActionResult> IndexGet(short studentId, byte careerPlanId)
         {
             try
             {
-                var progressOverview = await _academicRepository.GetProgressOverview();
+                var progressOverview = await _academicRepository.GetProgressOverview(studentId, careerPlanId);
                 return Ok(progressOverview);
             }
             catch (Exception e)
