@@ -4,13 +4,11 @@ using Microsoft.Data.SqlClient;
 
 namespace Api.Services.Repositories
 {
-    public class StudentRepository : IStudentRepository
+    public class StudentRepository : BaseRepository, IStudentRepository
     {
-        private readonly IConfiguration _configuration;
         private readonly ILogger<StudentRepository> _logger;
-        public StudentRepository(IConfiguration configuration, ILogger<StudentRepository> logger)
+        public StudentRepository(IConfiguration configuration, ILogger<StudentRepository> logger) : base(configuration)
         {
-            _configuration = configuration;
             _logger = logger;
         }
 
@@ -18,18 +16,8 @@ namespace Api.Services.Repositories
         {
             try
             {
-                var connectionString = _configuration.GetConnectionString("DefaultConnection");
-
-                await using var connection = new SqlConnection(connectionString);
-
-                const string sql = "SELECT * FROM app.student";
-
-                await using var command = new SqlCommand(sql, connection);
-
-                connection.Open();
-
-                _logger.LogInformation("Connection opened");
-
+                var connection = await CreateConnection();
+                await using var command = new SqlCommand("SELECT * FROM app.student", connection);
                 await using var reader = await command.ExecuteReaderAsync();
 
                 var students = new List<StudentDto>();
