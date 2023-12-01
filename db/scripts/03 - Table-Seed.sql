@@ -47,7 +47,10 @@ INSERT INTO app.career VALUES
 INSERT INTO app.career_plan (description, career_id) VALUES
 	('Plan Transversal', 0),
 	('Plan 2023', 1),
-	('Plan 2009', 1);
+	('Plan 2009', 1),
+	('Plan 2023', 2),
+	('Plan 2009', 2);
 
+	
 
 
