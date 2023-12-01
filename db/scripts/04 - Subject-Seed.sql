@@ -214,3 +214,66 @@ VALUES
 (3740, 'Electiva II', 4, 5, 3, 0, 0, 1),
 (3741, 'Electiva III', 4, 5, 3, 0, 0, 1),
 (3742, 'Seguridad e Higiene y Organización Industrial', 4, 5, 3, 0, 0, 0);
+
+-- Plan 2009:
+
+INSERT INTO app.subject
+(code, description, weekly_hours,
+ year_level, career_plan_id, is_optional,
+ is_annual, is_elective)
+ VALUES
+(1023, 'Análisis Matemático I', 8, 1, 4, 0, 0, 0),
+(1024, 'Elementos de Programación', 8, 1, 4, 0, 0, 0),
+(1025, 'Sistemas de Representación y Dibujo técnico', 4, 1, 4, 0, 0, 0),
+(1026, 'Tecnología, Ingeniería y Sociedad', 4, 1, 4, 0, 0, 0),
+(1027, 'Álgebra y Geometría analítica I', 8, 1, 4, 0, 0, 0),
+(1028, 'Matemática Discreta', 4, 1, 4, 0, 0, 0),
+(1029, 'Química General', 4, 1, 4, 0, 0, 0),
+(1030, 'Fundamentos de TICs', 8, 1, 4, 0, 0, 0),
+(1031, 'Física I', 8, 2, 4, 0, 0, 0),
+(1032, 'Álgebra y Geometría Analítica II', 4, 2, 4, 0, 0, 0),
+(1033, 'Análisis Matemático II', 8, 2, 4, 0, 0, 0),
+(1034, 'Introducción a los Sistemas Digitales', 4, 2, 4, 0, 0, 0),
+(1035, 'Física II', 8, 2, 4, 0, 0, 0),
+(1036, 'Técnicas Digitales I', 4, 2, 4, 0, 0, 0),
+(1037, 'Física III', 6, 2, 4, 0, 0, 0),
+(1038, 'Análisis de Señales', 8, 2, 4, 0, 0, 0),
+(1039, 'Electrónica I', 6, 3, 4, 0, 0, 0),
+(1040, 'Teoría de los Circuitos I', 6, 3, 4, 0, 0, 0),
+(1041, 'Medios de Enlace y Electromagnetismo', 8, 3, 4, 0, 0, 0),
+(1042, 'Economía', 4, 3, 4, 0, 0, 0),
+(1043, 'Electrónica II', 8, 3, 4, 0, 0, 0),
+(1044, 'Técnicas Digitales II', 8, 3, 4, 0, 0, 0),
+(1045, 'Medidas Eléctricas y Electrónicas', 8, 3, 4, 0, 0, 0),
+(1047, 'Sistemas de Control I', 8, 4, 4, 0, 0, 0),
+(1048, 'Teoría de Circuitos II', 8, 4, 4, 0, 0, 0),
+(1049, 'Técnicas Digitales III', 6, 4, 4, 0, 1, 0),
+(1050, 'Probabilidad y Estadística', 4, 4, 4, 0, 0, 0),
+(1051, 'Introducción a los Sistemas de Comunicaciones', 8, 4, 4, 0, 0, 0),
+(1052, 'Electrónica de Potencia', 6, 5, 4, 0, 0, 0),
+(1053, 'Organización Industrial, Seguridad e Higiene', 4, 4, 4, 0, 0, 0),
+(1054, 'Cálculo Numérico', 4, 4, 4, 0, 0, 0),
+(1055, 'Electrónica III', 4, 5, 4, 0, 0, 0),
+(1056, 'Informática Avanzada', 4, 5, 4, 0, 0, 0),
+(1057, 'Componentes e Instrumentos de Control', 4, 5, 4, 0, 0, 0),
+(1058, 'Tecnología Electrónica', 6, 5, 4, 0, 0, 0),
+(1059, 'Redes de Computadoras', 8, 5, 4, 0, 1, 0),
+(1060, 'Ejercicio Profesional', 4, 5, 4, 0, 0, 0),
+(1061, 'Proyecto', 4, 5, 4, 0, 1, 0),
+(1062, 'Práctica profesional supervisada', 200, 5, 4, 0, 0, 0),
+(1046, 'Taller de Electrónica', 4, 5, 4, 0, 0, 0),
+(1063, 'Comunicaciones sobre IP', 4, 5, 4, 1, 0, 0),
+(1064, 'Redes y Servicios Avanzados de Comunicaciones', 4, 5, 4, 1, 0, 0),
+(1065, 'Sistemas de Transmisión', 4, 5, 4, 1, 0, 0),
+(1066, 'Sistemas de Control II', 4, 5, 4, 1, 0, 0),
+(1067, 'Control Digital', 4, 5, 4, 1, 0, 0),
+(1068, 'Robótica', 4, 5, 4, 1, 0, 0),
+(1069, 'Procesamiento Digital de Señales', 4, 5, 4, 1, 0, 0),
+(1070, 'Programación de Hardware', 4, 5, 4, 1, 0, 0),
+(1071, 'Diseño de Interfaces', 4, 5, 4, 1, 0, 0),
+(1072, 'Desarrollo de Mercados Tecnológicos', 4, 5, 4, 1, 0, 0);
+
+-- Carrera: Ingeniería Industrial
+
+-- Plan 2009:
+

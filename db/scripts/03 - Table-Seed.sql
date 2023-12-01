@@ -49,8 +49,7 @@ INSERT INTO app.career_plan (description, career_id) VALUES
 	('Plan 2023', 1),
 	('Plan 2009', 1),
 	('Plan 2023', 2),
-	('Plan 2009', 2);
-
-	
+	('Plan 2009', 2),
+	('Plan 2009', 3);
 
 
