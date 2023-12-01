@@ -277,3 +277,61 @@ INSERT INTO app.subject
 
 -- Plan 2009:
 
+INSERT INTO app.subject
+(code, description, weekly_hours,
+ year_level, career_plan_id, is_optional,
+ is_annual, is_elective)
+ VALUES
+(1023, 'Análisis Matemático I', 8, 1, 5, 0, 0, 0),
+(1024, 'Elementos de Programación', 8, 1, 5, 0, 0, 0),
+(1025, 'Sistemas de Representación', 4, 1, 5, 0, 0, 0),
+(1026, 'Tecnología, Ingeniería y Sociedad', 4, 1, 5, 0, 0, 0),
+(1027, 'Álgebra y Geometría Analítica I', 8, 1, 5, 0, 0, 0),
+(1028, 'Matemática Discreta', 4, 1, 5, 0, 0, 0),
+(1029, 'Química General', 4, 1, 5, 0, 0, 0),
+(1030, 'Fundamentos de TICs', 8, 1, 5, 0, 0, 0),
+(1031, 'Física I', 8, 2, 5, 0, 0, 0),
+(1032, 'Álgebra y Geometría Analítica II', 4, 2, 5, 0, 0, 0),
+(1033, 'Análisis Matemático II', 8, 2, 5, 0, 0, 0),
+(1035, 'Física II', 8, 2, 5, 0, 0, 0),
+(1037, 'Física III', 8, 2, 5, 0, 0, 0),
+(1038, 'Análisis de Señales', 8, 2, 5, 0, 0, 0),
+(1073, 'Empresa y sus Estructuras', 4, 2, 5, 0, 0, 0),
+(1074, 'Elementos de Economía', 4, 2, 5, 0, 0, 0),
+(1075, 'Probabilidad y Estadística', 4, 2, 5, 0, 0, 0),
+(1076, 'Química Industrial', 8, 2, 5, 0, 0, 0),
+(1077, 'Costos Industriales', 4, 3, 5, 0, 0, 0),
+(1078, 'Física Superior', 4, 3, 5, 0, 0, 0),
+(1079, 'Termodinámica y Máquinas Térmicas', 8, 3, 5, 0, 0, 0),
+(1080, 'Organización Industrial', 8, 3, 5, 0, 0, 0),
+(1081, 'Mecánica de Materiales', 8, 3, 5, 0, 0, 0),
+(1082, 'Cálculo Numérico', 4, 3, 5, 0, 0, 0),
+(1083, 'Mecánica y Mecanismos', 8, 3, 5, 0, 0, 0),
+(1084, 'Estadística Aplicada', 4, 3, 5, 0, 0, 0),
+(1085, 'Investigación Operativa', 8, 4, 5, 0, 0, 0),
+(1086, 'Industrias I', 4, 4, 5, 0, 0, 0),
+(1087, 'Finanzas de la Empresa', 4, 4, 5, 0, 0, 0),
+(1088, 'Materiales Industriales', 4, 4, 5, 0, 0, 0),
+(1089, 'Mecánica de Fluidos e Instalaciones Hidráulicas', 4, 4, 5, 0, 0, 0),
+(1090, 'Máquinas e Instalaciones Eléctricas', 8, 4, 5, 0, 0, 0),
+(1091, 'Higiene y Seguridad', 4, 4, 5, 0, 0, 0),
+(1092, 'Organización de Empresas', 4, 4, 5, 0, 0, 0),
+(1093, 'Emprendedorismo e Innovación', 4, 4, 5, 0, 0, 0),
+(1094, 'Industrias II', 4, 4, 5, 0, 0, 0),
+(1095, 'Transporte y Logística', 4, 5, 5, 0, 0, 0),
+(1096, 'Ecología y Desarrollo Sustentable', 4, 5, 5, 0, 0, 0),
+(1097, 'Gestión Comercial', 4, 5, 5, 0, 0, 0),
+(1098, 'Proyectos de Ingeniería', 4, 5, 5, 0, 0, 0),
+(1099, 'Práctica Profesional Supervisada', 2, 5, 5, 0, 1, 0),
+(1100, 'Sistemas de Información', 4, 5, 5, 0, 0, 0),
+(1101, 'Legislación General', 4, 5, 5, 0, 0, 0),
+(1102, 'Gestión de la Calidad', 4, 5, 5, 0, 0, 0),
+(1103, 'Automatización Industrial', 4, 5, 5, 0, 0, 0),
+(1104, 'Industrias III', 4, 5, 5, 0, 0, 0),
+(1105, 'Gestión Industrial', 4, 5, 5, 0, 0, 0),
+(1106, 'Construcciones Industriales', 4, 5, 5, 0, 0, 0);
+
+-- Carrera: Ingeniería Civil
+
+-- Plan 2017:
+

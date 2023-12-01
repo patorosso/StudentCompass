@@ -35,9 +35,9 @@ INSERT INTO app.career VALUES
 	('Transversal', 0),
 	('Ingeniería Informática', 1),
 	('Ingeniería Electrónica', 1),
+	('Ingeniería Industrial', 1),
 	('Ingeniería Civil', 1),
 	('Ingeniería Mecánica', 1),
-	('Ingeniería Industrial', 1),
 	('Ingeniería en Energías', 1),
 	('Arquitectura', 1),
 	('Tecnicatura en Desarrollo Web', 1),
@@ -50,6 +50,7 @@ INSERT INTO app.career_plan (description, career_id) VALUES
 	('Plan 2009', 1),
 	('Plan 2023', 2),
 	('Plan 2009', 2),
-	('Plan 2009', 3);
+	('Plan 2009', 3),
+	('Plan 2017', 4);
 
 
