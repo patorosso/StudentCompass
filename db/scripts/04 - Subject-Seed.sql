@@ -335,3 +335,66 @@ INSERT INTO app.subject
 
 -- Plan 2017:
 
+INSERT INTO app.subject
+(code, description, weekly_hours,
+ year_level, career_plan_id, is_optional,
+ is_annual, is_elective)
+ VALUES
+(1023, 'Análisis Matemático I', 8, 1, 6, 0, 0, 0),
+(1024, 'Elementos de Programación', 8, 1, 6, 0, 0, 0),
+(1025, 'Sistemas de Representación', 4, 1, 6, 0, 0, 0),
+(1026, 'Tecnología, Ingeniería y Sociedad', 4, 1, 6, 0, 0, 0),
+(1027, 'Álgebra y Geometría Analítica I', 8, 1, 6, 0, 0, 0),
+(1028, 'Matemática Discreta', 4, 1, 6, 0, 0, 0),
+(1029, 'Química General', 4, 1, 6, 0, 0, 0),
+(1030, 'Fundamentos de TICs', 8, 1, 6, 0, 0, 0),
+(1031, 'Física I', 8, 2, 6, 0, 0, 0),
+(1032, 'Álgebra y Geometría Analítica II', 4, 2, 6, 0, 0, 0),
+(1033, 'Análisis Matemático II', 8, 2, 6, 0, 0, 0),
+(1035, 'Física II', 8, 2, 6, 0, 0, 0),
+(1255, 'Probabilidad y Estadística', 4, 2, 6, 0, 0, 0),
+(1256, 'Economía', 4, 2, 6, 0, 0, 0),
+(1257, 'Estabilidad', 8, 2, 6, 0, 0, 0),
+(1259, 'Materiales de Construcción', 8, 2, 6, 0, 0, 0),
+(1260, 'Cálculo Numérico', 4, 2, 6, 0, 0, 0),
+(1261, 'Resistencia de Materiales', 8, 3, 6, 0, 0, 0),
+(1262, 'Geotopografía', 6, 3, 6, 0, 0, 0),
+(1263, 'Tecnología de la Construcción', 8, 3, 6, 0, 0, 0),
+(1264, 'Instalaciones Eléctricas y Acústicas', 6, 3, 6, 0, 0, 0),
+(1265, 'Tecnología del Hormigón', 4, 3, 6, 0, 0, 0),
+(1266, 'Instalaciones Termomecánicas', 6, 3, 6, 0, 0, 0),
+(1267, 'Hidráulica General y Aplicada', 10, 3, 6, 0, 0, 0),
+(1268, 'Análisis Estructural I', 8, 3, 6, 0, 0, 0),
+(1269, 'Geotecnia', 8, 4, 6, 0, 0, 0),
+(1270, 'Estructuras de Hormigón', 8, 4, 6, 0, 0, 0),
+(1271, 'Instalaciones Sanitarias y de Gas', 8, 4, 6, 0, 0, 0),
+(1244, 'Gestión Ambiental', 4, 4, 6, 0, 0, 0),
+(1273, 'Diseño Arquitectónico, Planeamiento y Urbanismo I', 6, 4, 6, 0, 0, 0),
+(1274, 'Hidrología y Obras Hidráulicas I', 8, 4, 6, 0, 0, 0),
+(1275, 'Cimentaciones', 6, 4, 6, 0, 0, 0),
+(1394, 'Electiva I', 4, 4, 6, 0, 0, 0),
+(1277, 'Construcciones Metálicas y de Madera', 8, 5, 6, 0, 0, 0),
+(1278, 'Práctica Profesional Supervisada', 200, 5, 6, 0, 1, 0),
+(1279, 'Ingeniería Sanitaria', 6, 5, 6, 0, 0, 0),
+(1280, 'Vías de Comunicación I', 8, 5, 6, 0, 0, 0),
+(1281, 'Análisis Estructural II', 4, 5, 6, 0, 0, 0),
+(1397, 'Anteproyecto', 4, 5, 6, 0, 0, 0),
+(1282, 'Organización y Conducción de Obras', 8, 5, 6, 0, 0, 0),
+(1283, 'Vías de Comunicación II', 6, 5, 6, 0, 0, 0),
+(1395, 'Electiva II', 4, 5, 6, 0, 0, 0),
+(1396, 'Electiva III', 4, 5, 6, 0, 0, 0),
+(1286, 'Ingeniería Legal', 4, 5, 6, 0, 0, 0),
+(1398, 'Proyecto Final', 4, 5, 6, 0, 0, 0),
+(1243, 'Elasticidad y Plasticidad', 4, 4, 6, 0, 0, 1),
+(1245, 'Geología Aplicada', 4, 4, 6, 0, 0, 1),
+(1246, 'Prefabricaciones', 4, 4, 6, 0, 0, 1),
+(1247, 'Diseño Arquitectónico, Planeamiento y Urbanismo II', 4, 5, 6, 0, 0, 1),
+(1248, 'Hidrología y Obras Hidráulicas II', 4, 5, 6, 0, 0, 1),
+(1249, 'Tránsito y Vialidad Urbana', 4, 5, 6, 0, 0, 1),
+(1250, 'Puentes', 4, 5, 6, 0, 0, 1),
+(1251, 'Análisis Estructural III', 4, 5, 6, 0, 0, 1);
+
+-- Carrera: Ingeniería Mecánica
+
+-- Plan 2015:
+
