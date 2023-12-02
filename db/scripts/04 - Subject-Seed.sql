@@ -207,12 +207,12 @@ VALUES
 (3733, 'Automatización Industrial', 4, 5, 3, 0, 0, 0),
 (3734, 'Electrónica de Potencia', 4, 5, 3, 0, 0, 0),
 (3735, 'Integración Tecnológica IV', 4, 5, 3, 0, 0, 0),
-(3736, 'Electiva I', 4, 5, 3, 0, 0, 1),
+(3736, 'Electiva I', 4, 5, 3, 0, 0, 0),
 (3737, 'Comunicaciones Avanzadas', 4, 5, 3, 0, 0, 0),
 (3738, 'Control Avanzado', 4, 5, 3, 0, 0, 0),
 (3739, 'Proyecto Integrador', 4, 5, 3, 0, 1, 0),
-(3740, 'Electiva II', 4, 5, 3, 0, 0, 1),
-(3741, 'Electiva III', 4, 5, 3, 0, 0, 1),
+(3740, 'Electiva II', 4, 5, 3, 0, 0, 0),
+(3741, 'Electiva III', 4, 5, 3, 0, 0, 0),
 (3742, 'Seguridad e Higiene y Organización Industrial', 4, 5, 3, 0, 0, 0);
 
 -- Plan 2009:
@@ -385,14 +385,14 @@ INSERT INTO app.subject
 (1396, 'Electiva III', 4, 5, 6, 0, 0, 0),
 (1286, 'Ingeniería Legal', 4, 5, 6, 0, 0, 0),
 (1398, 'Proyecto Final', 4, 5, 6, 0, 0, 0),
-(1243, 'Elasticidad y Plasticidad', 4, 4, 6, 0, 0, 1),
-(1245, 'Geología Aplicada', 4, 4, 6, 0, 0, 1),
-(1246, 'Prefabricaciones', 4, 4, 6, 0, 0, 1),
-(1247, 'Diseño Arquitectónico, Planeamiento y Urbanismo II', 4, 5, 6, 0, 0, 1),
-(1248, 'Hidrología y Obras Hidráulicas II', 4, 5, 6, 0, 0, 1),
-(1249, 'Tránsito y Vialidad Urbana', 4, 5, 6, 0, 0, 1),
-(1250, 'Puentes', 4, 5, 6, 0, 0, 1),
-(1251, 'Análisis Estructural III', 4, 5, 6, 0, 0, 1);
+(1243, 'Elasticidad y Plasticidad', 4, 0, 6, 0, 0, 1),
+(1245, 'Geología Aplicada', 4, 0, 6, 0, 0, 1),
+(1246, 'Prefabricaciones', 4, 0, 6, 0, 0, 1),
+(1247, 'Diseño Arquitectónico, Planeamiento y Urbanismo II', 4, 0, 6, 0, 0, 1),
+(1248, 'Hidrología y Obras Hidráulicas II', 4, 0, 6, 0, 0, 1),
+(1249, 'Tránsito y Vialidad Urbana', 4, 0, 6, 0, 0, 1),
+(1250, 'Puentes', 4, 0, 6, 0, 0, 1),
+(1251, 'Análisis Estructural III', 4, 0, 6, 0, 0, 1);
 
 -- Carrera: Ingeniería Mecánica
 
@@ -445,3 +445,62 @@ INSERT INTO app.subject
 (3043, 'Legislación General', 4, 5, 7, 0, 0, 0),
 (3044, 'Práctica Profesional Supervisada', 4, 5, 7, 0, 1, 0),
 (3045, 'Proyecto Final', 8, 5, 7, 0, 0, 0);
+
+-- Carrera: Arquitectura
+
+-- Plan 2015:
+
+INSERT INTO app.subject
+(code, description, weekly_hours,
+ year_level, career_plan_id, is_optional,
+ is_annual, is_elective)
+ VALUES
+(2952, 'Proyecto I', 8, 1, 8, 0, 0, 0),
+(2953, 'Tecnología I', 4, 1, 8, 0, 0, 0),
+(2954, 'Forma I', 4, 1, 8, 0, 0, 0),
+(2955, 'Historia y Crítica I', 4, 1, 8, 0, 0, 0),
+(2956, 'Matemática Aplicada I', 4, 1, 8, 0, 0, 0),
+(2957, 'Proyecto II', 8, 1, 8, 0, 0, 0),
+(2958, 'Tecnología II', 4, 1, 8, 0, 0, 0),
+(2959, 'Forma II', 4, 1, 8, 0, 0, 0),
+(2960, 'Historia y Crítica II', 4, 1, 8, 0, 0, 0),
+(2961, 'Matemática Aplicada II', 4, 1, 8, 0, 0, 0),
+(2962, 'Proyecto III', 8, 2, 8, 0, 0, 0),
+(2963, 'Tecnología III', 8, 2, 8, 0, 0, 0),
+(2964, 'Forma III', 4, 2, 8, 0, 0, 0),
+(2965, 'Sistemas Informáticos Proyectuales I', 4, 2, 8, 0, 0, 0),
+(2966, 'Proyecto IV', 8, 2, 8, 0, 0, 0),
+(2967, 'Tecnología IV', 8, 2, 8, 0, 0, 0),
+(2968, 'Historia y Crítica III', 4, 2, 8, 0, 0, 0),
+(2969, 'Sistemas Informáticos Proyectuales II', 4, 3, 8, 0, 0, 0),
+(2970, 'Proyecto V', 8, 3, 8, 0, 0, 0),
+(2971, 'Tecnología V', 8, 3, 8, 0, 0, 0),
+(2972, 'Historia y Crítica IV', 4, 3, 8, 0, 0, 0),
+(2973, 'Proyecto VI', 8, 3, 8, 0, 0, 0),
+(2974, 'Tecnología VI', 8, 3, 8, 0, 0, 0),
+(2975, 'Forma IV', 4, 3, 8, 0, 0, 0),
+(2977, 'Proyecto VII', 8, 4, 8, 0, 0, 0),
+(2978, 'Tecnología VII', 8, 4, 8, 0, 0, 0),
+(2979, 'Forma V', 4, 4, 8, 0, 0, 0),
+(2980, 'Historia y Crítica V', 4, 4, 8, 0, 0, 0),
+(2981, 'Proyecto VIII', 8, 4, 8, 0, 0, 0),
+(2982, 'Tecnología VIII', 8, 4, 8, 0, 0, 0),
+(2983, 'Forma VI', 4, 4, 8, 0, 0, 0),
+(2984, 'Historia y Crítica VI', 4, 4, 8, 0, 0, 0),
+(2985, 'Proyecto IX', 8, 5, 8, 0, 0, 0),
+(2986, 'Urbanismo I', 4, 5, 8, 0, 0, 0),
+(2987, 'Gestión I', 4, 5, 8, 0, 0, 0),
+(2988, 'Práctica Profesional I', 4, 5, 8, 0, 0, 0),
+(2989, 'Proyecto X', 8, 5, 8, 0, 0, 0),
+(2990, 'Urbanismo II', 4, 5, 8, 0, 0, 0),
+(2991, 'Gestión II', 4, 5, 8, 0, 0, 0),
+(2992, 'Práctica Profesional II', 4, 5, 8, 0, 0, 0),
+(2993, 'Espacio Curricular Optativo I', 4, 5, 8, 0, 0, 0),
+(2994, 'Espacio Curricular Optativo II', 4, 5, 8, 0, 0, 0),
+(2995, 'Proyecto Final de Carrera', 12, 6, 8, 0, 0, 0),
+(3941, 'Desarrollo Urbano Sustentable', 4, 0, 8, 0, 0, 1),
+(3942, 'Paisaje, Arquitectura y Tecnologías I', 4, 0, 8, 0, 0, 1),
+(3943, 'Paisaje, Arquitectura y Tecnologías II', 4, 0, 8, 0, 0, 1),
+(3944, 'Programas Urbanos Especiales', 4, 0, 8, 0, 0, 1),
+(3945, 'Teoría y Crítica', 4, 0, 8, 0, 0, 1),
+(3940, 'Introducción al BIM', 4, 0, 8, 1, 0, 0);
