@@ -2,22 +2,21 @@ USE studentcompass
 
 GO
 
-CREATE PROCEDURE app.seed_students
-	@amount INT
+CREATE OR ALTER PROCEDURE app.seed_students @students_amount INT
 AS
 BEGIN
 
-CREATE TABLE #usernames (
-	username NVARCHAR(30)
-);
+	WHILE @students_amount > 0
+	BEGIN
 
-INSERT INTO #usernames VALUES
-	('jose'),('maria'),
-	('juan'),('julio'),
-	('lucas'),('marcos'),
-	('matias'),('luis'),
-	('pedro'),('pablo');
+	INSERT INTO app.student VALUES ('a','a',1)
+	SET @students_amount = @students_amount - 1
 
+	END
 
 END
+
+GO
+
+-- EXEC app.seed_students 31000
 
