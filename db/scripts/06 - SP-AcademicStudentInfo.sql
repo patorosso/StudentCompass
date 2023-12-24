@@ -46,8 +46,8 @@ END
 
 GO
 
-set statistics time on
-EXEC app.academic_student_info 1,1
+--set statistics time on
+--EXEC app.academic_student_info 1,1
 
 
 --CREATE NONCLUSTERED INDEX subject_idx ON app.subject (career_plan_id) INCLUDE (description, weekly_hours, year_level, is_optional, is_elective, is_annual)
