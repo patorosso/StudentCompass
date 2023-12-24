@@ -1,10 +1,9 @@
 USE studentcompass
 
 INSERT INTO app.course_status VALUES
-	('Pendiente'), -- 0
 	('Aprobada'), -- 1
-	('Cursando'), -- 2
-	('Desaprobada'), -- 3
+	('Desaprobada'), -- 2
+	('Cursando'), -- 3
 	('Cursada'); -- 4
 
 INSERT INTO app.exam VALUES

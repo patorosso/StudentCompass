@@ -21,31 +21,31 @@ BEGIN TRAN
 
 CREATE TABLE app.student(
 	id SMALLINT IDENTITY(1,1),
-	username NVARCHAR(30),
-	pass NVARCHAR(50),
-	is_active BIT, 
+	username NVARCHAR(30) NOT NULL,
+	pass NVARCHAR(50) NOT NULL,
+	is_active BIT NOT NULL, 
 	CONSTRAINT pk_student PRIMARY KEY (id),
 	--CONSTRAINT ck_pass CHECK (LEN(pass) >= 8)
 );
 
 CREATE TABLE app.department(
 	id TINYINT IDENTITY(0,1),
-	description NVARCHAR(35),
+	description NVARCHAR(35) NOT NULL,
 	CONSTRAINT pk_department PRIMARY KEY (id)
 );
 
 CREATE TABLE app.career(
 	id TINYINT IDENTITY(0,1),
-	description NVARCHAR(60),
-	department_id TINYINT,
+	description NVARCHAR(60) NOT NULL,
+	department_id TINYINT NOT NULL,
 	CONSTRAINT pk_career PRIMARY KEY (id),
 	CONSTRAINT fk_career_department FOREIGN KEY (department_id) REFERENCES app.department(id)
 );
 
 CREATE TABLE app.career_plan(
 	id TINYINT IDENTITY(0,1),
-	description NVARCHAR(60),
-	career_id TINYINT,
+	description NVARCHAR(60) NOT NULL,
+	career_id TINYINT NOT NULL,
 	CONSTRAINT pk_career_plan PRIMARY KEY (id),
 	CONSTRAINT fk_career_plan_career FOREIGN KEY (career_id) REFERENCES app.career(id)
 );
@@ -53,7 +53,7 @@ CREATE TABLE app.career_plan(
 CREATE TABLE app.enrolled(
 	student_id SMALLINT,
 	career_plan_id TINYINT,
-	enrollment_date DATE,
+	enrollment_date DATE NOT NULL,
 	CONSTRAINT pk_enrolled PRIMARY KEY (student_id, career_plan_id),
 	CONSTRAINT fk_enrolled_student FOREIGN KEY (student_id) REFERENCES app.student(id),
 	CONSTRAINT fk_enrolled_career_plan FOREIGN KEY (career_plan_id) 
@@ -62,19 +62,19 @@ CREATE TABLE app.enrolled(
 
 CREATE TABLE app.term(
 	id TINYINT IDENTITY(1,1),
-	description NVARCHAR(40),
+	description NVARCHAR(40) NOT NULL,
 	CONSTRAINT pk_term PRIMARY KEY (id)
 );
 
 CREATE TABLE app.subject(
 	code SMALLINT,
 	career_plan_id TINYINT,
-	description NVARCHAR(60),
-	weekly_hours TINYINT,
-	year_level TINYINT,
-	is_optional BIT,
-	is_elective BIT,
-	is_annual BIT,
+	description NVARCHAR(60) NOT NULL,
+	weekly_hours TINYINT NOT NULL,
+	year_level TINYINT NOT NULL,
+	is_optional BIT NOT NULL,
+	is_elective BIT NOT NULL,
+	is_annual BIT NOT NULL,
 	CONSTRAINT pk_subject PRIMARY KEY (code, career_plan_id),
 	CONSTRAINT fk_subject_career_plan FOREIGN KEY (career_plan_id) 
 	REFERENCES app.career_plan(id)
@@ -94,19 +94,19 @@ CREATE TABLE app.correlative(
 );
 
 CREATE TABLE app.course_status(
-	id TINYINT IDENTITY(0,1),
-	description NVARCHAR(25),
+	id TINYINT IDENTITY(1,1),
+	description NVARCHAR(25) NOT NULL,
 	CONSTRAINT pk_course_status PRIMARY KEY (id)
 );
 
 CREATE TABLE app.course(
 	id INT IDENTITY(1,1),
-	student_id SMALLINT,
-	subject_code SMALLINT,
-	career_plan_id TINYINT,
-	term_id TINYINT,
-	status_id TINYINT,
-	year SMALLINT,
+	student_id SMALLINT NOT NULL,
+	subject_code SMALLINT NOT NULL,
+	career_plan_id TINYINT NOT NULL,
+	term_id TINYINT NOT NULL,
+	status_id TINYINT NOT NULL,
+	year SMALLINT NOT NULL,
 	final_grade TINYINT,
 	CONSTRAINT pk_course PRIMARY KEY (id),
 	CONSTRAINT fk_course_student FOREIGN KEY (student_id) REFERENCES app.student(id),
@@ -121,14 +121,14 @@ CREATE TABLE app.course(
 
 CREATE TABLE app.exam(
 	id TINYINT IDENTITY(1,1),
-	description NVARCHAR(40),
+	description NVARCHAR(40) NOT NULL,
 	CONSTRAINT pk_exam PRIMARY KEY (id)
 );
 
 CREATE TABLE app.course_exam(
 	course_id INT,
 	exam_id TINYINT,
-	grade TINYINT,
+	grade TINYINT NOT NULL,
 	CONSTRAINT pk_course_exam PRIMARY KEY (course_id, exam_id),
 	CONSTRAINT fk_course_exam FOREIGN KEY (exam_id) REFERENCES app.exam(id),
 	CONSTRAINT fk_course_exam_course FOREIGN KEY (course_id) REFERENCES app.course(id),
