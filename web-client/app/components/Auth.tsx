@@ -1,37 +1,44 @@
 "use client";
 import React, { useState } from "react";
+import Login from "./Login";
 
 const Auth = () => {
-  const [activeTab, setActiveTab] = useState("signIn");
+  const [activeTab, setActiveTab] = useState("login");
 
   return (
-    <div className="flex flex-col bg-white h-3/5 w-4/5 shadow-lg rounded-lg pt-10 px-16">
-      <div className="flex border-b">
-        <button
-          className={`flex-1 py-2 ${
-            activeTab === "signIn" ? "border-b-2 border-blue-500" : ""
-          }`}
-          onClick={() => setActiveTab("signIn")}
-        >
-          Sign In
-        </button>
-        <button
-          className={`flex-1 py-2 ${
-            activeTab === "register" ? "border-b-2 border-blue-500" : ""
-          }`}
-          onClick={() => setActiveTab("register")}
-        >
-          Register
-        </button>
+    <div
+      className="p-4 shadow-lg rounded-lg bg-white w-2/3"
+      style={{ minHeight: "400px" }}
+    >
+      <div className="border-b">
+        <div className="flex space-x-4" role="tablist">
+          <button
+            className={`px-4 py-2 text-sm font-medium text-gray-700 rounded-t-lg focus:outline-none ${
+              activeTab === "login" ? "bg-gray-100" : ""
+            }`}
+            onClick={() => setActiveTab("login")}
+          >
+            Login
+          </button>
+          <button
+            className={`px-4 py-2 text-sm font-medium text-gray-700 rounded-t-lg focus:outline-none ${
+              activeTab === "register" ? "bg-gray-100" : ""
+            }`}
+            onClick={() => setActiveTab("register")}
+          >
+            Register
+          </button>
+        </div>
       </div>
-      <div className="py-4">
-        {activeTab === "signIn" && (
+
+      <div className="p-4">
+        {activeTab === "login" ? (
           <div>
-            <p>Sign In Form</p>
+            <Login />
           </div>
-        )}
-        {activeTab === "register" && (
+        ) : (
           <div>
+            {/* Register form goes here */}
             <p>Register Form</p>
           </div>
         )}
