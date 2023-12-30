@@ -1,11 +1,7 @@
-// RootLayout.tsx
-import { Inter } from "next/font/google";
 import { UserProvider } from "./context/userContext";
 import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "./components/Navbar";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Student Compass",
@@ -19,12 +15,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="h-full">
-      <body className="flex flex-col h-full">
+      <body className="flex flex-col h-full font-inter">
         <UserProvider>
           <Navbar />
-          <main className="flex-1" style={{ minHeight: "calc(100vh - 5rem)" }}>
+          <div
+            className="flex-1 pt-48 overflow-auto {}"
+            style={{ minHeight: "calc(100vh - 5rem)" }}
+          >
             {children}
-          </main>
+          </div>
         </UserProvider>
       </body>
     </html>
