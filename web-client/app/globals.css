@@ -1,0 +1,35 @@
+/* globals.css */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url("https://fonts.googleapis.com/css2?family=Figtree:wght@400;600;700;800&display=swap");
+
+* {
+  @apply transition-colors duration-200;
+}
+
+.font-figtree {
+  font-family: "Figtree", sans-serif;
+}
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+.dark {
+  --foreground-rgb: 18, 18, 18;
+  --background-start-rgb: 18, 18, 18;
+  --background-end-rgb: 28, 28, 28;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+    to bottom,
+    rgb(var(--background-start-rgb)) 40%,
+    rgb(var(--background-end-rgb)) 95%
+  );
+}
