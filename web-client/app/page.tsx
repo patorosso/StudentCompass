@@ -23,7 +23,7 @@ export default function Home() {
         </div>
       </div>
       <div className="flex items-center justify-center pt-12 pb-16">
-        <p className="text-gray-800 dark:text-gray-400 text-2xl md:text-4xl lg:text-6xl font-extrabold">
+        <p className="text-gray-800 dark:text-gray-400 text-2xl md:text-4xl lg:text-6xl font-extrabold cursor-pointer">
           Take a look at what we provide
         </p>
       </div>
