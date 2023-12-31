@@ -15,7 +15,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="h-full">
-      <body className="flex flex-col h-full font-inter">
+      <body className="flex flex-col h-full font-figtree">
         <UserProvider>
           <Navbar />
           <div
