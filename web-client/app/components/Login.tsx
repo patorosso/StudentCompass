@@ -9,13 +9,13 @@ const Login = () => {
       <form className="px-8 pt-6">
         <div className="mb-4">
           <label
-            className="block italic text-gray-700 dark:text-white text-sm mb-2"
+            className="block italic font-semibold text-gray-700 dark:text-white text-sm mb-2"
             htmlFor="username"
           >
             Username
           </label>
           <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 bg-surface-400 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="shadow appearance-none border dark:border-gray-500 rounded w-full py-2 px-3 bg-white dark:bg-surface-400 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="username"
             type="text"
             placeholder="your_user"
@@ -23,13 +23,13 @@ const Login = () => {
         </div>
         <div className="mb-6">
           <label
-            className="block italic text-gray-700 dark:text-white text-sm mb-2"
+            className="block italic font-semibold text-gray-700 dark:text-white text-sm mb-2"
             htmlFor="password"
           >
             Password
           </label>
           <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 bg-surface-400 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+            className="shadow appearance-none border dark:border-gray-500 rounded w-full py-2 px-3 bg-white dark:bg-surface-400 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
             id="password"
             type="password"
             placeholder="******************"
