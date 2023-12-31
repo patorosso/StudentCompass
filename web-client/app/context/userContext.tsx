@@ -22,8 +22,7 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
-  const contextValue = useMemo(() => ({ user, setUser }), [user, setUser]); //wont change in every render
-
+  const contextValue = useMemo(() => ({ user, setUser }), [user, setUser]); // wont re-render unnecessarily
   return (
     <UserContext.Provider value={contextValue}>{children}</UserContext.Provider>
   );
