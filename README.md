@@ -2,7 +2,7 @@
 
 ## Overview
 
-StudentCompass is an **_on-progress_** web application designed for college students and aims to provide them three tools:
+StudentCompass is an **_on-progress_** web application designed for college students and aims to provide them with three tools:
 
 ### Progress Tracker
 
@@ -14,4 +14,4 @@ Roadmap and schedule.
 
 ### Stats
 
-Full statistics of the user.
+Full statistics of the user's college path.
