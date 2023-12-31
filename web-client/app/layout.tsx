@@ -19,7 +19,7 @@ export default function RootLayout({
         <UserProvider>
           <Navbar />
           <div
-            className="flex-1 pt-48 overflow-auto {}"
+            className="flex-1 pt-24 lg:pt-48 overflow-auto {}"
             style={{ minHeight: "calc(100vh - 5rem)" }}
           >
             {children}
