@@ -3,7 +3,7 @@ import Auth from "./components/Auth";
 
 export default function Home() {
   return (
-    <section className="flex flex-col h-full justify-between">
+    <section className="flex flex-col h-full justify-between pt-24">
       <div className="flex flex-col lg:flex-row items-center justify-center">
         <div className="flex flex-col justify-center items-center px-10 w-full lg:w-3/5">
           <div>
