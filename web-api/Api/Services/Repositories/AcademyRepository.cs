@@ -15,18 +15,22 @@ namespace Api.Services.Repositories
 
         public async Task<IEnumerable<Subject>> GetProgressOverview(short studentId, byte careerPlanId)
         {
+            SqlConnection? connection = null;
+            SqlCommand? command = null;
+            SqlDataReader? reader = null;
+
             try
             {
-                var connection = await CreateConnection();
+                connection = await CreateConnection();
                 _logger.LogInformation("Connection opened");
 
-                await using var command = new SqlCommand("app.academic_student_info", connection);
+                command = new SqlCommand("app.academic_student_info", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.Add(new SqlParameter("@student_id", studentId));
                 command.Parameters.Add(new SqlParameter("@career_plan_id", careerPlanId));
 
                 var subjects = new List<Subject>();
-                await using var reader = await command.ExecuteReaderAsync();
+                reader = await command.ExecuteReaderAsync();
 
                 while (reader.Read())
                 {
@@ -53,6 +57,17 @@ namespace Api.Services.Repositories
             {
                 _logger.LogError(e, "Error while getting students");
                 throw;
+            }
+            finally
+            {
+                if (reader != null)
+                    await reader.DisposeAsync();
+
+                if (command != null)
+                    await command.DisposeAsync();
+
+                if (connection != null)
+                    await connection.DisposeAsync();
             }
         }
     }
