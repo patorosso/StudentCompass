@@ -31,3 +31,37 @@ body {
     rgb(var(--background-end-rgb)) 95%
   );
 }
+
+/* Custom scrollbar */
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: black;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #6561c0;
+  transition: width 0.2s ease;
+}
+
+.custom-scrollbar:hover::-webkit-scrollbar-thumb {
+  width: 12px;
+}
+
+/* Regular scrollbar */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: black;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #6561c0;
+  transition: width 0.2s ease;
+}
