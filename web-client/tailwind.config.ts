@@ -20,31 +20,31 @@ const config: Config = {
         },
         first: {
           DEFAULT: "#151e39",
-          dark: "#2a3658", // Dark mode variant for big-stone
+          dark: "#2a3658",
         },
         second: {
           DEFAULT: "#e90b93",
-          dark: "#f172b0", // Dark mode variant for hollywood-cerise
+          dark: "#f172b0",
         },
         third: {
           DEFAULT: "#541c7c",
-          dark: "#6e3d94", // Dark mode variant for honey-flower
+          dark: "#6e3d94",
         },
         fourth: {
           DEFAULT: "#e2d7e8",
-          dark: "#ebe2f0", // Dark mode variant for snuff
+          dark: "#ebe2f0",
         },
         sixth: {
           DEFAULT: "#39a0db",
-          dark: "#61b2e4", // Dark mode variant for curious-blue
+          dark: "#61b2e4",
         },
         seventh: {
           DEFAULT: "#5f2762",
-          dark: "#7a3e78", // Dark mode variant for bossanova
+          dark: "#7a3e78",
         },
         eigth: {
           DEFAULT: "#0b0e1b",
-          dark: "#1c1f2c", // Dark mode variant for ebony
+          dark: "#1c1f2c",
         },
         surface: {
           "100": "#121212",
