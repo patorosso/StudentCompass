@@ -65,3 +65,10 @@ body {
   background: #6561c0;
   transition: width 0.2s ease;
 }
+
+/* Filter svg colors */
+
+.filter-primary {
+  filter: brightness(0) saturate(100%) invert(40%) sepia(10%) saturate(3193%)
+    hue-rotate(204deg) brightness(99%) contrast(88%);
+}
