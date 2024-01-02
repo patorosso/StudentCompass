@@ -14,7 +14,7 @@ const SubjectsList = async () => {
       >
         <div
           className="overflow-auto custom-scrollbar pr-4"
-          style={{ height: 670 }}
+          style={{ height: 640 }}
         >
           <table className="min-w-full border-collapse text-sm">
             <thead className="text-left text-xs text-gray-500 sticky top-0 bg-gray-400 dark:bg-surface-200">

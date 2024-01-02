@@ -4,7 +4,7 @@ import Analytics from "./components/Analytics";
 
 const Dashboard = () => {
   return (
-    <div className="flex justify-evenly pt-24">
+    <div className="flex justify-evenly pt-20">
       <SubjectsList />
       <Analytics />
     </div>
