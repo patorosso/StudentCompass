@@ -72,3 +72,13 @@ body {
   filter: brightness(0) saturate(100%) invert(40%) sepia(10%) saturate(3193%)
     hue-rotate(204deg) brightness(99%) contrast(88%);
 }
+
+/* Sidebar special units */
+
+.w-22 {
+  width: 5.8rem;
+}
+
+.duration-350 {
+  transition-duration: 350ms;
+}

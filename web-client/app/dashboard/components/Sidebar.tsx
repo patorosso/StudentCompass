@@ -38,14 +38,14 @@ const Sidebar = () => {
   ];
   return (
     <div
-      className={`sticky top-0 h-full lg:flex flex-col hidden transition-all duration-700 ease-in-out ${
-        isSidebarOpen ? "w-72" : "w-20"
+      className={`sticky top-0 h-full lg:flex flex-col hidden transition-all duration-350 ease-in-out ${
+        isSidebarOpen ? "w-72" : "w-22"
       }`}
     >
-      <div className="flex grow flex-col gap-y-5 bg-surface-200 pt-4 px-4 pb-4">
+      <div className="flex grow flex-col gap-y-5 bg-surface-200 pt-4 px-4 pb-2">
         <div className="flex justify-end">
           <button
-            className="bg-surface-300 rounded-full flex items-center justify-center w-9 h-9 hover:cursor-pointer hover:bg-surface-400 select-none"
+            className="bg-surface-300 rounded-full flex items-center justify-center w-9 h-9 mr-2  hover:cursor-pointer hover:bg-surface-400 select-none"
             onClick={toggleSidebar}
           >
             <div
@@ -66,7 +66,7 @@ const Sidebar = () => {
         <nav className="flex flex-1 flex-col">
           <ul className="flex flex-1 flex-col">
             <li>
-              <ul className="space-y-8">
+              <ul className="space-y-4">
                 {sideBarOptions.map((option) => (
                   <li key={option.name}>
                     <Link
@@ -75,10 +75,10 @@ const Sidebar = () => {
                         option.current
                           ? "text-white"
                           : "text-gray-400 hover:text-white",
-                        "group flex text-xl px-4 py-3 rounded-xl hover:bg-gray-500"
+                        "group flex text-lg px-4 py-3 rounded-xl hover:bg-gray-500"
                       )}
                     >
-                      <div className="flex">
+                      <div className="flex shrink-0">
                         <Image
                           src={option.icon}
                           alt={option.name}
@@ -91,7 +91,7 @@ const Sidebar = () => {
                           }
                         />
                         <p
-                          className={`ml-6 overflow-hidden transition duration-1000 ease-linear ${
+                          className={`ml-6 overflow-hidden transition delay-100 duration-100 ease-linear ${
                             isSidebarOpen
                               ? "w-auto opacity-100"
                               : "w-0 opacity-0"
