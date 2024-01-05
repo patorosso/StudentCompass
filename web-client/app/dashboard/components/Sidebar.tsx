@@ -18,7 +18,7 @@ const Sidebar = () => {
 
   const sideBarOptions = [
     {
-      name: "Dashboard",
+      name: "Progress",
       icon: "/dashboard.svg",
       path: "/dashboard",
       current: segment === null,
@@ -38,12 +38,12 @@ const Sidebar = () => {
   ];
   return (
     <div
-      className={`sticky top-0 h-full lg:flex flex-col hidden transition-all duration-350 ease-in-out ${
-        isSidebarOpen ? "w-72" : "w-22"
+      className={`sticky top-0 h-full s0ml:flex flex-col hidden transition-all duration-350 ease-in-out ${
+        isSidebarOpen ? "w-22 s1ml:w-72" : "w-22"
       }`}
     >
       <div className="flex grow flex-col gap-y-5 bg-surface-200 pt-4 px-4 pb-2">
-        <div className="flex justify-end">
+        <div className="s1ml:flex s1ml:justify-end hidden">
           <button
             className="bg-surface-300 rounded-full flex items-center justify-center w-9 h-9 mr-2  hover:cursor-pointer hover:bg-surface-400 select-none"
             onClick={toggleSidebar}
@@ -91,11 +91,11 @@ const Sidebar = () => {
                           }
                         />
                         <p
-                          className={`ml-6 overflow-hidden transition delay-100 duration-100 ease-linear ${
+                          className={`ml-6 transition hidden s1ml:block delay-100 duration-100 ease-linear ${
                             isSidebarOpen
-                              ? "w-auto opacity-100"
+                              ? "md:w-auto md:opacity-100"
                               : "w-0 opacity-0"
-                          }`}
+                          } `}
                         >
                           {option.name}
                         </p>
