@@ -58,7 +58,7 @@ const Sidebar = () => {
                 alt="Toggle Sidebar"
                 width={14}
                 height={14}
-                className="filter-primary"
+                className="invert"
               />
             </div>
           </button>
