@@ -18,10 +18,18 @@ const config: Config = {
         s1ml: "1222px",
         s2ml: "1630px",
       },
+      height: {
+        md: "300px",
+        lg: "600px",
+        xl: "920px",
+      },
       colors: {
         primary: {
           DEFAULT: "#6561c0",
           dark: "#7c7aae",
+        },
+        secondary: {
+          DEFAULT: "#251f30",
         },
         first: {
           DEFAULT: "#151e39",
