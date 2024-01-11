@@ -10,3 +10,8 @@ interface Subject {
   isAvailable: boolean;
   status: string;
 }
+
+type SubjectRowProps = {
+  subject: Subject;
+  key: number;
+};
