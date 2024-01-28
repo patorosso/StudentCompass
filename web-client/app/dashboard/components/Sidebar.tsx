@@ -73,7 +73,7 @@ const Sidebar = () => {
                       href={option.path}
                       className={joinClassNames(
                         option.current
-                          ? "text-white"
+                          ? "text-white bg-gray-700"
                           : "text-gray-400 hover:text-white",
                         "group flex text-lg px-4 py-3 rounded-xl hover:bg-gray-500"
                       )}
