@@ -12,10 +12,5 @@ interface Subject {
 }
 
 type SubjectRowProps = {
-  subject: Subject;
-  key: number;
-};
-
-type SpecialSubjectTableProps = {
   subjects: Subject[];
 };

@@ -1,5 +1,5 @@
 import React from "react";
-import SubjectRow from "./SubjectRow";
+import SubjectRows from "./SubjectRows";
 
 const SubjectsList = async () => {
   const res = await fetch(
@@ -29,9 +29,7 @@ const SubjectsList = async () => {
               </tr>
             </thead>
             <tbody>
-              {subjects.map((subject) => (
-                <SubjectRow key={subject.code} subject={subject} />
-              ))}
+              <SubjectRows subjects={subjects} />
             </tbody>
           </table>
         </div>
