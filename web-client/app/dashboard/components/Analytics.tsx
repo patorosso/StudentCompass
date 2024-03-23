@@ -1,5 +1,6 @@
 import React from "react";
 import RadialProgress from "./RadialProgress";
+import SpecialSubjects from "./SpecialSubjects";
 
 const Analytics = () => {
   return (
@@ -29,15 +30,7 @@ const Analytics = () => {
             </div>
           </div>
         </div>
-        <div className="bg-gray-500 bg-opacity-55 dark:bg-surface-300 dark:bg-opacity-55 text-white shadow-xl rounded-lg p-4 md:col-span-2 h-40">
-          Second
-        </div>
-        <div className="bg-gray-500 bg-opacity-55 dark:bg-surface-300 dark:bg-opacity-55 text-white shadow-xl rounded-lg p-4 md:col-span-1">
-          Third
-        </div>
-        <div className="bg-gray-500 bg-opacity-55 dark:bg-surface-300 dark:bg-opacity-55 text-white shadow-xl rounded-lg p-4 md:col-span-3 h-32">
-          Fourth
-        </div>
+        <SpecialSubjects />
       </div>
     </div>
   );
