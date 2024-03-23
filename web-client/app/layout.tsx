@@ -1,7 +1,7 @@
-import { UserProvider } from "./context/userContext";
 import type { Metadata } from "next";
-import "./globals.css";
 import Navbar from "./components/Navbar";
+import "./globals.css";
+import StoreProvider from "./StoreProvider";
 
 export const metadata: Metadata = {
   title: "Student Compass",
@@ -14,9 +14,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="h-full">
-      <body className="flex flex-col h-full font-figtree">
-        <UserProvider>
+    <StoreProvider>
+      <html lang="en" className="h-full">
+        <body className="flex flex-col h-full font-figtree">
           <Navbar />
           <div
             className="flex-1 overflow-auto bg-light-theme dark:bg-dark-theme"
@@ -24,8 +24,8 @@ export default function RootLayout({
           >
             {children}
           </div>
-        </UserProvider>
-      </body>
-    </html>
+        </body>
+      </html>
+    </StoreProvider>
   );
 }

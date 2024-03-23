@@ -11,6 +11,12 @@ interface Subject {
   status: string;
 }
 
+interface User {
+  id: string;
+  token: string;
+  isLoaded: boolean;
+}
+
 type SubjectRowProps = {
   subjects: Subject[];
 };
