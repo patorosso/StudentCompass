@@ -3,10 +3,7 @@ import React from "react";
 
 const SubjectRow = ({ subject, key }: SubjectRowProps) => {
   return (
-    <tr
-      key={key}
-      className="cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600"
-    >
+    <tr key={key} className="cursor-pointer hover:text-second ">
       <td className="border-b dark:border-gray-700 p-4">{subject.code}</td>
       <td className="border-b dark:border-gray-700 p-4">
         {subject.description}

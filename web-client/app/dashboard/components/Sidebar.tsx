@@ -42,10 +42,10 @@ const Sidebar = () => {
         isSidebarOpen ? "w-22 s1ml:w-72" : "w-22"
       }`}
     >
-      <div className="flex grow flex-col gap-y-5 bg-surface-200 pt-4 px-4 pb-2">
+      <div className="flex grow flex-col gap-y-5 bg-black border-black dark:border-gray-500 border-r-[1px] pt-4 px-4 pb-2">
         <div className="s1ml:flex s1ml:justify-end hidden">
           <button
-            className="bg-surface-300 rounded-full flex items-center justify-center w-9 h-9 mr-2  hover:cursor-pointer hover:bg-surface-400 select-none"
+            className="bg-surface-300 rounded-full flex items-center justify-center w-9 h-9 mr-2 mt-2 hover:cursor-pointer hover:bg-surface-400 select-none"
             onClick={toggleSidebar}
           >
             <div

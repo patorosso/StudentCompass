@@ -25,7 +25,7 @@ const RadialProgress: React.FC<RadialProgressProps> = ({ progress }) => {
           cy="50"
         />
         <circle
-          className="text-sixth"
+          className="text-second"
           stroke="currentColor"
           fill="transparent"
           strokeWidth="7"

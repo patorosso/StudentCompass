@@ -10,22 +10,22 @@ const SubjectsList = async () => {
   return (
     <div>
       <div
-        className="bg-gray-400 dark:bg-surface-200 dark:text-white shadow-xl rounded-lg p-4"
+        className="bg-gray-400 dark:bg-surface-300 bg-opacity-55 dark:bg-opacity-55 dark:text-white shadow-xl rounded-lg p-4"
         style={{ width: 920 }}
       >
         <div
           className="overflow-auto custom-scrollbar pr-4"
           style={{ height: 640 }}
         >
-          <table className="min-w-full border-collapse text-sm">
-            <thead className="text-left text-xs text-gray-500 sticky top-0 bg-gray-400 dark:bg-surface-200">
+          <table className="min-w-full border-collapse">
+            <thead className="text-left text-white sticky top-0 bg-gray-600">
               <tr>
-                <th className="p-4">Code</th>
+                <th className="p-4 rounded-l-lg">Code</th>
                 <th className="p-4">Description</th>
                 <th className="p-4">Grade</th>
                 <th className="p-4">Hours</th>
                 <th className="p-4">Available</th>
-                <th className="p-4">Status</th>
+                <th className="p-4 rounded-r-lg">Status</th>
               </tr>
             </thead>
             <tbody>

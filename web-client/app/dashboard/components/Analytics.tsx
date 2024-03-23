@@ -5,7 +5,7 @@ const Analytics = () => {
   return (
     <div className="dark:text-white">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="bg-gradient-to-br from-indigo-900 from-20% to-pink-500 to-80% text-white shadow-xl rounded-lg p-4 md:col-span-3">
+        <div className="bg-gradient-to-br from-indigo-900 from-20% to-pink-500 to-80% text-white shadow-xl rounded-lg p-4 md:col-span-3 opacity-90">
           <div className="flex justify-center items-center px-8 py-4 space-x-16">
             <div className="flex justify-center items-center text-2xl text-black bg-gradient-to-br from-white from-10% to-90% to-gray-400 w-24 h-24 rounded-full shadow-xl">
               52/63

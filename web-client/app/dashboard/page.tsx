@@ -4,9 +4,14 @@ import Analytics from "./components/Analytics";
 
 const Dashboard = () => {
   return (
-    <div className="flex flex-col justify-center items-center s2ml:justify-evenly s2ml:flex-row pt-20 space-y-8">
-      <SubjectsList />
-      <Analytics />
+    <div>
+      <div className="flex items-center px-4 h-20 dark:bg-slate-900 bg-slate-300 opacity-90 border-gray-400 dark:border-gray-500 border-b-[1px]">
+        <p className="text-3xl dark:text-white">Career Overview</p>
+      </div>
+      <div className="flex flex-col justify-center items-center s2ml:flex-row s2ml:justify-evenly mt-14">
+        <SubjectsList />
+        <Analytics />
+      </div>
     </div>
   );
 };
