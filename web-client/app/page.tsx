@@ -7,7 +7,7 @@ export default function Home() {
       <div className="flex flex-col lg:flex-row items-center justify-center">
         <div className="flex flex-col justify-center items-center px-10 w-full lg:w-3/5">
           <div>
-            <div className="bg-clip-text text-transparent bg-gradient-to-r from-third from-5% to-primary to-90% text-4xl md:text-5xl lg:text-9xl font-extrabold">
+            <div className="bg-clip-text text-transparent bg-gradient-to-r from-third from-5% to-primary to-90% text-4xl md:text-5xl lg:text-8xl font-extrabold">
               student
             </div>
             <div className="bg-clip-text text-transparent bg-gradient-to-r from-third from-5% to-second to-70% text-5xl md:text-6xl lg:text-9xl font-extrabold">
