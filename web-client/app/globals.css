@@ -1,16 +1,10 @@
-/* globals.css */
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url("https://fonts.googleapis.com/css2?family=Figtree:wght@400;600;700;800&display=swap");
+@import "./fonts.css";
 
-* {
-  @apply transition-colors duration-200;
-}
-
-.font-figtree {
-  font-family: "Figtree", sans-serif;
+html {
+  font-family: "Noto Sans", sans-serif;
 }
 
 :root {
@@ -32,4 +26,55 @@ body {
     rgb(var(--background-start-rgb)) 40%,
     rgb(var(--background-end-rgb)) 95%
   );
+}
+
+/* Custom scrollbar */
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 15px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: black;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #6561c0;
+  transition: width 0.2s ease;
+}
+
+.custom-scrollbar:hover::-webkit-scrollbar-thumb {
+  width: 12px;
+}
+
+/* Regular scrollbar */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: black;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #6561c0;
+  transition: width 0.2s ease;
+}
+
+/* Filter svg colors */
+
+.filter-primary {
+  filter: brightness(0) saturate(100%) invert(40%) sepia(10%) saturate(3193%)
+    hue-rotate(204deg) brightness(99%) contrast(88%);
+}
+
+/* Sidebar special units */
+
+.w-22 {
+  width: 5.8rem;
+}
+
+.duration-350 {
+  transition-duration: 350ms;
 }

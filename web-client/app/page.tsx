@@ -3,18 +3,18 @@ import Auth from "./components/Auth";
 
 export default function Home() {
   return (
-    <section className="flex flex-col h-full justify-between">
+    <section className="flex flex-col h-full justify-between pt-24">
       <div className="flex flex-col lg:flex-row items-center justify-center">
         <div className="flex flex-col justify-center items-center px-10 w-full lg:w-3/5">
           <div>
-            <div className="bg-clip-text text-transparent bg-gradient-to-r from-third from-5% to-primary to-90% text-4xl md:text-5xl lg:text-8xl font-extrabold">
+            <div className="bg-clip-text text-transparent bg-gradient-to-r from-third from-5% to-primary to-90% text-4xl md:text-5xl lg:text-9xl font-extrabold">
               student
             </div>
             <div className="bg-clip-text text-transparent bg-gradient-to-r from-third from-5% to-second to-70% text-5xl md:text-6xl lg:text-9xl font-extrabold">
               Compass
             </div>
           </div>
-          <p className="text-gray-600 text-xl md:text-2xl lg:text-3xl mt-4">
+          <p className="text-gray-600 text-xl md:text-2xl lg:text-5xl mt-4">
             Navigate your college journey
           </p>
         </div>

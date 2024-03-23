@@ -12,39 +12,54 @@ const config: Config = {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+        "light-theme": "url('/background-light.png')",
+        "dark-theme": "url('/background-dark.png')",
+      },
+      screens: {
+        s0ml: "1077px",
+        s1ml: "1222px",
+        s2ml: "1630px",
+      },
+      height: {
+        md: "300px",
+        lg: "600px",
+        xl: "920px",
       },
       colors: {
         primary: {
           DEFAULT: "#6561c0",
           dark: "#7c7aae",
         },
+        secondary: {
+          DEFAULT: "#251f30",
+        },
         first: {
           DEFAULT: "#151e39",
-          dark: "#2a3658", // Dark mode variant for big-stone
+          dark: "#2a3658",
         },
         second: {
           DEFAULT: "#e90b93",
-          dark: "#f172b0", // Dark mode variant for hollywood-cerise
+          dark: "#f172b0",
         },
         third: {
           DEFAULT: "#541c7c",
-          dark: "#6e3d94", // Dark mode variant for honey-flower
+          dark: "#6e3d94",
         },
         fourth: {
           DEFAULT: "#e2d7e8",
-          dark: "#ebe2f0", // Dark mode variant for snuff
+          dark: "#ebe2f0",
         },
         sixth: {
           DEFAULT: "#39a0db",
-          dark: "#61b2e4", // Dark mode variant for curious-blue
+          dark: "#61b2e4",
         },
         seventh: {
           DEFAULT: "#5f2762",
-          dark: "#7a3e78", // Dark mode variant for bossanova
+          dark: "#7a3e78",
         },
         eigth: {
           DEFAULT: "#0b0e1b",
-          dark: "#1c1f2c", // Dark mode variant for ebony
+          dark: "#1c1f2c",
         },
         surface: {
           "100": "#121212",

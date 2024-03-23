@@ -27,7 +27,7 @@ const ThemeToggler = () => {
   return (
     <button
       onClick={() => setDarkMode(!darkMode)}
-      className="focus:outline-none transition ease-in-out duration-300 dark:invert"
+      className="focus:outline-none transition ease-in-out duration-300 dark:invert select-none"
     >
       <div
         className={`w-6 h-6 transition-transform duration-500 ${
@@ -39,7 +39,6 @@ const ThemeToggler = () => {
           alt="Toggle Theme"
           width={24}
           height={24}
-          layout="responsive"
         />
       </div>
     </button>
