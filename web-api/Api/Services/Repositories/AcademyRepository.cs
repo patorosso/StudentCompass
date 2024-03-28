@@ -1,5 +1,6 @@
 ﻿using Api.Data.Models;
 using Api.Services.Contracts;
+using Api.Services.Helpers;
 using Microsoft.Data.SqlClient;
 using System.Data;
 
@@ -43,9 +44,8 @@ namespace Api.Services.Repositories
                         IsOptional = (bool)reader["is_optional"],
                         WeeklyHours = (byte)reader["weekly_hours"],
                         YearLevel = (byte)reader["year_level"],
-                        Status = reader["status_id"] is DBNull ? default(SubjectStatus) : (SubjectStatus)Enum.ToObject(typeof(SubjectStatus), reader["status_id"]),
-                        FinalGrade = reader["final_grade"] is DBNull ? default(byte?) : (byte)reader["final_grade"],
-                        IsAvailable = Convert.ToBoolean(reader["is_available"])
+                        Status = reader["final_grade"] is DBNull ? "Pendiente" : AcademicHelpers.GetStatusDescription((SubjectStatus)(byte)reader["status_id"]),
+                        FinalGrade = reader["final_grade"] is DBNull ? default(byte?) : (byte)reader["final_grade"]
                     };
 
                     subjects.Add(subject);

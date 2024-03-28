@@ -6,7 +6,9 @@
         Approved,
         InProgress,
         Failed,
-        Coursed
+        Coursed,
+        Available,
+        NotAvailable
     }
     public class Subject
     {
@@ -18,8 +20,7 @@
         public bool IsOptional { get; set; }
         public bool IsElective { get; set; }
         public bool IsAnnual { get; set; }
-        public bool IsAvailable { get; set; }
-        public SubjectStatus Status { get; set; }
+        public string Status { get; set; } = null!;
 
     }
 }
