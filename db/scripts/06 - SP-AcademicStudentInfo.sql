@@ -34,8 +34,9 @@ non_available_subjects AS ( -- get distinct non available subjects
 SELECT s.code, s.description, s.weekly_hours, s.year_level, s.is_optional,
 s.is_elective, s.is_annual, course_info.final_grade,
 CASE WHEN (j.rn = 1 OR is_elective = 1) THEN 6 -- '6 = No disponible'
-	 WHEN (status_id = 1) THEN 1 ELSE 5  -- '5 = Disponible'
-	 END AS is_available
+	 WHEN (status_id = 1) THEN 1 -- '1 = Aprobada'
+	 ELSE 5  -- '5 = Disponible'
+	 END AS [status]
 FROM approved_subjects course_info
 
 -- all subjects with their info
