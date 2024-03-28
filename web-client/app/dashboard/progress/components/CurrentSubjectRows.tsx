@@ -1,8 +1,15 @@
 "use client";
 import React from "react";
 import Image from "next/image";
+import { useAppDispatch } from "@/lib/hooks";
+import { selectAllSubjects } from "@/lib/features/subjectsSlice";
+import { useSelector } from "react-redux";
 
-const CurrrentSubjects = ({ subjects }: SubjectRowProps) => {
+const CurrentSubjectRows = () => {
+
+  const dispatch = useAppDispatch();
+  const subjects = useSelector(selectAllSubjects);
+
   return (
     <div
       className="px-4  h-80" //overflow-auto custom-scrollbar
@@ -18,7 +25,7 @@ const CurrrentSubjects = ({ subjects }: SubjectRowProps) => {
           </tr>
         </thead>
         <tbody>
-          {subjects.map((subject) => (
+          {subjects.filter( subject => subject.status === "Cursando").map((subject) => (
             <tr key={subject.code} className="cursor-pointer hover:text-second">
               <td className="border-b dark:border-gray-700 p-4">
                 {subject.description}
@@ -51,4 +58,4 @@ const CurrrentSubjects = ({ subjects }: SubjectRowProps) => {
   );
 };
 
-export default CurrrentSubjects;
+export default CurrentSubjectRows;
