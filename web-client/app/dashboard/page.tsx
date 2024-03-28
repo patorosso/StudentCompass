@@ -1,21 +1,21 @@
+"use client";
 import React from "react";
-import SubjectsList from "./components/SubjectsList";
-import Analytics from "./components/Analytics";
+import { useRouter } from "next/navigation";
 
-const Dashboard = () => {
+const DashboardRoot = () => {
+  const router = useRouter();
+
+  const handleClick = () => {
+    router.push("/dashboard/progress?studentId=1&careerPlanId=1");
+  };
+
   return (
-    <div>
-      <div className="flex items-center px-4 h-20 dark:bg-slate-900 bg-slate-300 opacity-90 border-gray-400 dark:border-gray-500 border-b-[1px]">
-        <p className="text-3xl dark:text-white">
-          Ingeniería en Informática - Plan 2023
-        </p>
-      </div>
-      <div className="flex flex-col justify-center items-center s2ml:flex-row s2ml:justify-evenly mt-14">
-        <SubjectsList />
-        <Analytics />
+    <div className="flex items-center justify-center h-full w-full">
+      <div className="w-96 h-72 bg-gray-400 dark:bg-surface-300 bg-opacity-55 dark:bg-opacity-55 dark:text-white shadow-xl rounded-lg flex items-center justify-center">
+        <button onClick={() => handleClick()}>Elegir carrera</button>
       </div>
     </div>
   );
 };
 
-export default Dashboard;
+export default DashboardRoot;

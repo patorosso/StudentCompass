@@ -20,8 +20,8 @@ const Sidebar = () => {
     {
       name: "Progress",
       icon: "/dashboard.svg",
-      path: "/dashboard",
-      current: segment === null,
+      path: "/dashboard/progress",
+      current: segment === "progress",
     },
     {
       name: "Planner",
