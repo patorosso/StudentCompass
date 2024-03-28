@@ -44,7 +44,7 @@ namespace Api.Services.Repositories
                         IsOptional = (bool)reader["is_optional"],
                         WeeklyHours = (byte)reader["weekly_hours"],
                         YearLevel = (byte)reader["year_level"],
-                        Status = reader["final_grade"] is DBNull ? "Pendiente" : AcademicHelpers.GetStatusDescription((SubjectStatus)(byte)reader["status_id"]),
+                        Status = AcademicHelpers.GetStatusDescription((SubjectStatus)(int)reader["status"]),
                         FinalGrade = reader["final_grade"] is DBNull ? default(byte?) : (byte)reader["final_grade"]
                     };
 
