@@ -1,7 +1,24 @@
 "use client";
-import React from "react";
+import React, {useEffect} from "react";
+import { useAppDispatch } from "@/lib/hooks";
+import { selectAllSubjects, fetchSubjects } from "@/lib/features/subjectsSlice";
+import { useSelector } from "react-redux";
+import { useSearchParams } from "next/navigation";
 
-const SubjectRows = ({ subjects }: SubjectRowProps) => {
+const SubjectRows = () => {
+
+  const dispatch = useAppDispatch();
+  const subjects = useSelector(selectAllSubjects);
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    if (subjects.length === 0) {
+      let student = searchParams.get("studentId");
+      let career = searchParams.get("careerPlanId");
+      dispatch(fetchSubjects({student, career}));
+    }
+  }, []); // todo: add subjects to listen for changes
+
   return (
     <>
       {subjects.map((subject) => (
