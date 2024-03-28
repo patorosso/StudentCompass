@@ -1,12 +1,12 @@
 "use client";
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { useAppDispatch } from "@/lib/hooks";
 import { selectAllSubjects, fetchSubjects } from "@/lib/features/subjectsSlice";
 import { useSelector } from "react-redux";
 import { useSearchParams } from "next/navigation";
+import { joinClassNames, getStatusStyle } from "../../../utils/helpers";
 
 const SubjectRows = () => {
-
   const dispatch = useAppDispatch();
   const subjects = useSelector(selectAllSubjects);
   const searchParams = useSearchParams();
@@ -15,7 +15,7 @@ const SubjectRows = () => {
     if (subjects.length === 0) {
       let student = searchParams.get("studentId");
       let career = searchParams.get("careerPlanId");
-      dispatch(fetchSubjects({student, career}));
+      dispatch(fetchSubjects({ student, career }));
     }
   }, []); // todo: add subjects to listen for changes
 
@@ -33,11 +33,15 @@ const SubjectRows = () => {
           <td className="border-b dark:border-gray-700 p-4">
             {subject.weeklyHours}
           </td>
-          <td className="border-b dark:border-gray-700 p-4">
-            {subject.isAvailable ? "Yes" : "No"}
-          </td>
-          <td className="border-b dark:border-gray-700 p-4">
-            {subject.status}
+          <td className={"border-b dark:border-gray-700 p-4"}>
+            <div
+              className={joinClassNames(
+                getStatusStyle(subject.status),
+                "rounded-lg p-1 text-center shadow-lg text-gray-200"
+              )}
+            >
+              {subject.status}
+            </div>
           </td>
         </tr>
       ))}
