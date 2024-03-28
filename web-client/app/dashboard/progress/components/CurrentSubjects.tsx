@@ -1,10 +1,9 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import Image from "next/image";
-import CurrrentSubjects from "./CurrrentSubjects";
+import CurrentSubjectRows from "./CurrentSubjectRows";
 
 const SpecialSubjects = () => {
-  const [activeTableIndex, setActiveTableIndex] = useState(0);
 
   return (
     <div className="relative bg-gray-500 bg-opacity-55 dark:bg-surface-300 dark:bg-opacity-55 text-white shadow-xl rounded-lg p-4 md:col-span-3">
@@ -26,7 +25,7 @@ const SpecialSubjects = () => {
             />
           </button>
         </div>
-        <CurrrentSubjects subjects={[]} />
+        <CurrentSubjectRows />
       </div>
     </div>
   );
