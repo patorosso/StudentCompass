@@ -1,12 +1,9 @@
 "use client";
 import React, { useState } from "react";
 import { useSelectedLayoutSegment } from "next/navigation";
+import { joinClassNames } from "../../utils/helpers";
 import Link from "next/link";
 import Image from "next/image";
-
-function joinClassNames(...classNames: string[]) {
-  return classNames.filter(Boolean).join(" ");
-}
 
 const Sidebar = () => {
   const segment = useSelectedLayoutSegment();
