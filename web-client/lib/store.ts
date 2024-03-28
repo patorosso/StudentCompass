@@ -4,6 +4,8 @@ import subjectsReducer from "./features/subjectsSlice";
 
 export const makeStore = () => {
   return configureStore({
+    devTools: true,
+
     reducer: {
       user: userReducer,
       subjects: subjectsReducer,
