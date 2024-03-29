@@ -1,5 +1,7 @@
 ﻿using Api.Services.Contracts;
+using Api.Services.Helpers;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 
 namespace Api.Controllers
 {
@@ -30,5 +32,40 @@ namespace Api.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
+
+        [HttpPatch]
+        public async Task<IActionResult> SubjectToInProgress(int courseId)
+        {
+            try
+            {
+                await _academicRepository.SubjectToInProgress(courseId);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Error while updating progress");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        [HttpPost]
+        [Route("createInProgressCourse")]
+        public async Task<ActionResult> CreateInProgressCourse(short code, short student, byte career)
+        {
+            try
+            {
+                var courseId = await _academicRepository.CreateInProgressCourse(code, student, career);
+                return Ok(courseId);
+            }
+            catch (SqlException e)
+            {
+                return BadRequest(e.Message);
+            }
+            catch (SqlConnectionException e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
+
     }
 }

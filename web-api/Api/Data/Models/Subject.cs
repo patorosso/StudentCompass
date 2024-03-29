@@ -13,6 +13,7 @@
         public bool IsAnnual { get; set; }
         public string Status { get; set; } = null!;
         public byte? FinalGrade { get; set; }
+        public int? CourseId { get; set; }
 
     }
 
