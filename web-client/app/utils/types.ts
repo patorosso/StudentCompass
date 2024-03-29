@@ -9,6 +9,7 @@ interface Subject {
   isAnnual: boolean;
   isAvailable: boolean;
   status: string;
+  exams: Exam[];
 }
 
 interface User {
@@ -20,3 +21,8 @@ interface User {
 type SubjectRowProps = {
   subjects: Subject[];
 };
+
+interface Exam {
+  description: string;
+  grade: number;
+}
