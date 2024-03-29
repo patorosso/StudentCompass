@@ -26,5 +26,24 @@ namespace Api.Services.Helpers
                     return "Desconocido";
             }
         }
+
+        public static string GetExamDescription(ExamType exam)
+        {
+            switch (exam)
+            {
+                case ExamType.First:
+                    return "Primer parcial";
+                case ExamType.Second:
+                    return "Segundo parcial";
+                case ExamType.Recovery:
+                    return "Recuperatorio";
+                case ExamType.Final:
+                    return "Final";
+                case ExamType.Assignment:
+                    return "Trabajo práctico";
+                default:
+                    return "Desconocido";
+            }
+        }
     }
 }
