@@ -1,6 +1,6 @@
 import React from "react";
 import RadialProgress from "./RadialProgress";
-import SpecialSubjects from "./SpecialSubjects";
+import CurrentSubjects from "./CurrentSubjects";
 
 const Analytics = () => {
   return (
@@ -30,7 +30,7 @@ const Analytics = () => {
             </div>
           </div>
         </div>
-        <SpecialSubjects />
+        <CurrentSubjects />
       </div>
     </div>
   );
