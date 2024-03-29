@@ -27,17 +27,17 @@ const SubjectRows = () => {
           <td className="border-b dark:border-gray-700 p-4">
             {subject.description}
           </td>
-          <td className="border-b dark:border-gray-700 p-4">
+          <td className="border-b dark:border-gray-700 p-4 text-lg text-center">
             {subject.finalGrade ? subject.finalGrade : "-"}
           </td>
-          <td className="border-b dark:border-gray-700 p-4">
-            {subject.weeklyHours}
+          <td className="border-b dark:border-gray-700 p-4 text-lg text-center">
+            {subject.weeklyHours}hs
           </td>
           <td className={"border-b dark:border-gray-700 p-4"}>
             <div
               className={joinClassNames(
                 getStatusStyle(subject.status),
-                "rounded-lg p-1 text-center shadow-lg text-gray-200"
+                "rounded-md py-1 text-center shadow-lg text-gray-200"
               )}
             >
               {subject.status}
