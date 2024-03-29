@@ -18,12 +18,16 @@ USE studentcompass
 
 -----------------
 
-EXEC app.academic_student_info 1,1
+--EXEC app.academic_student_info 1,1
 
+SELECT *
+FROM app.course c
+ where student_id = 1
+--insert into app.course(student_id,subject_code,career_plan_id,term_id,status_id,year,final_grade) values (1,901,0,1,1,2022,10)
 
+--insert into app.course_exam(exam_id, course_id, grade) values (2, 310003, 10)
 
-
-SELECT * FROM app.course
+SELECT * FROM app.course_exam
 
 --DECLARE @students INT = 30000
 
@@ -35,3 +39,11 @@ SELECT * FROM app.course
 --SET @students = @students - 1
 
 --END
+
+-- recover
+-- INSERT INTO app.student VALUES ('a','a',1)
+insert into app.course(student_id,subject_code,career_plan_id,term_id,status_id,year,final_grade)
+values (1,911,0,NULL,2,NULL,NULL)
+
+--insert into app.course_exam(exam_id, course_id, grade) values (2, 2, 10)
+--insert into app.enrolled values (1,1,'2022-03-03')
