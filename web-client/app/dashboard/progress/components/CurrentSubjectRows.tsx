@@ -6,7 +6,6 @@ import { selectAllSubjects } from "@/lib/features/subjectsSlice";
 import { useSelector } from "react-redux";
 
 const CurrentSubjectRows = () => {
-
   const dispatch = useAppDispatch();
   const subjects = useSelector(selectAllSubjects);
 
@@ -25,16 +24,44 @@ const CurrentSubjectRows = () => {
           </tr>
         </thead>
         <tbody>
-          {subjects.filter( subject => subject.status === "Cursando").map((subject) => (
-            <tr key={subject.code} className="cursor-pointer hover:text-second">
-              <td className="border-b dark:border-gray-700 p-4">
-                {subject.description}
-              </td>
-              <td className="border-b dark:border-gray-700 p-4">
-                {subject.finalGrade ? subject.finalGrade : "-"}
-              </td>
-            </tr>
-          ))}
+          {subjects
+            .filter((subject) => subject.status === "Cursando")
+            .map((subject) => (
+              <tr
+                key={subject.code}
+                className="cursor-pointer hover:text-second"
+              >
+                <td className="border-b dark:border-gray-700 py-4 text-sm">
+                  {subject.description}
+                </td>
+                <td className="border-b dark:border-gray-700 py-4 text-sm">
+                  {subject.exams &&
+                    subject.exams
+                      .filter((grade) => grade.description === "Primer parcial")
+                      .at(-1)?.grade}
+                </td>
+                <td className="border-b dark:border-gray-700 py-4 text-sm">
+                  {subject.exams &&
+                    subject.exams
+                      .filter(
+                        (grade) => grade.description === "Segundo parcial"
+                      )
+                      .at(-1)?.grade}
+                </td>
+                <td className="border-b dark:border-gray-700 py-4 text-sm">
+                  {subject.exams &&
+                    subject.exams
+                      .filter((grade) => grade.description === "Recuperatorio")
+                      .at(-1)?.grade}
+                </td>
+                <td className="border-b dark:border-gray-700 py-4 text-sm">
+                  {subject.exams &&
+                    subject.exams
+                      .filter((grade) => grade.description === "Final")
+                      .at(-1)?.grade}
+                </td>
+              </tr>
+            ))}
         </tbody>
       </table>
       {subjects.length === 0 && (
