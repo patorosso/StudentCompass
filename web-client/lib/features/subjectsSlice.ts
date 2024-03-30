@@ -120,4 +120,10 @@ export const selectAvailableSubjects = createSelector(
     subjectsList.filter((subject) => subject.status === "Disponible")
 );
 
+export const selectInProgressSubjects = createSelector(
+  [selectAllSubjects],
+  (subjectsList) =>
+    subjectsList.filter((subject) => subject.status === "Cursando")
+);
+
 export default subjectsSlice.reducer;
