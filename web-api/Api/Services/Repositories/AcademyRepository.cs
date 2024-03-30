@@ -1,4 +1,5 @@
-﻿using Api.Data.Models;
+﻿using Api.Data.Dtos;
+using Api.Data.Models;
 using Api.Services.Contracts;
 using Api.Services.Helpers;
 using Microsoft.Data.SqlClient;
@@ -15,26 +16,53 @@ namespace Api.Services.Repositories
             _logger = logger;
         }
 
-        public async Task<int> CreateInProgressCourse(short code, short student, byte career)
+        public async Task<IEnumerable<SubjectDto>> CreateInProgressCourse(List<Subject> subjects, short studentId)
         {
-
             await using var connection = await CreateConnection() ?? throw new SqlConnectionException("DB Connection could not be established.");
-            await using var command = new SqlCommand("app.create_in_progress_course", connection);
+            var subjectDtoList = new List<SubjectDto>();
+            SqlTransaction transaction = null;
 
-            // Prepare params
-            command.CommandType = CommandType.StoredProcedure;
-            command.Parameters.Add(new SqlParameter("@subject_code", code));
-            command.Parameters.Add(new SqlParameter("@student_id", student));
-            command.Parameters.Add(new SqlParameter("@career_plan_id", career));
-            var newCourseIdParam = new SqlParameter("@new_course_id", SqlDbType.Int)
+            try
             {
-                Direction = ParameterDirection.Output
-            };
-            command.Parameters.Add(newCourseIdParam);
+                transaction = connection.BeginTransaction();
 
-            await command.ExecuteNonQueryAsync();
-            return (int)newCourseIdParam.Value;
+                foreach (var subject in subjects)
+                {
+                    await using var command = new SqlCommand("app.create_in_progress_course", connection, transaction);
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.Add(new SqlParameter("@subject_code", subject.Code));
+                    command.Parameters.Add(new SqlParameter("@student_id", studentId));
+                    command.Parameters.Add(new SqlParameter("@career_plan_id", subject.CareerPlanId));
+
+                    await using var reader = await command.ExecuteReaderAsync();
+                    while (reader.Read())
+                    {
+                        var subjectDto = new SubjectDto
+                        {
+                            CourseId = (int)reader["course_id"],
+                            Code = (short)reader["subject_code"]
+                        };
+
+                        subjectDtoList.Add(subjectDto);
+                    }
+                    reader.Close();
+                }
+
+                transaction.Commit();
+            }
+            catch (SqlException)
+            {
+                transaction?.Rollback();
+                throw;
+            }
+            finally
+            {
+                transaction?.Dispose();
+            }
+
+            return subjectDtoList;
         }
+
 
         public async Task<IEnumerable<Subject>> GetProgressOverview(short studentId, byte careerPlanId)
         {
@@ -61,15 +89,16 @@ namespace Api.Services.Repositories
                     var subject = new Subject
                     {
                         Code = (short)reader["code"],
-                        Description = (string)reader["description"],
-                        IsElective = (bool)reader["is_elective"],
                         IsAnnual = (bool)reader["is_annual"],
-                        IsOptional = (bool)reader["is_optional"],
-                        WeeklyHours = (byte)reader["weekly_hours"],
                         YearLevel = (byte)reader["year_level"],
+                        IsOptional = (bool)reader["is_optional"],
+                        IsElective = (bool)reader["is_elective"],
+                        WeeklyHours = (byte)reader["weekly_hours"],
+                        Description = (string)reader["description"],
+                        CareerPlanId = (byte)reader["career_plan_id"],
+                        CourseId = reader["course_id"] is DBNull ? null : (int?)reader["course_id"],
                         Status = AcademicHelpers.GetStatusDescription((SubjectStatus)(byte)reader["status"]),
-                        FinalGrade = reader["final_grade"] is DBNull ? default(byte?) : (byte)reader["final_grade"],
-                        CourseId = reader["course_id"] is DBNull ? null : (int?)reader["course_id"]
+                        FinalGrade = reader["final_grade"] is DBNull ? default(byte?) : (byte)reader["final_grade"]
                     };
 
                     subjects.Add(subject);

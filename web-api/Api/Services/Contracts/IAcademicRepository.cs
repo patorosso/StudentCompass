@@ -1,4 +1,5 @@
-﻿using Api.Data.Models;
+﻿using Api.Data.Dtos;
+using Api.Data.Models;
 
 namespace Api.Services.Contracts
 {
@@ -6,6 +7,6 @@ namespace Api.Services.Contracts
     {
         Task<IEnumerable<Subject>> GetProgressOverview(short studentId, byte careerPlanId);
         Task SubjectToInProgress(int? courseId);
-        Task<int> CreateInProgressCourse(short code, short student, byte career);
+        Task<IEnumerable<SubjectDto>> CreateInProgressCourse(List<Subject> subjects, short studentId);
     }
 }

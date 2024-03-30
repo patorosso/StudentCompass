@@ -1,4 +1,5 @@
-﻿using Api.Services.Contracts;
+﻿using Api.Data.Models;
+using Api.Services.Contracts;
 using Api.Services.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
@@ -50,22 +51,21 @@ namespace Api.Controllers
 
         [HttpPost]
         [Route("createInProgressCourse")]
-        public async Task<ActionResult> CreateInProgressCourse(short code, short student, byte career)
+        public async Task<IActionResult> CreateInProgressCourse([FromBody] List<Subject> subjects, short studentId)
         {
             try
             {
-                var courseId = await _academicRepository.CreateInProgressCourse(code, student, career);
-                return Ok(courseId);
+                var newCurrentSubjects = await _academicRepository.CreateInProgressCourse(subjects, studentId);
+                return Ok(newCurrentSubjects);
             }
             catch (SqlException e)
             {
-                return BadRequest(e.Message);
+                return BadRequest("The operation failed and all changes made have been reverted. " + e.Message);
             }
             catch (SqlConnectionException e)
             {
                 return StatusCode(500, e.Message);
             }
         }
-
     }
 }
