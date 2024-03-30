@@ -31,7 +31,8 @@ non_available_subjects AS ( -- get distinct non available subjects
 	ROW_NUMBER() OVER (PARTITION BY subject_code ORDER BY subject_code) as rn
 	FROM app.correlative 
 	WHERE subject_career_plan_id IN (@transversal_career_plan_id, @career_plan_id)
-	AND correlative_code NOT IN ( SELECT subject_code FROM approved_or_in_progress_subjects )
+	AND correlative_code 
+	NOT IN ( SELECT subject_code FROM approved_or_in_progress_subjects WHERE status_id = @approved_status_id )
 )
 
 -- first query: subjects list
