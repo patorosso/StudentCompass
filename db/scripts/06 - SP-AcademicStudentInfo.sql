@@ -35,7 +35,7 @@ non_available_subjects AS ( -- get distinct non available subjects
 )
 
 -- first query: subjects list
-SELECT s.code, s.description, s.weekly_hours, s.year_level, s.is_optional,
+SELECT s.code, s.description, s.weekly_hours, s.year_level, s.is_optional, s.career_plan_id,
 s.is_elective, s.is_annual, course_info.final_grade, course_info.id as course_id,
 CASE WHEN (j.rn = 1 OR is_elective = 1) THEN @not_available_status_id
 	 WHEN (status_id IN (@approved_status_id, @in_progress_status_id)) THEN status_id
