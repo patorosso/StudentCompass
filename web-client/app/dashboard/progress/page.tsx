@@ -1,5 +1,5 @@
 import React from "react";
-import SubjectsList from "./components/SubjectsList";
+import SubjectsList from "./components/subjects/SubjectsList";
 import Analytics from "./components/Analytics";
 
 const Dashboard = () => {

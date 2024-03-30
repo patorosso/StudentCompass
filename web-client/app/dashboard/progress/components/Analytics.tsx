@@ -1,6 +1,6 @@
 import React from "react";
 import RadialProgress from "./RadialProgress";
-import CurrentSubjects from "./CurrentSubjects";
+import CurrentSubjects from "./currentSubjects/CurrentSubjects";
 
 const Analytics = () => {
   return (

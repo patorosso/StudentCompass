@@ -4,7 +4,7 @@ import { useAppDispatch } from "@/lib/hooks";
 import { selectAllSubjects, fetchSubjects } from "@/lib/features/subjectsSlice";
 import { useSelector } from "react-redux";
 import { useSearchParams } from "next/navigation";
-import { joinClassNames, getStatusStyle } from "../../../utils/helpers";
+import { joinClassNames, getStatusStyle } from "../../../../utils/helpers";
 
 const SubjectRows = () => {
   const dispatch = useAppDispatch();
