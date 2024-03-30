@@ -10,6 +10,8 @@ interface Subject {
   isAvailable: boolean;
   status: string;
   exams: Exam[];
+  courseId: number;
+  careerId: number;
 }
 
 interface User {
@@ -18,7 +20,7 @@ interface User {
   isLoaded: boolean;
 }
 
-type SubjectRowProps = {
+type SubjectProps = {
   subjects: Subject[];
 };
 
