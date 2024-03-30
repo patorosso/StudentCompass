@@ -17,7 +17,7 @@ const SubjectRows = () => {
       let career = searchParams.get("careerPlanId");
       dispatch(fetchSubjects({ student, career }));
     }
-  }, []); // todo: add subjects to listen for changes
+  }, [subjects]);
 
   return (
     <>
