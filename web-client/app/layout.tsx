@@ -26,7 +26,9 @@ export default function RootLayout({
           >
             {children}
           </div>
-          <ToastContainer />
+          <ToastContainer
+            style={{ maxWidth: 700, marginTop: 67, width: "auto" }}
+          />
         </body>
       </html>
     </StoreProvider>
