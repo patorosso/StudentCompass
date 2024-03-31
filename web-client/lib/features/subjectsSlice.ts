@@ -1,6 +1,7 @@
-import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { createSelector } from "reselect";
 import { RootState } from "../store";
+import { toast } from "react-toastify";
 
 // Slice state type
 interface SubjectsState {
@@ -37,11 +38,7 @@ const initialState: SubjectsState = {
 export const subjectsSlice = createSlice({
   name: "subjects",
   initialState,
-  reducers: {
-    setSubjects: (state, action: PayloadAction<Subject[]>) => {
-      state.subjectsList = action.payload;
-    },
-  },
+  reducers: {},
   extraReducers(builder) {
     builder
       .addCase(fetchSubjects.pending, (state, action) => {
@@ -53,6 +50,7 @@ export const subjectsSlice = createSlice({
       })
       .addCase(fetchSubjects.rejected, (state, action) => {
         state.status = "failed";
+        toast.error("Error inesperado." + action.error.message);
         state.error = action.error.message;
       })
       .addCase(addCurrentSubjects.pending, (state, action) => {
@@ -60,6 +58,7 @@ export const subjectsSlice = createSlice({
       })
       .addCase(addCurrentSubjects.fulfilled, (state, action) => {
         state.status = "succeeded";
+        toast.success("Materias agregadas correctamente.");
         const payload = action.payload;
 
         state.subjectsList = state.subjectsList.map((subject) => {
@@ -77,6 +76,7 @@ export const subjectsSlice = createSlice({
       })
       .addCase(addCurrentSubjects.rejected, (state, action) => {
         state.status = "failed";
+        toast.error("Error inesperado." + action.error.message);
         state.error = action.error.message;
       });
   },
@@ -110,7 +110,6 @@ export const addCurrentSubjects = createAsyncThunk(
 );
 
 // Selectors
-export const { setSubjects } = subjectsSlice.actions;
 export const selectAllSubjects = (state: RootState) =>
   state.subjects.subjectsList;
 

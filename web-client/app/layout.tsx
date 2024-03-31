@@ -1,7 +1,9 @@
-import type { Metadata } from "next";
 import Navbar from "./components/Navbar";
-import "./globals.css";
 import StoreProvider from "./StoreProvider";
+import type { Metadata } from "next";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Student Compass",
@@ -24,6 +26,7 @@ export default function RootLayout({
           >
             {children}
           </div>
+          <ToastContainer />
         </body>
       </html>
     </StoreProvider>
