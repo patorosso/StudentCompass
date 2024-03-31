@@ -1,5 +1,5 @@
 import React from "react";
-import CurrentSubjectTable from "./CurrentSubjectTable";
+import CurrentSubjectsTable from "./CurrentSubjectsTable";
 import CurrentSubjectsActions from "./actions/CurrentSubjectsActions";
 
 const CurrentSubjects = () => {
@@ -12,7 +12,7 @@ const CurrentSubjects = () => {
           </h2>
           <CurrentSubjectsActions />
         </div>
-        <CurrentSubjectTable />
+        <CurrentSubjectsTable />
       </div>
     </div>
   );

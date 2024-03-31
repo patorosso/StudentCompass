@@ -1,12 +1,12 @@
 "use client";
 import React, { useEffect } from "react";
-import { useAppDispatch } from "@/lib/hooks";
-import { selectAllSubjects, fetchSubjects } from "@/lib/features/subjectsSlice";
 import { useSelector } from "react-redux";
+import { useAppDispatch } from "@/lib/hooks";
 import { useSearchParams } from "next/navigation";
+import { selectAllSubjects, fetchSubjects } from "@/lib/features/subjectsSlice";
 import { joinClassNames, getStatusStyle } from "../../../../utils/helpers";
 
-const SubjectRows = () => {
+const SubjectsRows = () => {
   const dispatch = useAppDispatch();
   const subjects = useSelector(selectAllSubjects);
   const searchParams = useSearchParams();
@@ -20,7 +20,7 @@ const SubjectRows = () => {
   }, [subjects]);
 
   return (
-    <>
+    <tbody>
       {subjects.map((subject) => (
         <tr key={subject.code} className="cursor-pointer hover:text-second">
           <td className="border-b dark:border-gray-700 p-4">{subject.code}</td>
@@ -45,8 +45,8 @@ const SubjectRows = () => {
           </td>
         </tr>
       ))}
-    </>
+    </tbody>
   );
 };
 
-export default SubjectRows;
+export default SubjectsRows;

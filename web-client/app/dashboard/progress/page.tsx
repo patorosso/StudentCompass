@@ -1,5 +1,5 @@
 import React from "react";
-import SubjectsList from "./components/subjects/SubjectsList";
+import Subjects from "./components/subjects/Subjects";
 import Analytics from "./components/Analytics";
 
 const Dashboard = () => {
@@ -11,7 +11,7 @@ const Dashboard = () => {
         </p>
       </div>
       <div className="flex flex-col justify-center items-center s2ml:flex-row s2ml:justify-evenly mt-14">
-        <SubjectsList />
+        <Subjects />
         <Analytics />
       </div>
     </div>
