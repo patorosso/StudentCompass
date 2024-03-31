@@ -3,7 +3,7 @@ import React from "react";
 import { selectInProgressSubjects } from "@/lib/features/subjectsSlice";
 import { useSelector } from "react-redux";
 
-const CurrentSubjectRows = () => {
+const CurrentSubjectTable = () => {
   const currentSubjects = useSelector(selectInProgressSubjects);
 
   return (
@@ -63,4 +63,4 @@ const CurrentSubjectRows = () => {
   );
 };
 
-export default CurrentSubjectRows;
+export default CurrentSubjectTable;
