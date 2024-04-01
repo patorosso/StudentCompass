@@ -14,6 +14,7 @@ import { selectEditStyle } from "@/lib/features/userSlice";
 import { joinClassNames, getStatusStyle } from "../../../../utils/helpers";
 import Modal from "../Modal";
 import Image from "next/image";
+import Menu from "../Menu";
 
 const SubjectsRows = () => {
   const dispatch = useAppDispatch();
@@ -21,8 +22,18 @@ const SubjectsRows = () => {
   const editStyle = useSelector(selectEditStyle);
   const isEditing = useSelector(selectIsEditing);
   const subjects = useSelector(selectAllSubjects);
-  const [openModal, setOpenModal] = useState(false);
   const selectedSubject = useSelector(selectSelectedSubject);
+  const [openModal, setOpenModal] = useState(false);
+  const [showGradeMenu, setShowGradeMenu] = useState(false);
+  const [showStatusMenu, setShowStatusMenu] = useState(false);
+
+  useEffect(() => {
+    if (subjects.length === 0) {
+      let student = searchParams.get("studentId");
+      let career = searchParams.get("careerPlanId");
+      dispatch(fetchSubjects({ student, career }));
+    }
+  }, [subjects]);
 
   const handleEdit = (clickedSubject: Subject | undefined) => {
     if (!isEditing) return;
@@ -37,13 +48,9 @@ const SubjectsRows = () => {
       dispatch(setSelectedSubject(clickedSubject));
   };
 
-  useEffect(() => {
-    if (subjects.length === 0) {
-      let student = searchParams.get("studentId");
-      let career = searchParams.get("careerPlanId");
-      dispatch(fetchSubjects({ student, career }));
-    }
-  }, [subjects]);
+  // const handleUpdateNote = (value: string) => {
+  //   // parse string to number
+  //   selectedSubject.finalGrade = value === "-" ? null : parseInt(value);
 
   const actionColumnStyle = {
     transition: "width 0.5s ease-in-out",
@@ -88,12 +95,21 @@ const SubjectsRows = () => {
                     width={5}
                     height={5}
                     className="cursor-pointer duration-350 ease-in-out"
+                    onClick={() => setShowGradeMenu(!showGradeMenu)}
                   />
+                  {showGradeMenu && (
+                    <Menu
+                      values={["-", "4", "5", "6", "7", "8", "9", "10"]}
+                      title="Nota"
+                      maxWidth="max-width-20"
+                      onClick={() => {}}
+                    />
+                  )}
                 </div>
               </td>
               <td className={"border-b dark:border-gray-700 p-4 bg-slate-900"}>
                 <>
-                  <div className="flex">
+                  <div className="flex relative">
                     <div
                       className={joinClassNames(
                         getStatusStyle(subject.status),
@@ -111,7 +127,16 @@ const SubjectsRows = () => {
                       width={5}
                       height={5}
                       className="ml-2 cursor-pointer duration-350 ease-in-out"
+                      onClick={() => setShowStatusMenu(!showStatusMenu)}
                     />
+                    {showStatusMenu && (
+                      <Menu
+                        values={["Disponible", "Cursando", "Aprobada"]}
+                        title="Estado"
+                        maxWidth="max-width-40"
+                        onClick={() => {}}
+                      />
+                    )}
                   </div>
                 </>
               </td>
