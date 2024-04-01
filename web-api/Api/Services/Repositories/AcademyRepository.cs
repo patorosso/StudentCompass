@@ -16,6 +16,33 @@ namespace Api.Services.Repositories
             _logger = logger;
         }
 
+        public async Task<Dictionary<short, List<short>>> GetCorrelatives(byte careerPlanId)
+        {
+            await using var connection = await CreateConnection() ?? throw new SqlConnectionException("DB Connection could not be established.");
+
+            await using var command = new SqlCommand("app.get_correlatives", connection);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.Add(new SqlParameter("@career_plan_id", careerPlanId));
+
+            var correlativeDtoDict = new Dictionary<short, List<short>>();
+
+            await using var reader = await command.ExecuteReaderAsync();
+            while (reader.Read())
+            {
+                var subjectRead = (short)reader["subject_code"];
+                var correlativeRead = (short)reader["correlative_code"];
+
+                if (correlativeDtoDict.TryGetValue(subjectRead, out var correlativesList))
+                    correlativesList?.Add(correlativeRead);
+                else
+                    correlativeDtoDict.Add(subjectRead, new List<short> { correlativeRead });
+            }
+            reader.Close();
+
+            return correlativeDtoDict;
+        }
+
+
         public async Task<IEnumerable<SubjectDto>> CreateInProgressCourse(List<Subject> subjects, short studentId)
         {
             await using var connection = await CreateConnection() ?? throw new SqlConnectionException("DB Connection could not be established.");

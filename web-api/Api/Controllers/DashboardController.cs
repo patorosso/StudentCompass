@@ -67,5 +67,24 @@ namespace Api.Controllers
                 return StatusCode(500, e.Message);
             }
         }
+
+        [HttpGet]
+        [Route("getCorrelatives")]
+        public async Task<IActionResult> GetCorrelatives(byte careerPlanId)
+        {
+            try
+            {
+                var correlatives = await _academicRepository.GetCorrelatives(careerPlanId);
+                return Ok(correlatives);
+            }
+            catch (SqlException e)
+            {
+                return BadRequest("The operation failed. " + e.Message);
+            }
+            catch (SqlConnectionException e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
     }
 }
