@@ -7,6 +7,8 @@ import { toast } from "react-toastify";
 interface SubjectsState {
   subjectsList: Subject[];
   status: "idle" | "loading" | "succeeded" | "failed";
+  isEditing: boolean;
+  selectedSubject: Subject | undefined;
   error: string | undefined;
 }
 
@@ -32,13 +34,26 @@ type AddCurrentSubjectsPayload = {
 const initialState: SubjectsState = {
   subjectsList: [],
   status: "idle",
+  isEditing: false,
+  selectedSubject: undefined,
   error: undefined,
 };
 
 export const subjectsSlice = createSlice({
   name: "subjects",
   initialState,
-  reducers: {},
+  reducers: {
+    setIsEditing: (state, action) => {
+      state.isEditing = action.payload;
+    },
+    setSelectedSubject: (state, action) => {
+      state.selectedSubject = action.payload;
+    },
+    setEditingFalse: (state) => {
+      state.isEditing = false;
+      state.selectedSubject = undefined;
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchSubjects.pending, (state, action) => {
@@ -109,6 +124,10 @@ export const addCurrentSubjects = createAsyncThunk(
   }
 );
 
+// Export actions
+export const { setIsEditing, setSelectedSubject, setEditingFalse } =
+  subjectsSlice.actions;
+
 // Selectors
 export const selectAllSubjects = (state: RootState) =>
   state.subjects.subjectsList;
@@ -124,5 +143,9 @@ export const selectInProgressSubjects = createSelector(
   (subjectsList) =>
     subjectsList.filter((subject) => subject.status === "Cursando")
 );
+
+export const selectIsEditing = (state: RootState) => state.subjects.isEditing;
+export const selectSelectedSubject = (state: RootState) =>
+  state.subjects.selectedSubject;
 
 export default subjectsSlice.reducer;

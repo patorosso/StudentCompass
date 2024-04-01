@@ -3,6 +3,26 @@
 @tailwind utilities;
 @import "./fonts.css";
 
+@keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-20px);
+  }
+  60% {
+    transform: translateY(-15px);
+  }
+}
+
+.bounce {
+  animation: bounce 1s ease 0.1s;
+}
+
 html {
   font-family: "Noto Sans", sans-serif;
 }
@@ -41,6 +61,7 @@ body {
 .custom-scrollbar::-webkit-scrollbar-thumb {
   background: #6561c0;
   transition: width 0.2s ease;
+  cursor: pointer;
 }
 
 .custom-scrollbar:hover::-webkit-scrollbar-thumb {

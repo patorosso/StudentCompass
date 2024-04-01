@@ -18,6 +18,16 @@ interface User {
   id: string;
   token: string;
   isLoaded: boolean;
+  preferences: Preferences;
+}
+
+interface Preferences {
+  darkTheme: boolean;
+  editStyle: "Fast" | "Detailed";
+}
+
+interface CorrelativesDict {
+  [key: number]: number[];
 }
 
 type SubjectProps = {
