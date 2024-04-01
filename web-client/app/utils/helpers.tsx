@@ -5,7 +5,7 @@ export function joinClassNames(...classNames: string[]) {
 export function getStatusStyle(status: string) {
   switch (status) {
     case "Aprobada":
-      return "bg-green-600";
+      return "bg-success";
     case "Disponible":
       return "bg-yellow-500";
     case "No disponible":

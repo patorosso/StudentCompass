@@ -61,6 +61,14 @@ const config: Config = {
           DEFAULT: "#0b0e1b",
           dark: "#1c1f2c",
         },
+        success: {
+          DEFAULT: "#4caf50",
+          dark: "#66bb6a",
+        },
+        cancel: {
+          DEFAULT: "#f44336",
+          dark: "#f6685e",
+        },
         surface: {
           "100": "#121212",
           "200": "#282828",
