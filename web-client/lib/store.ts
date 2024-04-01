@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import userReducer from "./features/userSlice";
 import subjectsReducer from "./features/subjectsSlice";
+import correlativesReducer from "./features/correlativesSlice";
 
 export const makeStore = () => {
   return configureStore({
@@ -9,6 +10,7 @@ export const makeStore = () => {
     reducer: {
       user: userReducer,
       subjects: subjectsReducer,
+      correlatives: correlativesReducer,
     },
   });
 };
