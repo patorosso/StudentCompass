@@ -35,7 +35,9 @@ const EditSubject = () => {
       <button
         id="edit-button"
         onClick={() => onEditClick()}
-        className="bg-surface-300 hover:bg-surface-400 text-gray-500 rounded-full w-9 h-9 flex items-center justify-center select-none mr-3"
+        className={`bg-surface-300 ${
+          !isEditing ? "hover:bg-surface-400" : ""
+        } text-gray-500 rounded-full w-9 h-9 flex items-center justify-center select-none mr-3`}
         disabled={isEditing}
         style={buttonStyle}
       >

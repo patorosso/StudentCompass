@@ -45,50 +45,39 @@ const SubjectsRows = () => {
     }
   }, [subjects]);
 
-  return (
-    <tbody>
-      {subjects.map((subject) =>
-        editStyle === "Fast" && selectedSubject?.code === subject.code ? (
-          <tr
-            key={subject.code}
-            className={`${isEditing ? " text-second" : "hover:text-second"}`}
-            onClick={() => handleEdit(subject)}
-          >
-            <td className="border-b dark:border-gray-700 p-4 bg-slate-900">
-              {subject.code}
-            </td>
-            <td
-              className={`border-b dark:border-gray-700 p-4 bg-slate-900 ${
-                subject.description.length > 25 ? "text-sm" : ""
-              }`}
-            >
-              {subject.description}
-            </td>
-            <td className="border-b dark:border-gray-700 p-4 text-center bg-slate-900">
-              {subject.weeklyHours}hs
-            </td>
+  const actionColumnStyle = {
+    transition: "width 0.5s ease-in-out",
+    overflow: "hidden",
+  };
 
-            <td className="border-b dark:border-gray-700 p-4 max-width-6 bg-slate-900">
-              <input
-                type="text"
-                placeholder={
-                  subject.finalGrade ? subject.finalGrade.toString() : ""
-                }
-                className="bg-transparent w-full max-w-full focus:outline-none"
-                autoFocus
-                style={{ maxWidth: "25px" }}
-              />
-            </td>
-            <td className={"border-b dark:border-gray-700 p-4 bg-slate-900"}>
-              <>
+  return (
+    <>
+      <tbody>
+        {subjects.map((subject) =>
+          editStyle === "Fast" && selectedSubject?.code === subject.code ? (
+            <tr
+              key={subject.code}
+              className={`${isEditing ? " text-second" : "hover:text-second"}`}
+              onClick={() => handleEdit(subject)}
+            >
+              <td className="border-b dark:border-gray-700 p-4 bg-slate-900">
+                {subject.code}
+              </td>
+              <td
+                className={`border-b dark:border-gray-700 p-4 bg-slate-900 ${
+                  subject.description.length > 25 ? "text-sm" : ""
+                }`}
+              >
+                {subject.description}
+              </td>
+              <td className="border-b dark:border-gray-700 p-4 bg-slate-900">
+                {subject.weeklyHours}hs
+              </td>
+
+              <td className="border-b dark:border-gray-700 p-4 max-width-6 bg-slate-900">
                 <div className="flex">
-                  <div
-                    className={joinClassNames(
-                      getStatusStyle(subject.status),
-                      "rounded-md py-1 text-center shadow-lg text-gray-200 w-full"
-                    )}
-                  >
-                    {subject.status}
+                  <div className="w-full">
+                    {subject.finalGrade ? subject.finalGrade : "-"}
                   </div>
                   <Image
                     src="/chevron-down-white.svg"
@@ -98,28 +87,68 @@ const SubjectsRows = () => {
                     }}
                     width={5}
                     height={5}
-                    className="ml-2 cursor-pointer duration-350 ease-in-out"
+                    className="cursor-pointer duration-350 ease-in-out"
                   />
                 </div>
-              </>
-            </td>
-          </tr>
-        ) : (
-          <tr
-            key={subject.code}
-            className={`${
-              isEditing &&
-              !selectedSubject &&
-              subject.status === "No disponible"
-                ? "text-gray-400"
-                : ""
-            }${
-              isEditing &&
-              !selectedSubject &&
-              subject.status !== "No disponible"
-                ? "hover:text-second cursor-pointer"
-                : ""
-            } 
+              </td>
+              <td className={"border-b dark:border-gray-700 p-4 bg-slate-900"}>
+                <>
+                  <div className="flex">
+                    <div
+                      className={joinClassNames(
+                        getStatusStyle(subject.status),
+                        "rounded-md py-1 text-center shadow-lg text-gray-200 w-full"
+                      )}
+                    >
+                      {subject.status}
+                    </div>
+                    <Image
+                      src="/chevron-down-white.svg"
+                      alt="Dropdown status"
+                      style={{
+                        width: isEditing ? "20px" : "0",
+                      }}
+                      width={5}
+                      height={5}
+                      className="ml-2 cursor-pointer duration-350 ease-in-out"
+                    />
+                  </div>
+                </>
+              </td>
+              {isEditing && (
+                <td
+                  style={actionColumnStyle}
+                  className="border-b dark:border-gray-700 bg-slate-900"
+                >
+                  <div className="flex justify-center items-center">
+                    <button onClick={() => {}}>
+                      <Image
+                        src="/check-enabled.svg"
+                        alt="Confirm"
+                        width={25}
+                        height={25}
+                      />
+                    </button>
+                  </div>
+                </td>
+              )}
+            </tr>
+          ) : (
+            <tr
+              key={subject.code}
+              className={`${
+                isEditing &&
+                !selectedSubject &&
+                subject.status === "No disponible"
+                  ? "text-gray-400"
+                  : ""
+              }${
+                isEditing &&
+                !selectedSubject &&
+                subject.status !== "No disponible"
+                  ? "hover:text-second cursor-pointer"
+                  : ""
+              } 
               ${
                 isEditing &&
                 selectedSubject &&
@@ -127,41 +156,42 @@ const SubjectsRows = () => {
                   ? "cursor-pointer hover:bg-slate-800"
                   : ""
               } ${
-              isEditing && selectedSubject && subject.status === "No disponible"
-                ? "text-gray-400"
-                : ""
-            }`}
-            onClick={() => handleEdit(subject)}
-          >
-            <td className="border-b dark:border-gray-700 p-4">
-              {subject.code}
-            </td>
-            <td
-              className={`border-b dark:border-gray-700 p-4 ${
-                subject.description.length > 25 ? "text-sm" : ""
+                isEditing &&
+                selectedSubject &&
+                subject.status === "No disponible"
+                  ? "text-gray-400"
+                  : ""
               }`}
+              onClick={() => handleEdit(subject)}
             >
-              {subject.description}
-            </td>
-            <td className="border-b dark:border-gray-700 p-4 text-center">
-              {subject.weeklyHours}hs
-            </td>
-            <td className="border-b dark:border-gray-700 p-4">
-              {subject.finalGrade ? subject.finalGrade : "-"}
-            </td>
-            <td className={"border-b dark:border-gray-700 p-4 w-44"}>
-              {editStyle === "Detailed" ? (
-                <>
-                  <div
-                    className={joinClassNames(
-                      getStatusStyle(subject.status),
-                      "rounded-md py-1 text-center shadow-lg text-gray-200 "
-                    )}
-                  >
-                    {subject.status}
+              <td className="border-b dark:border-gray-700 p-4">
+                {subject.code}
+              </td>
+              <td
+                className={`border-b dark:border-gray-700 p-4 ${
+                  subject.description.length > 25 ? "text-sm" : ""
+                }`}
+              >
+                {subject.description}
+              </td>
+              <td className="border-b dark:border-gray-700 p-4">
+                {subject.weeklyHours}hs
+              </td>
+              <td className="border-b dark:border-gray-700 p-4">
+                <div className="flex">
+                  <div className="w-full">
+                    {subject.finalGrade ? subject.finalGrade : "-"}
                   </div>
-                </>
-              ) : (
+                  <Image
+                    src="/chevron-down-white.svg"
+                    alt="Dropdown status"
+                    width={0}
+                    height={0}
+                    className="cursor-pointer duration-350 ease-in-out"
+                  />
+                </div>
+              </td>
+              <td className={"border-b dark:border-gray-700 p-4 w-44"}>
                 <>
                   <div className="flex">
                     <div
@@ -181,23 +211,42 @@ const SubjectsRows = () => {
                     />
                   </div>
                 </>
+              </td>
+              {isEditing && editStyle === "Fast" && (
+                <td
+                  style={actionColumnStyle}
+                  className="border-b dark:border-gray-700"
+                >
+                  <div className="flex justify-center items-center">
+                    <button onClick={() => {}}>
+                      <Image
+                        src="/check-disabled.svg"
+                        alt="Confirm"
+                        width={25}
+                        height={25}
+                      />
+                    </button>
+                  </div>
+                </td>
               )}
-            </td>
-          </tr>
-        )
+            </tr>
+          )
+        )}
+      </tbody>
+      {isEditing && editStyle === "Detailed" && (
+        <>
+          <Modal
+            title="Materia"
+            subtitle="Detalle de la materia"
+            isOpen={openModal}
+            onClose={() => setOpenModal(false)}
+            onAccept={() => console.log("Aceptar")}
+          >
+            <div>body2</div>
+          </Modal>
+        </>
       )}
-      <>
-        <Modal
-          title="Materia"
-          subtitle="Detalle de la materia"
-          isOpen={openModal}
-          onClose={() => setOpenModal(false)}
-          onAccept={() => console.log("Aceptar")}
-        >
-          <div>body2</div>
-        </Modal>
-      </>
-    </tbody>
+    </>
   );
 };
 
