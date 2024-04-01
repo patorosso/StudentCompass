@@ -13,6 +13,7 @@ IF OBJECT_ID('app.term', 'U') IS NOT NULL DROP TABLE app.term;
 IF OBJECT_ID('app.career_plan', 'U') IS NOT NULL DROP TABLE app.career_plan;
 IF OBJECT_ID('app.career', 'U') IS NOT NULL DROP TABLE app.career;
 IF OBJECT_ID('app.department', 'U') IS NOT NULL DROP TABLE app.department;
+IF OBJECT_ID('app.student_preferences', 'U') IS NOT NULL DROP TABLE app.student_preferences;
 IF OBJECT_ID('app.student', 'U') IS NOT NULL DROP TABLE app.student;
 
 -- Table creation for the app schema
@@ -26,6 +27,14 @@ CREATE TABLE app.student(
 	is_active BIT NOT NULL, 
 	CONSTRAINT pk_student PRIMARY KEY (id),
 	--CONSTRAINT ck_pass CHECK (LEN(pass) >= 8)
+);
+
+CREATE TABLE app.student_preferences(
+	student_id SMALLINT,
+	dark_theme BIT,
+	edit_style BIT,
+	CONSTRAINT pk_student_id PRIMARY KEY (student_id),
+	CONSTRAINT fk_student_id FOREIGN KEY (student_id) REFERENCES app.student(id)
 );
 
 CREATE TABLE app.department(
