@@ -6,10 +6,12 @@ import { toast } from "react-toastify";
 // Slice state type
 interface SubjectsState {
   subjectsList: Subject[];
-  status: "idle" | "loading" | "succeeded" | "failed";
+  subjectsToUpdate: Subject[];
+  subjectsBackup: Subject[];
   isEditing: boolean;
   selectedSubject: Subject | undefined;
   error: string | undefined;
+  status: "idle" | "loading" | "succeeded" | "failed";
 }
 
 // Fetch subjects params
@@ -33,25 +35,122 @@ type AddCurrentSubjectsPayload = {
 // Initial state
 const initialState: SubjectsState = {
   subjectsList: [],
-  status: "idle",
+  subjectsToUpdate: [],
+  subjectsBackup: [],
   isEditing: false,
   selectedSubject: undefined,
   error: undefined,
+  status: "idle",
 };
 
 export const subjectsSlice = createSlice({
   name: "subjects",
   initialState,
   reducers: {
-    setIsEditing: (state, action) => {
-      state.isEditing = action.payload;
+    addSubjectToBackup: (state, action) => {
+      state.subjectsBackup = [...state.subjectsBackup, action.payload];
+    },
+    addSubjectToUpdate: (state, action) => {
+      if (state.selectedSubject === undefined) return;
+
+      // se agrega o actualiza la materia en la lista de materias a actualizar
+      let inUpdateList = state.subjectsToUpdate.find((subject) => {
+        return subject.code === state.selectedSubject!.code;
+      });
+      if (inUpdateList === undefined)
+        state.subjectsToUpdate = [
+          ...state.subjectsToUpdate,
+          state.selectedSubject,
+        ];
+      else {
+        inUpdateList.finalGrade = state.selectedSubject!.finalGrade;
+        inUpdateList.status = state.selectedSubject!.status;
+      }
+
+      // si no estaba, se agrega la materia a la lista de materias de backup
+      let inBackupList = state.subjectsBackup.some((subject) => {
+        return subject.code === action.payload.previousSubject.code;
+      });
+      if (!inBackupList)
+        state.subjectsBackup = [
+          ...state.subjectsBackup,
+          action.payload.previousSubject,
+        ];
+
+      // se actualiza la lista de subjects
+      state.subjectsList = state.subjectsList.map((subject) =>
+        subject.code === action.payload.previousSubject.code
+          ? state.selectedSubject! // updated subject
+          : subject
+      ); // update subjects list
+
+      state.selectedSubject = undefined; // reset edicion
+
+      action.payload.subjectsToMakeAvailable.map((subject: Subject) => {
+        let inBackupList = state.subjectsBackup.some((subjectList) => {
+          return subject.code === subjectList.code;
+        });
+        if (!inBackupList)
+          state.subjectsBackup = [...state.subjectsBackup, subject];
+      });
+
+      action.payload.subjectsToMakeAvailable.map((subject: Subject) => {
+        state.subjectsList = state.subjectsList.map((subjectList) =>
+          subjectList.code === subject.code
+            ? { ...subjectList, status: "Disponible" }
+            : subjectList
+        );
+      });
+
+      action.payload.subjectsToMakeUnavailable.map((subject: Subject) => {
+        let inBackupList = state.subjectsBackup.some((subjectList) => {
+          return subjectList.code === subject.code;
+        });
+        if (!inBackupList)
+          state.subjectsBackup = [...state.subjectsBackup, subject];
+      });
+
+      action.payload.subjectsToMakeUnavailable.map((subject: Subject) => {
+        state.subjectsList = state.subjectsList.map((subjectList) =>
+          subject.code === subjectList.code
+            ? { ...subjectList, status: "No disponible" }
+            : subjectList
+        );
+      });
+    },
+    updateGradeSelectedSubject: (state, action) => {
+      if (state.selectedSubject) {
+        state.selectedSubject = {
+          ...state.selectedSubject,
+          finalGrade: action.payload,
+        };
+      }
+    },
+    updateStatusSelectedSubject: (state, action) => {
+      if (state.selectedSubject) {
+        state.selectedSubject = {
+          ...state.selectedSubject,
+          status: action.payload,
+        };
+      }
     },
     setSelectedSubject: (state, action) => {
       state.selectedSubject = action.payload;
     },
+    setIsEditing: (state, action) => {
+      state.isEditing = action.payload;
+    },
     setEditingFalse: (state) => {
       state.isEditing = false;
       state.selectedSubject = undefined;
+      state.subjectsToUpdate = [];
+
+      const backupLookup = new Map(
+        state.subjectsBackup.map((sub) => [sub.code, sub])
+      );
+      state.subjectsList = state.subjectsList.map((subject) => {
+        return backupLookup.get(subject.code) || subject;
+      });
     },
   },
   extraReducers(builder) {
@@ -125,8 +224,15 @@ export const addCurrentSubjects = createAsyncThunk(
 );
 
 // Export actions
-export const { setIsEditing, setSelectedSubject, setEditingFalse } =
-  subjectsSlice.actions;
+export const {
+  addSubjectToUpdate,
+  addSubjectToBackup,
+  setIsEditing,
+  setSelectedSubject,
+  setEditingFalse,
+  updateGradeSelectedSubject,
+  updateStatusSelectedSubject,
+} = subjectsSlice.actions;
 
 // Selectors
 export const selectAllSubjects = (state: RootState) =>
@@ -145,6 +251,8 @@ export const selectInProgressSubjects = createSelector(
 );
 
 export const selectIsEditing = (state: RootState) => state.subjects.isEditing;
+export const selectAllToUpdatedSubjects = (state: RootState) =>
+  state.subjects.subjectsToUpdate;
 export const selectSelectedSubject = (state: RootState) =>
   state.subjects.selectedSubject;
 

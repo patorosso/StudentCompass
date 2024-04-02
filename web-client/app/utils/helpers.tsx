@@ -18,46 +18,7 @@ export function getStatusStyle(status: string) {
 }
 
 // quiza es mucha memoria pasar subjects tantas veces
-// mejora maxima: recortar el diccionario y buscar con valores "mayores" al codigo
-export const correlativeCheckConcat = (
-  correlatives: CorrelativesDict,
-  subjects: Subject[],
-  previousSubjectCode: number,
-  result: number[]
-) => {
-  // conseguir materias que necesitan tener a previousSubject aprobada
-  const correlativesKeys = Object.entries(correlatives)
-    .filter(([key, values]) => {
-      return values.includes(previousSubjectCode);
-    })
-    .map(([key]) => key);
-
-  let subjectsToWorry = correlativesKeys.filter((key) =>
-    subjects.find(
-      (subject) =>
-        subject.code === parseInt(key) &&
-        (subject.status === "Aprobada" ||
-          subject.status === "Disponible" ||
-          subject.status === "Cursando")
-    )
-  );
-
-  // este array va a tener las materias que necesito avisar que van a tener problemas
-  result.concat(subjectsToWorry.map((key) => parseInt(key)));
-
-  let correlativesToCheck = subjectsToWorry.filter((key) =>
-    subjects.find(
-      (subject) =>
-        subject.code === parseInt(key) && subject.status === "Aprobada"
-    )
-  );
-  correlativesToCheck.forEach((key) => {
-    correlativeCheckConcat(correlatives, subjects, parseInt(key), result);
-  });
-};
-
-// quiza es mucha memoria pasar subjects tantas veces
-// mejora maxima: recortar el diccionario y buscar con valores "mayores" al codigo
+// mejora: recortar el diccionario y buscar con valores "mayores" al codigo
 export const correlativeCheck = (
   correlatives: CorrelativesDict,
   subjects: Subject[],
@@ -86,12 +47,14 @@ export const correlativeCheck = (
         subject.code === parseInt(key) && subject.status === "Aprobada"
     )
   );
+
   correlativesToCheck.forEach((key) => {
-    subjectsToWorry.concat(
+    subjectsToWorry = subjectsToWorry.concat(
       correlativeCheck(correlatives, subjects, parseInt(key))
     );
   });
 
+  // si llegase a haber problemas de duplicados, usar set.
   return subjectsToWorry;
 };
 
@@ -115,8 +78,10 @@ export const getNewAvailableSubjects = (
     const correlativesToCheckApproved = correlatives[subject.code];
     const approved = correlativesToCheckApproved.every((correlative) => {
       return subjects.find(
-        (subject) =>
-          subject.code === correlative && subject.status === "Aprobada"
+        (subjectList) =>
+          subjectCode === subjectList.code || // si es la materia en cuestion no me fijo
+          (subjectList.code === correlative && // si es otra, que este aprobada
+            subjectList.status === "Aprobada")
       );
     });
     if (approved) result.push(subject);

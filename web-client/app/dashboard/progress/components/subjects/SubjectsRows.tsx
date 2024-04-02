@@ -9,9 +9,18 @@ import {
   selectIsEditing,
   selectSelectedSubject,
   setSelectedSubject,
+  updateGradeSelectedSubject,
+  updateStatusSelectedSubject,
+  addSubjectToUpdate,
 } from "@/lib/features/subjectsSlice";
 import { selectEditStyle } from "@/lib/features/userSlice";
-import { joinClassNames, getStatusStyle } from "../../../../utils/helpers";
+import { selectAllCorrelatives } from "@/lib/features/correlativesSlice";
+import {
+  joinClassNames,
+  getStatusStyle,
+  correlativeCheck,
+  getNewAvailableSubjects,
+} from "../../../../utils/helpers";
 import Modal from "../Modal";
 import Image from "next/image";
 import Menu from "../Menu";
@@ -22,6 +31,7 @@ const SubjectsRows = () => {
   const editStyle = useSelector(selectEditStyle);
   const isEditing = useSelector(selectIsEditing);
   const subjects = useSelector(selectAllSubjects);
+  const correlatives = useSelector(selectAllCorrelatives);
   const selectedSubject = useSelector(selectSelectedSubject);
   const [openModal, setOpenModal] = useState(false);
   const [showGradeMenu, setShowGradeMenu] = useState(false);
@@ -38,6 +48,7 @@ const SubjectsRows = () => {
   const handleEdit = (clickedSubject: Subject | undefined) => {
     if (!isEditing) return;
     if (clickedSubject?.status === "No disponible") return;
+    if (clickedSubject?.code === selectedSubject?.code) return;
 
     if (editStyle === "Detailed") {
       setOpenModal(true);
@@ -48,9 +59,63 @@ const SubjectsRows = () => {
       dispatch(setSelectedSubject(clickedSubject));
   };
 
-  // const handleUpdateNote = (value: string) => {
-  //   // parse string to number
-  //   selectedSubject.finalGrade = value === "-" ? null : parseInt(value);
+  const handleUpdateGrade = (value: string) => {
+    if (selectedSubject === undefined) return;
+    dispatch(updateGradeSelectedSubject(value));
+    setShowGradeMenu(false);
+  };
+
+  const handleUpdateStatus = (value: string) => {
+    if (selectedSubject === undefined) return;
+    dispatch(updateStatusSelectedSubject(value));
+    setShowStatusMenu(false);
+  };
+
+  const handleConfirmEdit = (previousSubject: Subject) => {
+    setShowGradeMenu(false);
+    setShowStatusMenu(false);
+    if (correlatives === null) return;
+    // Si la materia estaba aprobada, verificar consistencia
+    var subjectsToCheck: string[] = [];
+    if (
+      previousSubject.status === "Aprobada" &&
+      selectedSubject?.status !== "Aprobada"
+    ) {
+      subjectsToCheck = correlativeCheck(
+        correlatives,
+        subjects,
+        previousSubject.code
+      );
+      if (subjectsToCheck.length > 0) {
+        // Open modal to show subjects with problems
+      }
+    }
+    // poner esto en el helper, que devuelva las subjects y punto:
+    var subjectsToMakeUnavailable = subjectsToCheck.map((code) =>
+      subjects.find((subject) => subject.code === parseInt(code))
+    );
+
+    // Si la materia se pasa a aprobada, buscar nuevas disponibles a actualizar
+    var subjectsToMakeAvailable: Subject[] = [];
+    if (
+      selectedSubject?.status === "Aprobada" &&
+      previousSubject.status !== "Aprobada"
+    ) {
+      subjectsToMakeAvailable = getNewAvailableSubjects(
+        selectedSubject.code,
+        correlatives,
+        subjects
+      );
+    }
+
+    dispatch(
+      addSubjectToUpdate({
+        previousSubject,
+        subjectsToMakeAvailable,
+        subjectsToMakeUnavailable,
+      })
+    );
+  };
 
   const actionColumnStyle = {
     transition: "width 0.5s ease-in-out",
@@ -63,28 +128,30 @@ const SubjectsRows = () => {
         {subjects.map((subject) =>
           editStyle === "Fast" && selectedSubject?.code === subject.code ? (
             <tr
-              key={subject.code}
+              key={selectedSubject.code}
               className={`${isEditing ? " text-second" : "hover:text-second"}`}
-              onClick={() => handleEdit(subject)}
+              onClick={() => handleEdit(selectedSubject)}
             >
               <td className="border-b dark:border-gray-700 p-4 bg-slate-900">
-                {subject.code}
+                {selectedSubject.code}
               </td>
               <td
                 className={`border-b dark:border-gray-700 p-4 bg-slate-900 ${
-                  subject.description.length > 25 ? "text-sm" : ""
+                  selectedSubject.description.length > 25 ? "text-sm" : ""
                 }`}
               >
-                {subject.description}
+                {selectedSubject.description}
               </td>
               <td className="border-b dark:border-gray-700 p-4 bg-slate-900">
-                {subject.weeklyHours}hs
+                {selectedSubject.weeklyHours}hs
               </td>
 
               <td className="border-b dark:border-gray-700 p-4 max-width-6 bg-slate-900">
                 <div className="flex">
                   <div className="w-full">
-                    {subject.finalGrade ? subject.finalGrade : "-"}
+                    {selectedSubject.finalGrade
+                      ? selectedSubject.finalGrade
+                      : "-"}
                   </div>
                   <Image
                     src="/chevron-down-white.svg"
@@ -102,7 +169,7 @@ const SubjectsRows = () => {
                       values={["-", "4", "5", "6", "7", "8", "9", "10"]}
                       title="Nota"
                       maxWidth="max-width-20"
-                      onClick={() => {}}
+                      onClick={handleUpdateGrade}
                     />
                   )}
                 </div>
@@ -112,11 +179,11 @@ const SubjectsRows = () => {
                   <div className="flex relative">
                     <div
                       className={joinClassNames(
-                        getStatusStyle(subject.status),
+                        getStatusStyle(selectedSubject.status),
                         "rounded-md py-1 text-center shadow-lg text-gray-200 w-full"
                       )}
                     >
-                      {subject.status}
+                      {selectedSubject.status}
                     </div>
                     <Image
                       src="/chevron-down-white.svg"
@@ -134,7 +201,7 @@ const SubjectsRows = () => {
                         values={["Disponible", "Cursando", "Aprobada"]}
                         title="Estado"
                         maxWidth="max-width-40"
-                        onClick={() => {}}
+                        onClick={handleUpdateStatus}
                       />
                     )}
                   </div>
@@ -146,7 +213,7 @@ const SubjectsRows = () => {
                   className="border-b dark:border-gray-700 bg-slate-900"
                 >
                   <div className="flex justify-center items-center">
-                    <button onClick={() => {}}>
+                    <button onClick={() => handleConfirmEdit(subject)}>
                       <Image
                         src="/check-enabled.svg"
                         alt="Confirm"
