@@ -1,7 +1,7 @@
 interface Subject {
   code: number;
   description: string;
-  finalGrade: number;
+  finalGrade: number | null;
   weeklyHours: number;
   yearLevel: number;
   isOptional: boolean;
