@@ -2,7 +2,7 @@ USE studentcompass
 
 GO
 
-CREATE OR ALTER PROCEDURE app.get_correlatives
+CREATE OR ALTER PROCEDURE app.get_career_correlatives
 @career_plan_id TINYINT
 AS
 BEGIN

@@ -20,7 +20,7 @@ namespace Api.Services.Repositories
         {
             await using var connection = await CreateConnection() ?? throw new SqlConnectionException("DB Connection could not be established.");
 
-            await using var command = new SqlCommand("app.get_correlatives", connection);
+            await using var command = new SqlCommand("app.get_career_correlatives", connection);
             command.CommandType = CommandType.StoredProcedure;
             command.Parameters.Add(new SqlParameter("@career_plan_id", careerPlanId));
 
