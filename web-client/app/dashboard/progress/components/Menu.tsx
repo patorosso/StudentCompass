@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef } from "react";
 
 interface MenuProps {
   onClick: (value: string) => void;
@@ -26,6 +26,7 @@ const Menu = ({ title, onClick, values, maxWidth }: MenuProps) => {
         </div>
         {values.map((value) => (
           <button
+            key={value}
             className={`block px-4 py-2 text-md w-full text-center hover:bg-gray-300`}
             role="menuitem"
             tabIndex={-1}
