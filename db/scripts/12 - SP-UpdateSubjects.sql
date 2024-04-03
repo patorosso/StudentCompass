@@ -41,6 +41,7 @@ DECLARE @subject_exists BIT;
 DECLARE @student_exists BIT;
 DECLARE @valid_grade BIT;
 DECLARE @course_exists BIT;
+DECLARE @is_approvable BIT;
 DECLARE @existing_course_status TINYINT = -1;
 DECLARE @transversal_career_plan_id TINYINT = 0;
 DECLARE @approved_status_id TINYINT = 1;
@@ -149,16 +150,37 @@ BEGIN TRAN
 		BEGIN
 		-- si course_id es nulo...
 		-- BUSCAR ACA DISPONIBILIDAD
+		SET @is_approvable = (SELECT 1
+							  FROM app.correlative 
+							  WHERE subject_code = @subject_code
+							  AND subject_career_plan_id = @career_plan_id
+							  HAVING COUNT(*) = (SELECT qty FROM (SELECT COUNT(*) as qty FROM app.course 
+												WHERE student_id = @student_id
+												AND career_plan_id = @career_plan_id
+												AND status_id = @approved_status_id
+												AND subject_code IN (	SELECT correlative_code
+																		FROM app.correlative 
+																		WHERE subject_code = @subject_code
+																		AND subject_career_plan_id = @career_plan_id))alias) )
+
 			IF(@status_id IN (@approved_status_id, @coursing_status_id))
 			BEGIN
 				-- verificar si la materia ESTA DISPONIBLE
 				-- si lo está, creo course_id.
-				SELECT 1
+				IF (@is_approvable = 1)
+				BEGIN
+					INSERT INTO app.course(student_id,subject_code,career_plan_id,status_id,final_grade)
+					VALUES (@student_id, @subject_code, @career_plan_id, @status_id, @final_grade)
+				END
 			END
 			ELSE IF(@status_id = @available_status_id)
 			BEGIN
 				-- si vino DISPONIBLE y en realidad no lo está, tiro error. si ya estaba disponible no hago nada.
-				SELECT 1
+				IF (@is_approvable = 0)
+				BEGIN
+					SET @error_message = CONCAT('Subject with code ', CAST(@subject_code AS NVARCHAR), ' is not available.');
+					;THROW 50001, @error_message, 1;
+				END
 			END
 		END
 
