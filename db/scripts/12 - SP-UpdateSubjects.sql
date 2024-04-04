@@ -41,6 +41,7 @@ DECLARE @subject_exists BIT;
 DECLARE @student_exists BIT;
 DECLARE @valid_grade BIT;
 DECLARE @course_exists BIT;
+DECLARE @is_status_duplicated BIT;
 DECLARE @is_approvable BIT;
 DECLARE @existing_course_status TINYINT = -1;
 DECLARE @transversal_career_plan_id TINYINT = 0;
@@ -53,10 +54,6 @@ SELECT *
 INTO   #subjects_to_update
 FROM   @subjects_to_update
 
--- ordeno la tabla que me dieron por codigo para ASEGURARME de que no voy a tener problemas con updates que puedan fallar.
--- Ejemplo: viene Fisica 2 y Fisica 1 para pasar a APROBADAS, en ese orden.
--- si trato primero a F2, va a salir un error por no tratar a la anterior primero. No puedo tener en cuenta en la lista de
--- disponibles a los registros estos de updates, porque pueden estar mal. Por ejemplo, quizá nunca aprobé análisis 1...
 BEGIN TRY
 BEGIN TRAN
 
@@ -66,7 +63,7 @@ BEGIN TRAN
 	SELECT TOP 1 
 	@subject_code = subject_code, @course_id = course_id, @status_id = status_id,
 	@final_grade = final_grade, @career_plan_id = career_plan_id
-	FROM #subjects_to_update ORDER BY subject_code
+	FROM #subjects_to_update ORDER BY subject_code -- it's important subjects are ordered
 
 	-- Check subject
 	SELECT @subject_exists = CASE WHEN EXISTS(
@@ -120,15 +117,27 @@ BEGIN TRAN
 			SET @error_message = CONCAT('Course with ID = ', CAST(@course_id AS NVARCHAR), ' does not exist.');
 			;THROW 50005, @error_message, 1;
 		END;
+
+		-- Check no two approved or in-progress courses happen simultaneously
+		SELECT @is_status_duplicated = CASE WHEN EXISTS(
+			SELECT 1 FROM app.course 
+			WHERE @student_id = student_id AND @career_plan_id = career_plan_id AND @subject_code = subject_code 
+			AND @status_id IN (@approved_status_id, @coursing_status_id) 
+			AND status_id IN (@approved_status_id, @coursing_status_id)
+			) THEN 1 ELSE 0 END;
+		IF @is_status_duplicated = 0
+		BEGIN 
+			;THROW 50006, 'There can be only one approved or in-progress subject simultaneously.', 1;
+		END;
 	
 			IF(@existing_course_status = @approved_status_id AND @status_id <> @approved_status_id)
 			BEGIN
-
-				-- eliminar cursadas que dependen
+				-- Use function to remove dependant subjects courses
+				SELECT * FROM app.get_subjects_to_remove_courses(@student_id,@career_plan_id,@subject_code)
 
 				IF(@status_id = @available_status_id)
 				BEGIN
-					DELETE FROM app.course WHERE @course_id = id;
+					DELETE FROM app.course WHERE @course_id = id; --available status is calculable, no need for rows.
 				END
 				ELSE IF(@status_id = @coursing_status_id)
 				BEGIN
@@ -143,8 +152,6 @@ BEGIN TRAN
 				SET status_id = @status_id, final_grade = @final_grade
 				WHERE id = @course_id;
 			END
-			-- 3er estado posible es que sea igual estados (tenido en cuenta en el else) -> 
-			-- 1. o es todo igual 2. cambia la nota... supongo que no cuesta nada hacer el update
 		END
 		ELSE
 		BEGIN
@@ -179,7 +186,7 @@ BEGIN TRAN
 				IF (@is_approvable = 0)
 				BEGIN
 					SET @error_message = CONCAT('Subject with code ', CAST(@subject_code AS NVARCHAR), ' is not available.');
-					;THROW 50001, @error_message, 1;
+					;THROW 50007, @error_message, 1;
 				END
 			END
 		END
