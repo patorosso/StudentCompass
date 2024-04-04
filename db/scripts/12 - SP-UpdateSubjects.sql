@@ -199,6 +199,7 @@ BEGIN TRAN
 
 	COMMIT TRAN;
 	DROP TABLE #subjects_to_update
+	EXEC app.academic_student_info @student_id, @career_plan_id
 
     END TRY
     BEGIN CATCH
