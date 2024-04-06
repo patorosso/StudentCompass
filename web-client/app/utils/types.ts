@@ -11,7 +11,7 @@ interface Subject {
   status: string;
   exams: Exam[];
   courseId: number;
-  careerId: number;
+  careerPlanId: number;
 }
 
 interface User {
@@ -37,4 +37,12 @@ type SubjectProps = {
 interface Exam {
   description: string;
   grade: number;
+}
+
+interface UpdateSubjectDto {
+  code: number;
+  finalGrade: number | null;
+  courseId: number | null;
+  status: string;
+  careerPlanId: number;
 }
