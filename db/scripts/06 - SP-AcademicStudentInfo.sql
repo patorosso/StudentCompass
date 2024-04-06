@@ -56,35 +56,3 @@ END
 
 GO
 
---set statistics time on
---EXEC app.academic_student_info 1,1
-
-
---CREATE NONCLUSTERED INDEX subject_idx ON app.subject (career_plan_id) INCLUDE (description, weekly_hours, year_level, is_optional, is_elective, is_annual)
---CREATE NONCLUSTERED INDEX correlative_idx ON app.correlative (subject_code,subject_career_plan_id, correlative_code) 
---CREATE NONCLUSTERED INDEX course_idx ON app.course (student_id, career_plan_id, status_id) INCLUDE (subject_code, final_grade)
-
---DROP INDEX subject_idx ON app.subject
---DROP INDEX correlative_idx ON app.correlative
---DROP INDEX course_idx ON app.course
-
---SELECT * FROM app.correlative correlative
---FULL OUTER JOIN app.course course ON 
---course.career_plan_id = correlative.subject_career_plan_id
-----AND course.subject_code = correlative.subject_code
---WHERE course.student_id = 1 AND course.career_plan_id IN (0,1)
-
---SELECT correlative.subject_code, NULL AS final_grade, NULL AS status_id
---FROM app.correlative correlative
---WHERE correlative.subject_career_plan_id IN (0,1)
-
---UNION
-
---SELECT course.subject_code, course.final_grade, course.status_id
---FROM app.course course
---WHERE course.student_id = 1 AND course.career_plan_id IN (0,1)
---ORDER BY subject_code
-
---select * from app.course where career_plan_id = 0 and student_id = 1
-
---select * from app.correlative where subject_career_plan_id IN (0,1) 
