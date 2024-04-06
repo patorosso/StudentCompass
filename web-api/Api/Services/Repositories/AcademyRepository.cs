@@ -16,6 +16,81 @@ namespace Api.Services.Repositories
             _logger = logger;
         }
 
+        public async Task<IEnumerable<Subject>> UpdateSubjects(List<UpdateSubjectDto> subjectsToUpdate, short studentId, byte careerPlanId)
+        {
+            await using var connection = await CreateConnection() ?? throw new SqlConnectionException("DB Connection could not be established.");
+
+            await using var command = new SqlCommand("app.update_subjects", connection);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@student_id", studentId);
+            command.Parameters.AddWithValue("@student_career_plan_id", careerPlanId);
+            var table = new DataTable();
+            table.Columns.Add("subject_code", typeof(short));
+            table.Columns.Add("career_plan_id", typeof(byte));
+            table.Columns.Add("status_id", typeof(byte));
+            table.Columns.Add("final_grade", typeof(byte));
+            table.Columns.Add("course_id", typeof(int));
+
+            foreach (var subject in subjectsToUpdate)
+                table.Rows.Add(subject.Code, subject.CareerPlanId, AcademicHelpers.GetStatusId(subject.Status), subject.FinalGrade, subject.CourseId);
+
+            var tvpParam = command.Parameters.AddWithValue("@subjects_to_update", table);
+            tvpParam.SqlDbType = SqlDbType.Structured;
+            tvpParam.TypeName = "app.subjects_to_update_type";
+
+
+            var subjects = new List<Subject>();
+            var courseExams = new Dictionary<int?, List<Exam>>();
+            await using var reader = await command.ExecuteReaderAsync();
+
+            while (reader.Read())
+            {
+                var subject = new Subject
+                {
+                    Code = (short)reader["code"],
+                    IsAnnual = (bool)reader["is_annual"],
+                    YearLevel = (byte)reader["year_level"],
+                    IsOptional = (bool)reader["is_optional"],
+                    IsElective = (bool)reader["is_elective"],
+                    WeeklyHours = (byte)reader["weekly_hours"],
+                    Description = (string)reader["description"],
+                    CareerPlanId = (byte)reader["career_plan_id"],
+                    CourseId = reader["course_id"] is DBNull ? null : (int?)reader["course_id"],
+                    Status = AcademicHelpers.GetStatusDescription((SubjectStatus)(byte)reader["status"]),
+                    FinalGrade = reader["final_grade"] is DBNull ? default(byte?) : (byte)reader["final_grade"]
+                };
+
+                subjects.Add(subject);
+            }
+
+            await reader.NextResultAsync();
+            while (reader.Read())
+            {
+                var exam = new Exam
+                {
+                    Grade = (byte)reader["grade"],
+                    Description = AcademicHelpers.GetExamDescription((ExamType)(byte)reader["exam_id"])
+                };
+
+                var examCourseId = (int)reader["course_id"];
+
+                if (!courseExams.ContainsKey(examCourseId))
+                    courseExams[examCourseId] = new List<Exam>();
+
+                courseExams[examCourseId].Add(exam);
+            }
+
+            if (courseExams.IsNullOrEmpty())
+                return subjects.AsEnumerable();
+
+            foreach (var subject in subjects.Where(x => x.CourseId != null))
+                if (courseExams.TryGetValue(subject.CourseId, out var examsList))
+                    subject.Exams = examsList;
+
+
+            return subjects.AsEnumerable();
+        }
+
         public async Task<Dictionary<short, List<short>>> GetCorrelatives(byte careerPlanId)
         {
             await using var connection = await CreateConnection() ?? throw new SqlConnectionException("DB Connection could not be established.");

@@ -45,5 +45,20 @@ namespace Api.Services.Helpers
                     return "Desconocido";
             }
         }
+
+        public static byte GetStatusId(string status)
+        {
+            return status switch
+            {
+                "Pendiente" => (byte)SubjectStatus.Pending,
+                "Aprobada" => (byte)SubjectStatus.Approved,
+                "Cursando" => (byte)SubjectStatus.InProgress,
+                "Desaprobada" => (byte)SubjectStatus.Failed,
+                "Cursada" => (byte)SubjectStatus.Coursed,
+                "Disponible" => (byte)SubjectStatus.Available,
+                "No disponible" => (byte)SubjectStatus.NotAvailable,
+                _ => 0
+            };
+        }
     }
 }

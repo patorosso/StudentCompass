@@ -1,4 +1,5 @@
-﻿using Api.Data.Models;
+﻿using Api.Data.Dtos;
+using Api.Data.Models;
 using Api.Services.Contracts;
 using Api.Services.Helpers;
 using Microsoft.AspNetCore.Mvc;
@@ -80,6 +81,25 @@ namespace Api.Controllers
             catch (SqlException e)
             {
                 return BadRequest("The operation failed. " + e.Message);
+            }
+            catch (SqlConnectionException e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
+
+        [HttpPut]
+        [Route("updateSubjects")]
+        public async Task<IActionResult> UpdateSubjects([FromBody] List<UpdateSubjectDto> subjectsToUpdate, short studentId, byte careerPlanId)
+        {
+            try
+            {
+                var updatedSubjects = await _academicRepository.UpdateSubjects(subjectsToUpdate, studentId, careerPlanId);
+                return Ok(updatedSubjects);
+            }
+            catch (SqlException e)
+            {
+                return BadRequest("The operation failed and all changes made have been reverted. " + e.Message);
             }
             catch (SqlConnectionException e)
             {
