@@ -192,6 +192,36 @@ export const subjectsSlice = createSlice({
         state.status = "failed";
         toast.error("Error inesperado." + action.error.message);
         state.error = action.error.message;
+      })
+      .addCase(updateSubjects.pending, (state, action) => {
+        state.status = "loading";
+      })
+      .addCase(updateSubjects.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        toast.success("Materias actualizadas correctamente.");
+        state.subjectsList = action.payload;
+        state.isEditing = false;
+        state.subjectsBackup = [];
+        state.subjectsToUpdate = [];
+        state.selectedSubject = undefined;
+      })
+      .addCase(updateSubjects.rejected, (state, action) => {
+        state.status = "failed";
+        toast.error("Error inesperado." + action.error.message);
+        state.error = action.error.message;
+
+        const backupLookup = new Map(
+          state.subjectsBackup.map((sub) => [sub.code, sub])
+        );
+
+        state.subjectsList = state.subjectsList.map((subject) => {
+          return backupLookup.get(subject.code) || subject;
+        });
+
+        state.isEditing = false;
+        state.subjectsBackup = [];
+        state.subjectsToUpdate = [];
+        state.selectedSubject = undefined;
       });
   },
 });
@@ -223,6 +253,29 @@ export const addCurrentSubjects = createAsyncThunk(
   }
 );
 
+// Async thunk
+export const updateSubjects = createAsyncThunk(
+  "subjects/updateSubjects",
+  async (subjects: Subject[]) => {
+    const subjectsToUpdate: UpdateSubjectDto[] = subjects.map((subject) => ({
+      code: subject.code,
+      finalGrade: subject.finalGrade,
+      courseId: subject.courseId,
+      status: subject.status,
+      careerPlanId: subject.careerPlanId,
+    }));
+
+    const response = await fetch(
+      `https://localhost:7006/api/Dashboard/updateSubjects?studentId=1&careerPlanId=1`,
+      {
+        method: "PUT",
+        body: JSON.stringify(subjectsToUpdate),
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+    return response.json();
+  }
+);
 // Export actions
 export const {
   addSubjectToUpdate,
@@ -249,11 +302,12 @@ export const selectInProgressSubjects = createSelector(
   (subjectsList) =>
     subjectsList.filter((subject) => subject.status === "Cursando")
 );
-
 export const selectIsEditing = (state: RootState) => state.subjects.isEditing;
 export const selectAllToUpdatedSubjects = (state: RootState) =>
   state.subjects.subjectsToUpdate;
 export const selectSelectedSubject = (state: RootState) =>
   state.subjects.selectedSubject;
+export const selectSubjectsToUpdate = (state: RootState) =>
+  state.subjects.subjectsToUpdate;
 
 export default subjectsSlice.reducer;
