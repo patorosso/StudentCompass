@@ -27,6 +27,7 @@ GO
 
 CREATE OR ALTER PROCEDURE app.update_subjects
 @student_id SMALLINT,
+@student_career_plan_id TINYINT,
 @subjects_to_update app.subjects_to_update_type READONLY
 AS
 BEGIN
@@ -43,7 +44,7 @@ DECLARE @valid_grade BIT;
 DECLARE @course_exists BIT;
 DECLARE @is_status_duplicated BIT;
 DECLARE @is_approvable BIT;
-DECLARE @existing_course_status TINYINT = -1;
+DECLARE @existing_course_status TINYINT = 0;
 DECLARE @transversal_career_plan_id TINYINT = 0;
 DECLARE @approved_status_id TINYINT = 1;
 DECLARE @coursing_status_id TINYINT = 3;
@@ -98,7 +99,7 @@ BEGIN TRAN
     END;
 
 	-- Check grade
-	SELECT @valid_grade = CASE WHEN ((@status_id = @approved_status_id AND @final_grade IN (4,10)) 
+	SELECT @valid_grade = CASE WHEN ((@status_id = @approved_status_id AND @final_grade IN (4,5,6,7,8,9,10)) 
 	OR (@status_id <> @approved_status_id AND @final_grade IS NULL)
 		) THEN 1 ELSE 0 END;
 	IF @valid_grade = 0
@@ -111,10 +112,12 @@ BEGIN TRAN
 		BEGIN
 
 		-- Check course
-		SELECT TOP 1 @existing_course_status = status_id FROM app.course WHERE id = @course_id 
-		IF @existing_course_status = -1
+		SELECT TOP 1 @existing_course_status = status_id FROM app.course WHERE id = @course_id
+		AND student_id = @student_id AND career_plan_id = @career_plan_id AND subject_code = @subject_code
+		IF @existing_course_status = 0
 		BEGIN 
-			SET @error_message = CONCAT('Course with ID = ', CAST(@course_id AS NVARCHAR), ' does not exist.');
+			SET @error_message = CONCAT('Invalid course with ID = ', CAST(@course_id AS NVARCHAR),
+			'. It does not exist or has incorrect information.');
 			;THROW 50005, @error_message, 1;
 		END;
 
@@ -179,6 +182,11 @@ BEGIN TRAN
 					INSERT INTO app.course(student_id,subject_code,career_plan_id,status_id,final_grade)
 					VALUES (@student_id, @subject_code, @career_plan_id, @status_id, @final_grade)
 				END
+				ELSE
+				BEGIN
+					SET @error_message = CONCAT('Subject with code ', CAST(@subject_code AS NVARCHAR), ' is not available.');
+					;THROW 50007, @error_message, 1;
+				END
 			END
 			ELSE IF(@status_id = @available_status_id)
 			BEGIN
@@ -199,7 +207,7 @@ BEGIN TRAN
 
 	COMMIT TRAN;
 	DROP TABLE #subjects_to_update
-	EXEC app.academic_student_info @student_id, @career_plan_id
+	EXEC app.academic_student_info @student_id, @student_career_plan_id
 
     END TRY
     BEGIN CATCH
