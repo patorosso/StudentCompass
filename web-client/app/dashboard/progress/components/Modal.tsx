@@ -20,7 +20,7 @@ const Modal = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex items-center justify-center">
+    <div className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex items-center justify-center z-50">
       <div className="bg-white dark:bg-slate-500 p-6 rounded-lg shadow-lg w-1/3">
         <h2 className="text-3xl font-bold text-slate-600 dark:text-slate-200">
           {title}
