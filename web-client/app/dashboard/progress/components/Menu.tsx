@@ -4,7 +4,7 @@ import React, { useRef } from "react";
 interface MenuProps {
   onClick: (value: string) => void;
   values: string[];
-  title: string;
+  title?: string;
   maxWidth: string;
 }
 
@@ -21,9 +21,11 @@ const Menu = ({ title, onClick, values, maxWidth }: MenuProps) => {
       ref={menuRef}
     >
       <div className="py-1 max-h-52 overflow-y-auto" role="none">
-        <div className="flex border-b-2 border-slate-300 px-4">
-          <p className="text-gray-700 block py-2 text-md">{title}</p>
-        </div>
+        {title && (
+          <div className="flex border-b-2 border-slate-300 px-4">
+            <p className="text-gray-700 block py-2 text-md">{title}</p>
+          </div>
+        )}
         {values.map((value) => (
           <button
             key={value}
