@@ -125,65 +125,36 @@ const SubjectsRows = () => {
   return (
     <>
       <tbody>
-        {subjects.map((subject) =>
-          editStyle === "Fast" && selectedSubject?.code === subject.code ? (
-            <tr
-              key={selectedSubject.code}
-              className={`${isEditing ? " text-second" : "hover:text-second"}`}
-              onClick={() => handleEdit(selectedSubject)}
-            >
-              <td className="border-b dark:border-gray-700 p-4 bg-slate-900">
-                {selectedSubject.code}
-              </td>
-              <td
-                className={`border-b dark:border-gray-700 p-4 bg-slate-900 ${
-                  selectedSubject.description.length > 25 ? "text-sm" : ""
+        {subjects &&
+          subjects.map((subject) =>
+            editStyle === "Fast" && selectedSubject?.code === subject.code ? (
+              <tr
+                key={selectedSubject.code}
+                className={`${
+                  isEditing ? " text-second" : "hover:text-second"
                 }`}
+                onClick={() => handleEdit(selectedSubject)}
               >
-                {selectedSubject.description}
-              </td>
-              <td className="border-b dark:border-gray-700 p-4 bg-slate-900">
-                {selectedSubject.weeklyHours}hs
-              </td>
+                <td className="border-b dark:border-gray-700 p-4 bg-slate-900">
+                  {selectedSubject.code}
+                </td>
+                <td
+                  className={`border-b dark:border-gray-700 p-4 bg-slate-900 ${
+                    selectedSubject.description.length > 25 ? "text-sm" : ""
+                  }`}
+                >
+                  {selectedSubject.description}
+                </td>
+                <td className="border-b dark:border-gray-700 p-4 bg-slate-900">
+                  {selectedSubject.weeklyHours}hs
+                </td>
 
-              <td className="border-b dark:border-gray-700 p-4 max-width-6 bg-slate-900">
-                <div className="flex">
-                  <div className="w-full">
-                    {selectedSubject.finalGrade
-                      ? selectedSubject.finalGrade
-                      : "-"}
-                  </div>
-                  <Image
-                    src="/chevron-down-white.svg"
-                    alt="Dropdown status"
-                    style={{
-                      width: isEditing ? "20px" : "0",
-                    }}
-                    width={5}
-                    height={5}
-                    className="cursor-pointer duration-350 ease-in-out"
-                    onClick={() => setShowGradeMenu(!showGradeMenu)}
-                  />
-                  {showGradeMenu && (
-                    <Menu
-                      values={["-", "4", "5", "6", "7", "8", "9", "10"]}
-                      title="Nota"
-                      maxWidth="max-width-20"
-                      onClick={handleUpdateGrade}
-                    />
-                  )}
-                </div>
-              </td>
-              <td className={"border-b dark:border-gray-700 p-4 bg-slate-900"}>
-                <>
-                  <div className="flex relative">
-                    <div
-                      className={joinClassNames(
-                        getStatusStyle(selectedSubject.status),
-                        "rounded-md py-1 text-center shadow-lg text-gray-200 w-full"
-                      )}
-                    >
-                      {selectedSubject.status}
+                <td className="border-b dark:border-gray-700 p-4 max-width-6 bg-slate-900">
+                  <div className="flex">
+                    <div className="w-full">
+                      {selectedSubject.finalGrade
+                        ? selectedSubject.finalGrade
+                        : "-"}
                     </div>
                     <Image
                       src="/chevron-down-white.svg"
@@ -193,54 +164,86 @@ const SubjectsRows = () => {
                       }}
                       width={5}
                       height={5}
-                      className="ml-2 cursor-pointer duration-350 ease-in-out"
-                      onClick={() => setShowStatusMenu(!showStatusMenu)}
+                      className="cursor-pointer duration-350 ease-in-out"
+                      onClick={() => setShowGradeMenu(!showGradeMenu)}
                     />
-                    {showStatusMenu && (
+                    {showGradeMenu && (
                       <Menu
-                        values={["Disponible", "Cursando", "Aprobada"]}
-                        title="Estado"
-                        maxWidth="max-width-40"
-                        onClick={handleUpdateStatus}
+                        values={["-", "4", "5", "6", "7", "8", "9", "10"]}
+                        maxWidth="max-width-20"
+                        onClick={handleUpdateGrade}
                       />
                     )}
                   </div>
-                </>
-              </td>
-              {isEditing && (
-                <td
-                  style={actionColumnStyle}
-                  className="border-b dark:border-gray-700 bg-slate-900"
-                >
-                  <div className="flex justify-center items-center">
-                    <button onClick={() => handleConfirmEdit(subject)}>
-                      <Image
-                        src="/check-enabled.svg"
-                        alt="Confirm"
-                        width={25}
-                        height={25}
-                      />
-                    </button>
-                  </div>
                 </td>
-              )}
-            </tr>
-          ) : (
-            <tr
-              key={subject.code}
-              className={`${
-                isEditing &&
-                !selectedSubject &&
-                subject.status === "No disponible"
-                  ? "text-gray-400"
-                  : ""
-              }${
-                isEditing &&
-                !selectedSubject &&
-                subject.status !== "No disponible"
-                  ? "hover:text-second cursor-pointer"
-                  : ""
-              } 
+                <td
+                  className={"border-b dark:border-gray-700 p-4 bg-slate-900"}
+                >
+                  <>
+                    <div className="flex relative">
+                      <div
+                        className={joinClassNames(
+                          getStatusStyle(selectedSubject.status),
+                          "rounded-md py-1 text-center shadow-lg text-gray-200 w-full"
+                        )}
+                      >
+                        {selectedSubject.status}
+                      </div>
+                      <Image
+                        src="/chevron-down-white.svg"
+                        alt="Dropdown status"
+                        style={{
+                          width: isEditing ? "20px" : "0",
+                        }}
+                        width={5}
+                        height={5}
+                        className="ml-2 cursor-pointer duration-350 ease-in-out"
+                        onClick={() => setShowStatusMenu(!showStatusMenu)}
+                      />
+                      {showStatusMenu && (
+                        <Menu
+                          values={["Disponible", "Cursando", "Aprobada"]}
+                          maxWidth="max-width-40"
+                          onClick={handleUpdateStatus}
+                        />
+                      )}
+                    </div>
+                  </>
+                </td>
+                {isEditing && (
+                  <td
+                    style={actionColumnStyle}
+                    className="border-b dark:border-gray-700 bg-slate-900"
+                  >
+                    <div className="flex justify-center items-center">
+                      <button onClick={() => handleConfirmEdit(subject)}>
+                        <Image
+                          src="/check-enabled.svg"
+                          alt="Confirm"
+                          width={25}
+                          height={25}
+                        />
+                      </button>
+                    </div>
+                  </td>
+                )}
+              </tr>
+            ) : (
+              <tr
+                key={subject.code}
+                className={`${
+                  isEditing &&
+                  !selectedSubject &&
+                  subject.status === "No disponible"
+                    ? "text-gray-400"
+                    : ""
+                }${
+                  isEditing &&
+                  !selectedSubject &&
+                  subject.status !== "No disponible"
+                    ? "hover:text-second cursor-pointer"
+                    : ""
+                } 
               ${
                 isEditing &&
                 selectedSubject &&
@@ -248,82 +251,82 @@ const SubjectsRows = () => {
                   ? "cursor-pointer hover:bg-slate-800"
                   : ""
               } ${
-                isEditing &&
-                selectedSubject &&
-                subject.status === "No disponible"
-                  ? "text-gray-400"
-                  : ""
-              }`}
-              onClick={() => handleEdit(subject)}
-            >
-              <td className="border-b dark:border-gray-700 p-4">
-                {subject.code}
-              </td>
-              <td
-                className={`border-b dark:border-gray-700 p-4 ${
-                  subject.description.length > 25 ? "text-sm" : ""
+                  isEditing &&
+                  selectedSubject &&
+                  subject.status === "No disponible"
+                    ? "text-gray-400"
+                    : ""
                 }`}
+                onClick={() => handleEdit(subject)}
               >
-                {subject.description}
-              </td>
-              <td className="border-b dark:border-gray-700 p-4">
-                {subject.weeklyHours}hs
-              </td>
-              <td className="border-b dark:border-gray-700 p-4">
-                <div className="flex">
-                  <div className="w-full">
-                    {subject.finalGrade ? subject.finalGrade : "-"}
-                  </div>
-                  <Image
-                    src="/chevron-down-white.svg"
-                    alt="Dropdown status"
-                    width={0}
-                    height={0}
-                    className="cursor-pointer duration-350 ease-in-out"
-                  />
-                </div>
-              </td>
-              <td className={"border-b dark:border-gray-700 p-4 w-44"}>
-                <>
+                <td className="border-b dark:border-gray-700 p-4">
+                  {subject.code}
+                </td>
+                <td
+                  className={`border-b dark:border-gray-700 p-4 ${
+                    subject.description.length > 25 ? "text-sm" : ""
+                  }`}
+                >
+                  {subject.description}
+                </td>
+                <td className="border-b dark:border-gray-700 p-4">
+                  {subject.weeklyHours}hs
+                </td>
+                <td className="border-b dark:border-gray-700 p-4">
                   <div className="flex">
-                    <div
-                      className={joinClassNames(
-                        getStatusStyle(subject.status),
-                        "rounded-md py-1 text-center shadow-lg text-gray-200 w-full"
-                      )}
-                    >
-                      {subject.status}
+                    <div className="w-full">
+                      {subject.finalGrade ? subject.finalGrade : "-"}
                     </div>
                     <Image
                       src="/chevron-down-white.svg"
                       alt="Dropdown status"
                       width={0}
                       height={0}
-                      className="ml-2 cursor-pointer duration-350 ease-in-out"
+                      className="cursor-pointer duration-350 ease-in-out"
                     />
                   </div>
-                </>
-              </td>
-              {isEditing && editStyle === "Fast" && (
-                <td
-                  style={actionColumnStyle}
-                  className="border-b dark:border-gray-700"
-                >
-                  <div className="flex justify-center items-center">
-                    <button onClick={() => {}}>
-                      <Image
-                        src="/check-disabled.svg"
-                        alt="Confirm"
-                        width={25}
-                        height={25}
-                      />
-                    </button>
-                  </div>
                 </td>
-              )}
-            </tr>
-          )
-        )}
+                <td className={"border-b dark:border-gray-700 p-4 w-44"}>
+                  <>
+                    <div className="flex">
+                      <div
+                        className={joinClassNames(
+                          getStatusStyle(subject.status),
+                          "rounded-md py-1 text-center shadow-lg text-gray-200 w-full"
+                        )}
+                      >
+                        {subject.status}
+                      </div>
+                      <Image
+                        src="/chevron-down-white.svg"
+                        alt="Dropdown status"
+                        width={0}
+                        height={0}
+                        className="ml-2 cursor-pointer duration-350 ease-in-out"
+                      />
+                    </div>
+                  </>
+                </td>
+                {isEditing && editStyle === "Fast" && (
+                  <td
+                    style={actionColumnStyle}
+                    className="border-b dark:border-gray-700"
+                  >
+                    <div className="flex justify-center items-center">
+                      <button onClick={() => {}}>
+                        <Image
+                          src="/check-disabled.svg"
+                          alt="Confirm"
+                          width={25}
+                          height={25}
+                        />
+                      </button>
+                    </div>
+                  </td>
+                )}
+              </tr>
+            )
+          )}
       </tbody>
       {isEditing && editStyle === "Detailed" && (
         <>
