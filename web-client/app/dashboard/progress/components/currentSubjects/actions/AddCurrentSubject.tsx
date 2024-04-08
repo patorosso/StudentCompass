@@ -48,20 +48,21 @@ const AddCurrentSubject = ({ availableSubjects }: AddCurrentSubjectProps) => {
     <div>
       <button
         onClick={() => setModalOpen(true)}
-        className="bg-surface-300 hover:bg-surface-400 text-gray-500 rounded-full w-9 h-9 flex items-center justify-center select-none mr-3"
+        className="bg-yellow-500 hover:bg-yellow-400 text-gray-500 rounded-full w-9 h-9 flex items-center justify-center select-none mr-3"
       >
         <Image
           src="/add.svg"
           alt="Toggle Sidebar"
           width={19}
           height={19}
-          className="invert"
+          className=""
         />
       </button>
       <Modal
         isOpen={modalOpen}
         onClose={closeModal}
         onAccept={acceptModal}
+        hasCancelButton={true}
         title="Agregar materias en curso"
         subtitle="Se recuerda que la cantidad máxima en simultáneo es de 6 materias."
       >

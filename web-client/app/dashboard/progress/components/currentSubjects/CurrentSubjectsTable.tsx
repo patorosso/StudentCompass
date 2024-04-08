@@ -14,10 +14,7 @@ const CurrentSubjectsTable = () => {
         <thead className="text-left text-sm text-white sticky top-0 border-b-[1px]">
           <tr>
             <th className="py-4">Descripción</th>
-            <th className="py-4">1°</th>
-            <th className="py-4">2°</th>
-            <th className="py-4">Rec.</th>
-            <th className="py-4">Final</th>
+            <th className="py-4">Acción</th>
           </tr>
         </thead>
         <tbody>
@@ -26,29 +23,10 @@ const CurrentSubjectsTable = () => {
               <td className="border-b dark:border-gray-700 py-4 text-sm">
                 {subject.description}
               </td>
-              <td className="border-b dark:border-gray-700 py-4 text-sm">
-                {subject.exams &&
-                  subject.exams
-                    .filter((grade) => grade.description === "Primer parcial")
-                    .at(-1)?.grade}
-              </td>
-              <td className="border-b dark:border-gray-700 py-4 text-sm">
-                {subject.exams &&
-                  subject.exams
-                    .filter((grade) => grade.description === "Segundo parcial")
-                    .at(-1)?.grade}
-              </td>
-              <td className="border-b dark:border-gray-700 py-4 text-sm">
-                {subject.exams &&
-                  subject.exams
-                    .filter((grade) => grade.description === "Recuperatorio")
-                    .at(-1)?.grade}
-              </td>
-              <td className="border-b dark:border-gray-700 py-4 text-sm">
-                {subject.exams &&
-                  subject.exams
-                    .filter((grade) => grade.description === "Final")
-                    .at(-1)?.grade}
+              <td className="border-b dark:border-gray-700 text-sm">
+                <div className="rounded-md text-center shadow-lg bg-yellow-500 text-gray-200  py-1 ">
+                  VER EXÁMENES
+                </div>
               </td>
             </tr>
           ))}
