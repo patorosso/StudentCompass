@@ -9,6 +9,7 @@ interface SubjectsState {
   subjectsToUpdate: Subject[];
   subjectsBackup: Subject[];
   isEditing: boolean;
+  detailModalOpen: boolean;
   selectedSubject: Subject | undefined;
   error: string | undefined;
   status: "idle" | "loading" | "succeeded" | "failed";
@@ -38,6 +39,7 @@ const initialState: SubjectsState = {
   subjectsToUpdate: [],
   subjectsBackup: [],
   isEditing: false,
+  detailModalOpen: false,
   selectedSubject: undefined,
   error: undefined,
   status: "idle",
@@ -152,6 +154,9 @@ export const subjectsSlice = createSlice({
         return backupLookup.get(subject.code) || subject;
       });
     },
+    setDetailedModal: (state, action) => {
+      state.detailModalOpen = action.payload;
+    },
   },
   extraReducers(builder) {
     builder
@@ -207,7 +212,8 @@ export const subjectsSlice = createSlice({
       })
       .addCase(updateSubjects.rejected, (state, action) => {
         state.status = "failed";
-        toast.error("Error inesperado." + action.error.message);
+        var error = action.payload as any; // change, watch out when server is not running.
+        toast.error(error.message);
         state.error = action.error.message;
 
         const backupLookup = new Map(
@@ -229,18 +235,26 @@ export const subjectsSlice = createSlice({
 // Async thunk
 export const fetchSubjects = createAsyncThunk(
   "subjects/fetchSubjects",
-  async ({ student, career }: FetchSubjectsArgs) => {
+  async ({ student, career }: FetchSubjectsArgs, { rejectWithValue }) => {
     const response = await fetch(
       `https://localhost:7006/api/Dashboard?studentId=${student}&careerPlanId=${career}`
     );
-    return response.json();
+    if (response.status === 500) {
+      return rejectWithValue({
+        message: "Error inesperado, no fue posible conectarse con el servidor.",
+      });
+    }
+    return await response.json();
   }
 );
 
 // Async thunk
 export const addCurrentSubjects = createAsyncThunk(
   "subjects/addCurrentSubjects",
-  async ({ subjects, student }: AddCurrentSubjectsType) => {
+  async (
+    { subjects, student }: AddCurrentSubjectsType,
+    { rejectWithValue }
+  ) => {
     const response = await fetch(
       `https://localhost:7006/api/Dashboard/createInProgressCourse?studentId=${student}`,
       {
@@ -249,14 +263,19 @@ export const addCurrentSubjects = createAsyncThunk(
         headers: { "Content-Type": "application/json" },
       }
     );
-    return response.json();
+    if (response.status === 500) {
+      return rejectWithValue({
+        message: "Error inesperado, no fue posible conectarse con el servidor.",
+      });
+    }
+    return await response.json();
   }
 );
 
 // Async thunk
 export const updateSubjects = createAsyncThunk(
   "subjects/updateSubjects",
-  async (subjects: Subject[]) => {
+  async (subjects: Subject[], { rejectWithValue }) => {
     const subjectsToUpdate: UpdateSubjectDto[] = subjects.map((subject) => ({
       code: subject.code,
       finalGrade: subject.finalGrade,
@@ -273,7 +292,16 @@ export const updateSubjects = createAsyncThunk(
         headers: { "Content-Type": "application/json" },
       }
     );
-    return response.json();
+    if (response.status === 500) {
+      return rejectWithValue({
+        message: "Error inesperado, no fue posible conectarse con el servidor.",
+      });
+    }
+    if (!response.ok) {
+      return rejectWithValue(await response.json());
+    }
+
+    return await response.json();
   }
 );
 // Export actions
@@ -285,6 +313,7 @@ export const {
   setEditingFalse,
   updateGradeSelectedSubject,
   updateStatusSelectedSubject,
+  setDetailedModal,
 } = subjectsSlice.actions;
 
 // Selectors
@@ -302,7 +331,10 @@ export const selectInProgressSubjects = createSelector(
   (subjectsList) =>
     subjectsList.filter((subject) => subject.status === "Cursando")
 );
+
 export const selectIsEditing = (state: RootState) => state.subjects.isEditing;
+export const selectDetailedModal = (state: RootState) =>
+  state.subjects.detailModalOpen;
 export const selectAllToUpdatedSubjects = (state: RootState) =>
   state.subjects.subjectsToUpdate;
 export const selectSelectedSubject = (state: RootState) =>
