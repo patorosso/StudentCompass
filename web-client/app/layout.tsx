@@ -1,9 +1,10 @@
 import Navbar from "./components/Navbar";
-import StoreProvider from "./StoreProvider";
+import StoreProvider from "./utils/StoreProvider";
+import ProgressBarProvider from "./utils/ProgressBarProvider";
 import type { Metadata } from "next";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "./globals.css";
+import "./styles/globals.css";
 
 export const metadata: Metadata = {
   title: "Student Compass",
@@ -24,7 +25,7 @@ export default function RootLayout({
             className="flex-1 overflow-auto bg-light-theme dark:bg-dark-theme"
             style={{ minHeight: "calc(100vh - 5rem)" }}
           >
-            {children}
+            <ProgressBarProvider> {children}</ProgressBarProvider>
           </div>
           <ToastContainer
             style={{ maxWidth: 700, marginTop: 67, width: "auto" }}
