@@ -18,7 +18,7 @@ const SubjectsColumns = () => {
         <th className="p-5">Nota</th>
         <th className="px-5 py-4">Estado</th>
         <th
-          className={`transition-all duration-500 ease-in-out overflow-hidden ${
+          className={`duration-500 overflow-hidden ${
             shouldShowConfirmEdit ? "text-white" : "text-gray-600"
           }`}
           style={{
