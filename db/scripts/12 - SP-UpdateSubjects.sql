@@ -47,7 +47,7 @@ DECLARE @is_approvable BIT;
 DECLARE @existing_course_status TINYINT = 0;
 DECLARE @transversal_career_plan_id TINYINT = 0;
 DECLARE @approved_status_id TINYINT = 1;
-DECLARE @coursing_status_id TINYINT = 3;
+DECLARE @coursing_status_id TINYINT = 2;
 DECLARE @available_status_id TINYINT = 5;
 DECLARE @error_message VARCHAR(150);
 
@@ -107,7 +107,7 @@ BEGIN TRAN
 		SET @error_message = 'Final grade must be between 4-10 if the status is approved. Otherwise, null.';
 		;THROW 50004, @error_message, 1;
     END;
-
+	
 		IF (@course_id IS NOT NULL)
 		BEGIN
 
@@ -119,18 +119,6 @@ BEGIN TRAN
 			SET @error_message = CONCAT('Invalid course with ID = ', CAST(@course_id AS NVARCHAR),
 			'. It does not exist or has incorrect information.');
 			;THROW 50005, @error_message, 1;
-		END;
-
-		-- Check no two approved or in-progress courses happen simultaneously
-		SELECT @is_status_duplicated = CASE WHEN EXISTS(
-			SELECT 1 FROM app.course 
-			WHERE @student_id = student_id AND @career_plan_id = career_plan_id AND @subject_code = subject_code 
-			AND @status_id IN (@approved_status_id, @coursing_status_id) 
-			AND status_id IN (@approved_status_id, @coursing_status_id)
-			) THEN 1 ELSE 0 END;
-		IF @is_status_duplicated = 0
-		BEGIN 
-			;THROW 50006, 'There can be only one approved or in-progress subject simultaneously.', 1;
 		END;
 	
 			IF(@existing_course_status = @approved_status_id AND @status_id <> @approved_status_id)
@@ -158,8 +146,7 @@ BEGIN TRAN
 		END
 		ELSE
 		BEGIN
-		-- si course_id es nulo...
-		-- BUSCAR ACA DISPONIBILIDAD
+		-- Search availability
 		SET @is_approvable = (SELECT 1
 							  FROM app.correlative 
 							  WHERE subject_code = @subject_code
@@ -175,6 +162,18 @@ BEGIN TRAN
 
 			IF(@status_id IN (@approved_status_id, @coursing_status_id))
 			BEGIN
+
+				-- Check no two approved or in-progress courses happen simultaneously
+				SELECT @is_status_duplicated = CASE WHEN EXISTS(
+					SELECT 1 FROM app.course 
+					WHERE @student_id = student_id AND @career_plan_id = career_plan_id 
+					AND @subject_code = subject_code AND status_id = @status_id
+					) THEN 1 ELSE 0 END;
+				IF @is_status_duplicated = 1
+				BEGIN 
+					;THROW 50006, 'There can be only one approved or in-progress subject simultaneously.', 1;
+				END;
+				
 				-- verificar si la materia ESTA DISPONIBLE
 				-- si lo está, creo course_id.
 				IF (@is_approvable = 1)
