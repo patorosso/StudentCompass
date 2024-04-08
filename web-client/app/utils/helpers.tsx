@@ -11,7 +11,7 @@ export function getStatusStyle(status: string) {
     case "No disponible":
       return "bg-red-500";
     case "Cursando":
-      return "bg-primary";
+      return "bg-blue-500";
     default:
       return "bg-gray-400";
   }
