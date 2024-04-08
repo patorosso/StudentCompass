@@ -99,11 +99,12 @@ namespace Api.Controllers
             }
             catch (SqlException e)
             {
-                return BadRequest("The operation failed and all changes made have been reverted. " + e.Message);
+                return BadRequest(new { message = "The operation failed and all changes made have been reverted. " + e.Message });
+
             }
             catch (SqlConnectionException e)
             {
-                return StatusCode(500, e.Message);
+                return StatusCode(500, new { message = e.Message });
             }
         }
     }
