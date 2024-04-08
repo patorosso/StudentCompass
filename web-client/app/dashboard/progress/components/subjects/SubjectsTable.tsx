@@ -1,6 +1,7 @@
 import React from "react";
 import SubjectsRows from "./SubjectsRows";
 import SubjectsColumns from "./SubjectsColumns";
+import DetailedEdit from "./actions/DetailedEdit";
 
 const SubjectsTable = () => {
   return (
@@ -12,6 +13,7 @@ const SubjectsTable = () => {
         <SubjectsColumns />
         <SubjectsRows />
       </table>
+      <DetailedEdit />
     </div>
   );
 };
