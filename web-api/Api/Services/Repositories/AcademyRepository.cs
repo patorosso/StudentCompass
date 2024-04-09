@@ -117,7 +117,6 @@ namespace Api.Services.Repositories
             return correlativeDtoDict;
         }
 
-
         public async Task<IEnumerable<SubjectDto>> CreateInProgressCourse(List<Subject> subjects, short studentId)
         {
             await using var connection = await CreateConnection() ?? throw new SqlConnectionException("DB Connection could not be established.");
@@ -165,6 +164,60 @@ namespace Api.Services.Repositories
             return subjectDtoList;
         }
 
+        public async Task<IEnumerable<Course>> GetCourses(short studentId, byte careerPlanId)
+        {
+            await using var connection = await CreateConnection() ?? throw new SqlConnectionException("DB Connection could not be established.");
+
+            await using var command = new SqlCommand("app.get_courses", connection);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.Add(new SqlParameter("@student_id", studentId));
+            command.Parameters.Add(new SqlParameter("@career_plan_id", careerPlanId));
+
+            var courses = new List<Course>();
+            var courseExams = new Dictionary<int, List<Exam>>();
+
+            await using var reader = await command.ExecuteReaderAsync();
+            while (reader.Read())
+            {
+                var course = new Course
+                {
+                    Id = (int)reader["id"],
+                    Term = reader["term"] is DBNull ? default(byte?) : (byte)reader["term"],
+                    Year = reader["year"] is DBNull ? default(short?) : (short)reader["year"],
+                    Status = AcademicHelpers.GetStatusDescription((SubjectStatus)(byte)reader["status"]),
+                    FinalGrade = reader["final_grade"] is DBNull ? default(byte?) : (byte)reader["final_grade"],
+                    SubjectCode = (short)reader["subject_code"],
+                    CareerPlanId = (byte)reader["career_plan_id"]
+                };
+                courses.Add(course);
+            }
+
+            await reader.NextResultAsync();
+            while (reader.Read())
+            {
+                var exam = new Exam
+                {
+                    Grade = (byte)reader["grade"],
+                    Description = AcademicHelpers.GetExamDescription((ExamType)(byte)reader["exam_id"])
+                };
+
+                var examCourseId = (int)reader["course_id"];
+
+                if (!courseExams.ContainsKey(examCourseId))
+                    courseExams[examCourseId] = new List<Exam>();
+
+                courseExams[examCourseId].Add(exam);
+            }
+
+            if (courseExams.IsNullOrEmpty())
+                return courses.AsEnumerable();
+
+            foreach (var course in courses)
+                if (courseExams.TryGetValue(course.Id, out var examsList))
+                    course.Exams = examsList;
+
+            return courses.AsEnumerable();
+        }
 
         public async Task<IEnumerable<Subject>> GetProgressOverview(short studentId, byte careerPlanId)
         {

@@ -107,5 +107,24 @@ namespace Api.Controllers
                 return StatusCode(500, new { message = e.Message });
             }
         }
+
+        [HttpGet]
+        [Route("getCourses")]
+        public async Task<IActionResult> GetCourses(short studentId, byte careerPlanId)
+        {
+            try
+            {
+                var courses = await _academicRepository.GetCourses(studentId, careerPlanId);
+                return Ok(courses);
+            }
+            catch (SqlException e)
+            {
+                return BadRequest("The operation failed. " + e.Message);
+            }
+            catch (SqlConnectionException e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
     }
 }
