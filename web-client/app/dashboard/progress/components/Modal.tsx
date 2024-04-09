@@ -29,14 +29,14 @@ const Modal = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex items-center justify-center z-50">
+    <div className="fixed inset-0 bg-black dark:bg-gray-500 dark:bg-opacity-55 bg-opacity-30 backdrop-blur-sm flex items-center justify-center z-50">
       <div
-        className="flex flex-col bg-white dark:bg-surface-200 p-6 rounded-lg shadow-lg"
+        className="flex flex-col bg-white dark:bg-slate-900 p-6 rounded-lg shadow-lg"
         style={{ height, width }}
       >
         <div className="flex justify-between">
           {title && (
-            <h2 className="text-xl font-bold text-slate-600 dark:text-slate-200">
+            <h2 className="text-xl font-bold text-slate-600 dark:text-slate-400">
               {title}
             </h2>
           )}
