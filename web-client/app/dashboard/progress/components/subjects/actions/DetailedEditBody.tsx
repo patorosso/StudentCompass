@@ -69,17 +69,11 @@ const DetailedEditBody = () => {
               Nota final
             </label>
             <select className="mt-1 block w-full px-3 py-2 bg-white border rounded-md shadow-sm dark:bg-slate-600 dark:border-none border-slate-300 focus:outline-none">
-              <option>10 (Diez)</option>
-              <option>9 (Nueve)</option>
-              <option>8 (Ocho)</option>
-              <option>7 (Siete)</option>
-              <option>6 (Seis)</option>
-              <option>5 (Cinco)</option>
-              <option>4 (Cuatro)</option>
-              <option>3 (Tres)</option>
-              <option>2 (Dos)</option>
-              <option>1 (Uno)</option>
-              <option>Ausente</option>
+              {grades.map((grade) => (
+                <option key={grade} value={grade}>
+                  {grade}
+                </option>
+              ))}
             </select>
           </div>
           <div>
@@ -94,17 +88,15 @@ const DetailedEditBody = () => {
                 "hover:cursor-pointer text-white mt-1 block w-full px-3 py-2 border shadow-sm dark:border-none dark:rounded-md border-slate-300 placeholder-slate-400 focus:outline-none"
               )}
             >
-              {["Cursando", "Cursada", "Aprobada", "Desaprobada"].map(
-                (status) => (
-                  <option
-                    key={status}
-                    value={status}
-                    className="bg-white text-black hover:cursor-pointer"
-                  >
-                    {status}
-                  </option>
-                )
-              )}
+              {statuses.map((status) => (
+                <option
+                  key={status}
+                  value={status}
+                  className="bg-white text-black hover:cursor-pointer"
+                >
+                  {status}
+                </option>
+              ))}
             </select>
           </div>
         </div>
@@ -114,3 +106,19 @@ const DetailedEditBody = () => {
 };
 
 export default DetailedEditBody;
+
+const statuses = ["Cursando", "Cursada", "Aprobada", "Desaprobada"];
+
+const grades = [
+  "10 (Diez)",
+  "9 (Nueve)",
+  "8 (Ocho)",
+  "7 (Siete)",
+  "6 (Seis)",
+  "5 (Cinco)",
+  "4 (Cuatro)",
+  "3 (Tres)",
+  "2 (Dos)",
+  "1 (Uno)",
+  "Ausente",
+];
