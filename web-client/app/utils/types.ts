@@ -30,6 +30,16 @@ interface CorrelativesDict {
   [key: number]: number[];
 }
 
+interface Course {
+  id: number;
+  subjectCode: string;
+  careerPlanId: number;
+  year: number;
+  term: number;
+  finalGrade: number;
+  status: number;
+}
+
 type SubjectProps = {
   subjects: Subject[];
 };

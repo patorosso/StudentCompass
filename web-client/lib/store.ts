@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import userReducer from "./features/userSlice";
 import subjectsReducer from "./features/subjectsSlice";
 import correlativesReducer from "./features/correlativesSlice";
+import coursesReducer from "./features/coursesSlice";
 
 export const makeStore = () => {
   return configureStore({
@@ -11,6 +12,7 @@ export const makeStore = () => {
       user: userReducer,
       subjects: subjectsReducer,
       correlatives: correlativesReducer,
+      courses: coursesReducer,
     },
   });
 };
