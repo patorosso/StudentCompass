@@ -110,12 +110,12 @@ namespace Api.Controllers
 
         [HttpGet]
         [Route("getCourses")]
-        public async Task<IActionResult> GetCourses(short studentId, byte careerPlanId)
+        public async Task<IActionResult> GetCourses(short studentId, byte careerPlanId, short subjectCode)
         {
             try
             {
-                var courses = await _academicRepository.GetCourses(studentId, careerPlanId);
-                return Ok(courses);
+                var courses = await _academicRepository.GetCourses(studentId, careerPlanId, subjectCode);
+                return Ok(new Dictionary<short, IEnumerable<Course>> { { subjectCode, courses } });
             }
             catch (SqlException e)
             {
