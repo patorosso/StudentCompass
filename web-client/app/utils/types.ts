@@ -1,7 +1,7 @@
 interface Subject {
   code: number;
   description: string;
-  finalGrade: number | null;
+  finalGrade: number | undefined;
   weeklyHours: number;
   yearLevel: number;
   isOptional: boolean;
@@ -32,12 +32,17 @@ interface CorrelativesDict {
 
 interface Course {
   id: number;
-  subjectCode: string;
+  subjectCode: number;
   careerPlanId: number;
-  year: number;
-  term: number;
-  finalGrade: number;
-  status: number;
+  year: string | null;
+  term: string | null;
+  exams: Exam[];
+  finalGrade: number | null;
+  status: string | null;
+}
+
+interface CoursesDict {
+  [key: number]: Course[];
 }
 
 type SubjectProps = {
@@ -47,11 +52,12 @@ type SubjectProps = {
 interface Exam {
   description: string;
   grade: number;
+  date: Date;
 }
 
 interface UpdateSubjectDto {
   code: number;
-  finalGrade: number | null;
+  finalGrade: number | undefined;
   courseId: number | null;
   status: string;
   careerPlanId: number;
