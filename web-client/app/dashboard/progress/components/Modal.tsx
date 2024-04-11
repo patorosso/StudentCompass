@@ -7,17 +7,19 @@ interface ModalProps {
   isOpen: boolean;
   hasCancelIcon?: boolean;
   hasCancelButton?: boolean;
+  hasAcceptButton?: boolean;
   children: React.ReactNode;
   width?: string;
   height?: string;
   onClose: () => void;
-  onAccept: () => void;
+  onAccept?: () => void;
 }
 
 const Modal = ({
   title,
   width,
   height,
+  hasAcceptButton,
   hasCancelIcon,
   hasCancelButton,
   subtitle,
@@ -75,7 +77,7 @@ const Modal = ({
               </button>
             </div>
           )}
-          {!hasCancelButton && (
+          {!hasCancelButton && hasAcceptButton && (
             <button
               onClick={onAccept}
               className="p-4 bg-blue-500 text-white rounded hover:bg-blue-600 w-full text-center"
