@@ -20,7 +20,7 @@ const CurrentSubjectsTable = () => {
         <tbody>
           {currentSubjects.map((subject) => (
             <tr key={subject.code} className="cursor-pointer hover:text-second">
-              <td className="border-b dark:border-gray-700 py-4 text-sm">
+              <td className="border-b dark:border-gray-700 py-4 text-sm text-black dark:text-white">
                 {subject.description}
               </td>
               <td className="border-b dark:border-gray-700 text-sm">

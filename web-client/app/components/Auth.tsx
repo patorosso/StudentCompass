@@ -7,7 +7,7 @@ const Auth = () => {
 
   return (
     <div
-      className="bg-gray-400 dark:bg-surface-200 p-4 shadow-lg rounded-lg w-2/3"
+      className="bg-gray-400 dark:bg-surface-200 bg-opacity-55 dark:bg-opacity-75 p-4 shadow-lg rounded-lg w-2/3"
       style={{ minHeight: "400px" }}
     >
       <div className="border-b border-white dark:border-gray-600">

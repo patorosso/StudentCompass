@@ -9,7 +9,7 @@ const Subjects = () => {
       style={{ width: 920 }}
     >
       <div className="flex justify-between pb-4">
-        <h2 className="text-center text-black dark:text-white text-2xl my-1 pl-4">
+        <h2 className="text-center text-slate-800 dark:text-white text-2xl my-1 pl-4">
           Lista de materias
         </h2>
         <SubjectsActions />
