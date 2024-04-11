@@ -137,6 +137,7 @@ CREATE TABLE app.exam(
 CREATE TABLE app.course_exam(
 	course_id INT,
 	exam_id TINYINT,
+	taken_on DATE,
 	grade TINYINT NOT NULL,
 	CONSTRAINT pk_course_exam PRIMARY KEY (course_id, exam_id),
 	CONSTRAINT fk_course_exam FOREIGN KEY (exam_id) REFERENCES app.exam(id),
