@@ -4,6 +4,7 @@
     {
         public byte Grade { get; set; }
         public string Description { get; set; } = null!;
+        public DateTime Date { get; set; }
     }
 
     public enum ExamType

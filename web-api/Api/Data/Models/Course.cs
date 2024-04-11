@@ -8,7 +8,7 @@
         public List<Exam>? Exams { get; set; }
         public string Status { get; set; } = null!;
         public byte? FinalGrade { get; set; }
-        public short? Year { get; set; }
-        public byte? Term { get; set; }
+        public string? Year { get; set; }
+        public string? Term { get; set; }
     }
 }
