@@ -4,19 +4,21 @@ import { toast } from "react-toastify";
 
 // Slice state type
 interface CoursesState {
-  coursesList: Course[];
+  coursesDict: CoursesDict;
+  selectedCourse: Course | null;
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | undefined;
 }
 
-// // Fetch correlatives params
-// interface GetCorrelativesArgs {
-//   career: string | null;
-// }
+// Fetch correlatives params
+interface GetCoursesArgs {
+  subjectCode: number;
+}
 
 // Initial state
 const initialState: CoursesState = {
-  coursesList: [],
+  coursesDict: {},
+  selectedCourse: null,
   status: "idle",
   error: undefined,
 };
@@ -24,17 +26,61 @@ const initialState: CoursesState = {
 export const coursesSlice = createSlice({
   name: "courses",
   initialState,
-  reducers: {},
+  reducers: {
+    setSelectedCourse: (state, action) => {
+      state.selectedCourse = action.payload;
+    },
+    updateGradeSelectedCourse: (state, action) => {
+      if (state.selectedCourse) {
+        state.selectedCourse = {
+          ...state.selectedCourse,
+          finalGrade: action.payload,
+        };
+      }
+    },
+    updateTermSelectedCourse: (state, action) => {
+      if (state.selectedCourse) {
+        state.selectedCourse = {
+          ...state.selectedCourse,
+          term: action.payload,
+        };
+      }
+    },
+    updateYearSelectedCourse: (state, action) => {
+      if (state.selectedCourse) {
+        state.selectedCourse = {
+          ...state.selectedCourse,
+          year: action.payload,
+        };
+      }
+    },
+    updateStatusSelectedCourse: (state, action) => {
+      if (state.selectedCourse) {
+        state.selectedCourse = {
+          ...state.selectedCourse,
+          status: action.payload,
+          finalGrade:
+            action.payload === "Cursando"
+              ? null
+              : state.selectedCourse.finalGrade,
+        };
+      }
+    },
+  },
   extraReducers(builder) {
     builder
-      .addCase(getCourses.pending, (state) => {
+      .addCase(fetchCourses.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(getCourses.fulfilled, (state, action) => {
+      .addCase(fetchCourses.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.coursesList = action.payload;
+        const subjectCode = Number(Object.keys(action.payload)[0]); // cast to number because all keys are strings
+        const courses = action.payload[subjectCode];
+        state.coursesDict[subjectCode] = courses;
+
+        if (courses.length > 0) state.selectedCourse = courses[0];
       })
-      .addCase(getCourses.rejected, (state, action) => {
+      .addCase(fetchCourses.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
       });
@@ -42,17 +88,28 @@ export const coursesSlice = createSlice({
 });
 
 // Async thunk
-export const getCourses = createAsyncThunk(
-  "correlatives/getCorrelatives",
-  async () => {
+export const fetchCourses = createAsyncThunk(
+  "courses/fetchCourses",
+  async ({ subjectCode }: GetCoursesArgs) => {
     const response = await fetch(
-      `https://localhost:7006/api/Dashboard/getCourses?careerPlanId=1&studentId=1`
+      `https://localhost:7006/api/Dashboard/getCourses?careerPlanId=1&studentId=1&subjectCode=${subjectCode}`
     );
     return response.json();
   }
 );
 
+export const {
+  setSelectedCourse,
+  updateGradeSelectedCourse,
+  updateStatusSelectedCourse,
+  updateTermSelectedCourse,
+  updateYearSelectedCourse,
+} = coursesSlice.actions;
+
 // Selectors
 
-export const selectCourses = (state: RootState) => state.courses.coursesList;
+export const selectCourses = (state: RootState) => state.courses.coursesDict;
+export const selectSelectedCourse = (state: RootState) =>
+  state.courses.selectedCourse;
+
 export default coursesSlice.reducer;
