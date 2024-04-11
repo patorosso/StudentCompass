@@ -60,5 +60,16 @@ namespace Api.Services.Helpers
                 _ => 0
             };
         }
+
+        public static string GetTerm(byte id)
+        {
+            return id switch
+            {
+                1 => "Primer cuatrimestre",
+                2 => "Segundo cuatrimestre",
+                3 => "Curso de verano",
+                _ => "Desconocido"
+            };
+        }
     }
 }

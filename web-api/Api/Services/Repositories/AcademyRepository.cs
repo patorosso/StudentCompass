@@ -164,7 +164,7 @@ namespace Api.Services.Repositories
             return subjectDtoList;
         }
 
-        public async Task<IEnumerable<Course>> GetCourses(short studentId, byte careerPlanId)
+        public async Task<IEnumerable<Course>> GetCourses(short studentId, byte careerPlanId, short subjectCode)
         {
             await using var connection = await CreateConnection() ?? throw new SqlConnectionException("DB Connection could not be established.");
 
@@ -172,6 +172,7 @@ namespace Api.Services.Repositories
             command.CommandType = CommandType.StoredProcedure;
             command.Parameters.Add(new SqlParameter("@student_id", studentId));
             command.Parameters.Add(new SqlParameter("@career_plan_id", careerPlanId));
+            command.Parameters.Add(new SqlParameter("@subject_code", subjectCode));
 
             var courses = new List<Course>();
             var courseExams = new Dictionary<int, List<Exam>>();
@@ -182,10 +183,10 @@ namespace Api.Services.Repositories
                 var course = new Course
                 {
                     Id = (int)reader["id"],
-                    Term = reader["term"] is DBNull ? default(byte?) : (byte)reader["term"],
-                    Year = reader["year"] is DBNull ? default(short?) : (short)reader["year"],
-                    Status = AcademicHelpers.GetStatusDescription((SubjectStatus)(byte)reader["status"]),
-                    FinalGrade = reader["final_grade"] is DBNull ? default(byte?) : (byte)reader["final_grade"],
+                    Term = reader["term_id"] is DBNull ? default : AcademicHelpers.GetTerm((byte)reader["term_id"]),
+                    Year = reader["year"] is DBNull ? default : ((short)reader["year"]).ToString(),
+                    Status = AcademicHelpers.GetStatusDescription((SubjectStatus)(byte)reader["status_id"]),
+                    FinalGrade = reader["final_grade"] is DBNull ? default : (byte)reader["final_grade"],
                     SubjectCode = (short)reader["subject_code"],
                     CareerPlanId = (byte)reader["career_plan_id"]
                 };
@@ -198,7 +199,8 @@ namespace Api.Services.Repositories
                 var exam = new Exam
                 {
                     Grade = (byte)reader["grade"],
-                    Description = AcademicHelpers.GetExamDescription((ExamType)(byte)reader["exam_id"])
+                    Description = AcademicHelpers.GetExamDescription((ExamType)(byte)reader["exam_id"]),
+                    Date = (DateTime)reader["taken_on"]
                 };
 
                 var examCourseId = (int)reader["course_id"];

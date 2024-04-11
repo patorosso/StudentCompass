@@ -10,6 +10,6 @@ namespace Api.Services.Contracts
         Task<Dictionary<short, List<short>>> GetCorrelatives(byte careerPlanId);
         Task<IEnumerable<Subject>> UpdateSubjects(List<UpdateSubjectDto> subjectsToUpdate, short studentId, byte careerPlanId);
         Task<IEnumerable<SubjectDto>> CreateInProgressCourse(List<Subject> subjects, short studentId);
-        Task<IEnumerable<Course>> GetCourses(short studentId, byte careerPlanId);
+        Task<IEnumerable<Course>> GetCourses(short studentId, byte careerPlanId, short subjectCode);
     }
 }
