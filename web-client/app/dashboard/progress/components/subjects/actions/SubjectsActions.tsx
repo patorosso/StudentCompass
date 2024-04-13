@@ -37,16 +37,26 @@ const SubjectsActions = () => {
           id="edit-button"
           onClick={() => onSaveEditClick()}
           disabled={isSaveDisabled}
-          className="bg-success hover:bg-surface-400 text-gray-500 rounded-full w-9 h-9 flex items-center justify-center select-none mr-3"
+          className={`bg-success ${
+            isSaveDisabled
+              ? "bg-success opacity-40"
+              : "bg-success hover:bg-green-400"
+          } text-gray-500 rounded-full w-9 h-9 flex items-center justify-center select-none mr-3`}
         >
           <Image src="/save.svg" alt="Save edit" width={20} height={20} />
         </button>
         <button
-          id="edit-button"
+          id="cancel-button"
           onClick={() => onCancelEditClick()}
-          className="bg-cancel hover:bg-surface-400 text-gray-500 rounded-full w-9 h-9 flex items-center justify-center select-none"
+          className="bg-cancel hover:bg-red-700 text-gray-500 rounded-full w-9 h-9 flex items-center justify-center select-none"
         >
-          <Image src="/cancel.svg" alt="Cancel edit" width={20} height={20} />
+          <Image
+            src="/cancel.svg"
+            alt="Cancel edit"
+            width={30}
+            height={30}
+            className="invert"
+          />
         </button>
       </div>
       <SubjectsMenu />

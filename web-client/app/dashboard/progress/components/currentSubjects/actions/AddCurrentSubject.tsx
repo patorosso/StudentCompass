@@ -48,13 +48,13 @@ const AddCurrentSubject = ({ availableSubjects }: AddCurrentSubjectProps) => {
     <div>
       <button
         onClick={() => setModalOpen(true)}
-        className="bg-yellow-500 hover:bg-yellow-400 text-gray-500 rounded-full w-9 h-9 flex items-center justify-center select-none mr-3"
+        className="bg-yellow-500 hover:bg-yellow-400 rounded-full w-9 h-9 flex items-center justify-center select-none mr-3"
       >
         <Image
           src="/add.svg"
           alt="Toggle Sidebar"
-          width={19}
-          height={19}
+          width={21}
+          height={21}
           className=""
         />
       </button>

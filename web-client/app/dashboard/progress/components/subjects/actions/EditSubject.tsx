@@ -20,13 +20,11 @@ const EditSubject = () => {
   };
 
   const buttonStyle = {
-    transition: "transform 0.6s ease-out", // Adjust time as needed for a smoother effect
+    transition: "transform 0.6s ease-out",
   };
 
   const imageStyle = {
-    transform: isEditing
-      ? "rotate(-360deg)" // Adjust -100px to the distance you want it to move to the left
-      : "rotate(0deg)",
+    transform: isEditing ? "rotate(-360deg)" : "rotate(0deg)",
     transition: "transform 0.6s ease-out",
   };
 
@@ -35,14 +33,14 @@ const EditSubject = () => {
       <button
         id="edit-button"
         onClick={() => onEditClick()}
-        className={`bg-surface-300 ${
-          !isEditing ? "hover:bg-surface-400" : ""
+        className={`bg-yellow-500 ${
+          !isEditing ? "hover:bg-yellow-400 " : "opacity-40"
         } text-gray-500 rounded-full w-9 h-9 flex items-center justify-center select-none mr-3`}
         disabled={isEditing}
         style={buttonStyle}
       >
         <Image
-          src="/edit.svg"
+          src="/edit_black.svg"
           alt="Toggle Sidebar"
           width={25}
           height={25}

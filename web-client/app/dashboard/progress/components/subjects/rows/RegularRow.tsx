@@ -73,25 +73,27 @@ const RegularRow = ({ subject, handleEdit }: RegularRowProps) => {
           />
         </div>
       </td>
-      <td className={"border-b dark:border-gray-700 p-4 w-44"}>
+      <td className={"border-b dark:border-gray-700 p-4"}>
         <>
-          <div className="flex">
-            <div
-              className={joinClassNames(
-                getStatusStyle(subject.status),
-                "rounded-md py-1 text-center shadow-lg text-gray-200 w-full"
-              )}
-            >
-              {subject.status}
-            </div>
+          <button
+            className={joinClassNames(
+              getStatusStyle(subject.status),
+              "rounded-md py-1 shadow-lg text-gray-200 flex duration-350 hover:cursor-pointer w-40"
+            )}
+          >
+            <p className="w-full">{subject.status}</p>
             <Image
               src="/chevron-down-white.svg"
               alt="Dropdown status"
-              width={0}
-              height={0}
-              className="ml-2 cursor-pointer duration-350"
+              width={23}
+              height={23}
+              style={{
+                width: isEditing ? "23px" : "0px",
+                height: "23px",
+              }}
+              className="duration-350 mr-5"
             />
-          </div>
+          </button>
         </>
       </td>
       {isEditing && editStyle === "Fast" && (

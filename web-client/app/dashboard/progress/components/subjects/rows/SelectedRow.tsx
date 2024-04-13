@@ -1,8 +1,8 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Menu from "../../Menu";
-import { joinClassNames, getStatusStyle } from "@/app/utils/helpers";
+import { joinClassNames, getStatusStyleWithRipple } from "@/app/utils/helpers";
 import { useSelector } from "react-redux";
 import { useAppDispatch } from "@/lib/hooks";
 import {
@@ -32,6 +32,11 @@ const SelectedRow = ({
   const isEditing = useSelector(selectIsEditing);
   const [showGradeMenu, setShowGradeMenu] = useState(false);
   const [showStatusMenu, setShowStatusMenu] = useState(false);
+  const [chevronWidthGrow, setChevronWidthGrow] = useState(false);
+
+  useEffect(() => {
+    setChevronWidthGrow(true);
+  }, []);
 
   const handleUpdateGrade = (value: string) => {
     if (selectedSubject === undefined) return;
@@ -54,7 +59,7 @@ const SelectedRow = ({
   return (
     <tr
       key={selectedSubject.code}
-      className={`${isEditing ? " text-second" : "hover:text-second"}`}
+      className={`${isEditing ? " text-second" : "hover:text-second "} `}
       onClick={() => handleEdit(selectedSubject)}
     >
       <td className="border-b dark:border-gray-700 p-4 bg-slate-900">
@@ -81,6 +86,9 @@ const SelectedRow = ({
             alt="Dropdown status"
             width={20}
             height={20}
+            style={{
+              width: chevronWidthGrow ? "23px" : "0px",
+            }}
             className="cursor-pointer duration-350"
             onClick={() => setShowGradeMenu(!showGradeMenu)}
           />
@@ -95,23 +103,13 @@ const SelectedRow = ({
       </td>
       <td className={"border-b dark:border-gray-700 p-4 bg-slate-900"}>
         <>
-          <div className="flex relative">
-            <div
-              className={joinClassNames(
-                getStatusStyle(selectedSubject.status),
-                "rounded-md py-1 text-center shadow-lg text-gray-200 w-full"
-              )}
-            >
-              {selectedSubject.status}
-            </div>
-            <Image
-              src="/chevron-down-white.svg"
-              alt="Dropdown status"
-              width={5}
-              height={5}
-              className="ml-2 cursor-pointer duration-350"
-              onClick={() => setShowStatusMenu(!showStatusMenu)}
-            />
+          <button
+            onClick={() => setShowStatusMenu(!showStatusMenu)}
+            className={joinClassNames(
+              getStatusStyleWithRipple(selectedSubject.status),
+              "rounded-md py-1 shadow-lg text-gray-200 flex duration-350 hover:cursor-pointer w-40"
+            )}
+          >
             {showStatusMenu && (
               <Menu
                 values={["Disponible", "Cursando", "Aprobada"]}
@@ -119,7 +117,19 @@ const SelectedRow = ({
                 onClick={handleUpdateStatus}
               />
             )}
-          </div>
+            <p className="w-full">{selectedSubject.status}</p>
+            <Image
+              src="/chevron-down-white.svg"
+              alt="Dropdown status"
+              width={23}
+              height={23}
+              style={{
+                width: chevronWidthGrow ? "23px" : "0px",
+                height: "23px",
+              }}
+              className="duration-350 mr-5"
+            />
+          </button>
         </>
       </td>
       {isEditing && (

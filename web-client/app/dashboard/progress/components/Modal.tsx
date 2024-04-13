@@ -47,9 +47,9 @@ const Modal = ({
               <Image
                 src="/cancel.svg"
                 alt="Close"
-                width={25}
-                height={25}
-                className="dark:hover:invert invert"
+                width={45}
+                height={45}
+                className="dark:invert"
               />
             </button>
           )}

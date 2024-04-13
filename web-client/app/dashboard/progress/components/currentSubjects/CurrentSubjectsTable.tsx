@@ -24,7 +24,7 @@ const CurrentSubjectsTable = () => {
                 {subject.description}
               </td>
               <td className="border-b dark:border-gray-700 text-sm">
-                <div className="rounded-md text-center shadow-lg bg-yellow-500 text-gray-200  py-1 ">
+                <div className="rounded-md text-center shadow-lg bg-yellow-500 text-gray-200  py-1 ripple select-none">
                   VER EXÁMENES
                 </div>
               </td>
