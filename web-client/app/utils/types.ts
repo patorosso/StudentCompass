@@ -1,7 +1,7 @@
 interface Subject {
   code: number;
   description: string;
-  finalGrade: number | undefined;
+  finalGrade: number | null;
   weeklyHours: number;
   yearLevel: number;
   isOptional: boolean;
@@ -57,7 +57,7 @@ interface Exam {
 
 interface UpdateSubjectDto {
   code: number;
-  finalGrade: number | undefined;
+  finalGrade: number | null;
   courseId: number | null;
   status: string;
   careerPlanId: number;
