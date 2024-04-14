@@ -32,7 +32,8 @@ namespace Api.Services.Repositories
             table.Columns.Add("course_id", typeof(int));
 
             foreach (var subject in subjectsToUpdate)
-                table.Rows.Add(subject.Code, subject.CareerPlanId, AcademicHelpers.GetStatusId(subject.Status), subject.FinalGrade, subject.CourseId);
+                table.Rows.Add(subject.Code, subject.CareerPlanId, AcademicHelpers.GetStatusId(subject.Status),
+                    subject.FinalGrade == null ? DBNull.Value : subject.FinalGrade, subject.CourseId);
 
             var tvpParam = command.Parameters.AddWithValue("@subjects_to_update", table);
             tvpParam.SqlDbType = SqlDbType.Structured;
