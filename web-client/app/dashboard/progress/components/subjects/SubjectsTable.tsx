@@ -7,7 +7,7 @@ const SubjectsTable = () => {
   return (
     <div
       className="overflow-auto custom-scrollbar pr-4"
-      style={{ height: 610 }}
+      style={{ height: 580 }}
     >
       <table className="min-w-full border-collapse">
         <SubjectsColumns />
