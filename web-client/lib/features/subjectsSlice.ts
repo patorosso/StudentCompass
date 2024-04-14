@@ -49,9 +49,6 @@ export const subjectsSlice = createSlice({
   name: "subjects",
   initialState,
   reducers: {
-    addSubjectToBackup: (state, action) => {
-      state.subjectsBackup = [...state.subjectsBackup, action.payload];
-    },
     addSubjectToUpdate: (state, action) => {
       if (state.selectedSubject === undefined) return;
 
@@ -124,7 +121,7 @@ export const subjectsSlice = createSlice({
       if (state.selectedSubject) {
         state.selectedSubject = {
           ...state.selectedSubject,
-          finalGrade: action.payload,
+          finalGrade: action.payload === "-" ? null : action.payload,
         };
       }
     },
@@ -307,7 +304,6 @@ export const updateSubjects = createAsyncThunk(
 // Export actions
 export const {
   addSubjectToUpdate,
-  addSubjectToBackup,
   setIsEditing,
   setSelectedSubject,
   setEditingFalse,
