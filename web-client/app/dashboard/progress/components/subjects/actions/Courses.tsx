@@ -105,48 +105,79 @@ const Courses = () => {
               </label>
               <div className="w-full select-none grid grid-cols-3 gap-4">
                 <button
+                  disabled={isEditing}
                   onClick={() => setIsEditing(true)}
-                  className="px-3 py-2 w-full mt-[5px] rounded-md shadow-sm flex items-center bg-yellow-500"
+                  className="px-3 py-2 w-full mt-[5px] rounded-md shadow-sm flex items-center ripple-yellow"
                 >
                   <Image
-                    src="/edit.svg"
+                    src="/edit_black.svg"
                     alt="Start edit"
                     width={20}
                     height={20}
-                    className="invert mr-1"
+                    className="mr-1"
                   />
-                  <p className="text-slate-100">Editar</p>
+                  <p className="text-black">Editar</p>
                 </button>
-                {isEditing && (
-                  <>
-                    <button
-                      disabled
-                      className="px-3 py-2 w-full mt-[5px] rounded-md shadow-sm flex items-center bg-success"
-                    >
-                      <Image
-                        src="/save.svg"
-                        alt="Save edit"
-                        width={17}
-                        height={17}
-                        className="mr-1"
-                      />
-                      <p className="text-slate-200">Guardar</p>
-                    </button>
-                    <button
-                      disabled
-                      className="px-3 py-2 w-full mt-[5px] rounded-md shadow-sm flex items-center bg-cancel"
-                    >
-                      <Image
-                        src="/cancel.svg"
-                        alt="Cancel edit"
-                        width={20}
-                        height={20}
-                        className=""
-                      />
-                      <p className="text-slate-200">Cancelar</p>
-                    </button>
-                  </>
-                )}
+                <button
+                  disabled
+                  className=" w-full mt-[5px] rounded-md shadow-sm flex items-center bg-success duration-500"
+                  style={{
+                    minWidth: isEditing ? "106px" : "0",
+                    width: isEditing ? "106px" : "0",
+                  }}
+                >
+                  <Image
+                    src="/save.svg"
+                    alt="Save edit"
+                    width={17}
+                    height={17}
+                    className="mx-2 duration-500"
+                    style={{
+                      minWidth: isEditing ? "17px" : "0",
+                      width: isEditing ? "17px" : "0",
+                    }}
+                  />
+                  <div
+                    style={{
+                      width: isEditing ? "auto" : "0",
+                      minWidth: isEditing ? "auto" : "0",
+                      overflow: "hidden",
+                    }}
+                    className="text-slate-200 duration-500"
+                  >
+                    Guardar
+                  </div>
+                </button>
+                <button
+                  className=" w-full mt-[5px] rounded-md shadow-sm flex items-center bg-cancel duration-500"
+                  style={{
+                    minWidth: isEditing ? "106px" : "0",
+                    width: isEditing ? "106px" : "0",
+                  }}
+                  onClick={() => setIsEditing(false)}
+                >
+                  <Image
+                    src="/cancel.svg"
+                    alt="Cancel edit"
+                    width={25}
+                    height={25}
+                    className="invert duration-500 ml-1"
+                    style={{
+                      minWidth: isEditing ? "25px" : "0",
+                      width: isEditing ? "25px" : "0",
+                    }}
+                  />
+                  <div
+                    style={{
+                      width: isEditing ? "auto" : "0",
+                      minWidth: isEditing ? "auto" : "0",
+                      overflow: "hidden",
+                    }}
+                    className="text-slate-200 duration-500"
+                  >
+                    Cancelar
+                  </div>
+                </button>
               </div>
             </div>
           </div>
@@ -156,8 +187,8 @@ const Courses = () => {
               <label className="block text-gray-700 dark:text-slate-400">
                 Examenes
               </label>
-              <div className="w-full mt-1 rounded-sm shadow-sm border border-slate-300 dark:border-slate-500">
-                <table className="w-full shadow-sm border-slate-300 text-sm dark:border-slate-500">
+              <div className="w-full mt-1 rounded-sm shadow-sm border border-slate-300 dark:border-slate-500 h-[128px]">
+                <table className="w-full shadow-sm border-slate-300 text-sm dark:border-slate-500 ">
                   <thead className="border-b border-slate-300 dark:border-slate-500">
                     <tr className="text-left text-slate-700 dark:text-slate-100">
                       <th className="p-2 rounded-tl-lg w-24">Fecha</th>
@@ -182,51 +213,71 @@ const Courses = () => {
                 <label className=" block text-gray-700 dark:text-slate-400">
                   Nota final
                 </label>
-                <select
-                  disabled={selectedCourse?.status === "Cursando"}
-                  onChange={(e) => handleGradeChange(e.target.value)}
-                  value={selectedCourse?.finalGrade ?? ""}
-                  className={`${
-                    selectedCourse?.status === "Cursando"
-                      ? "text-slate-400"
-                      : "hover:cursor-pointer"
-                  } mt-1 block w-full px-3 py-2 bg-white border rounded-md shadow-sm dark:bg-slate-600 dark:border-none border-slate-300 focus:outline-none`}
-                >
-                  {grades.map((grade, index) => (
-                    <option
-                      key={index}
-                      value={grade.grade === null ? "" : grade.grade}
-                      disabled={grade.grade === null}
-                      className="bg-white text-black hover:cursor-pointer"
-                    >
-                      {grade.description}
-                    </option>
-                  ))}
-                </select>
+                {isEditing ? (
+                  <select
+                    disabled={selectedCourse?.status === "Cursando"}
+                    onChange={(e) => handleGradeChange(e.target.value)}
+                    value={selectedCourse?.finalGrade ?? ""}
+                    className={`${
+                      selectedCourse?.status === "Cursando"
+                        ? "text-slate-400"
+                        : "hover:cursor-pointer"
+                    } mt-1 block w-full px-3 py-2 bg-white border rounded-md shadow-sm dark:bg-slate-600 dark:border-none border-slate-300 focus:outline-none`}
+                  >
+                    {grades.map((grade, index) => (
+                      <option
+                        key={index}
+                        value={grade.grade === null ? "" : grade.grade}
+                        disabled={grade.grade === null}
+                        className="bg-white text-black hover:cursor-pointer"
+                      >
+                        {grade.description}
+                      </option>
+                    ))}
+                  </select>
+                ) : (
+                  <div className="mt-1 block w-full pr-3 pl-4 py-2 bg-white border rounded-md shadow-sm dark:bg-slate-600 dark:border-none border-slate-300 focus:outline-none">
+                    {
+                      grades.find((x) => x.grade === selectedCourse?.finalGrade)
+                        ?.description
+                    }
+                  </div>
+                )}
               </div>
               <div>
                 <label className="mt-4 block text-gray-700 dark:text-slate-400">
                   Estado
                 </label>
-                <select
-                  onChange={(e) => handleStatusChange(e.target.value)}
-                  value={selectedCourse?.status ?? ""}
-                  className={joinClassNames(
-                    getStatusStyle(selectedCourse?.status!),
-                    "hover:cursor-pointer text-white mt-1 block w-full px-3 py-2 border shadow-sm dark:border-none dark:rounded-md border-slate-300 placeholder-slate-400 focus:outline-none"
-                  )}
-                >
-                  {statuses.map((status, index) => (
-                    <option
-                      key={index}
-                      value={status || ""}
-                      disabled={status === ""}
-                      className="bg-white text-black hover:cursor-pointer"
-                    >
-                      {status || "Seleccionar estado"}
-                    </option>
-                  ))}
-                </select>
+                {isEditing ? (
+                  <select
+                    onChange={(e) => handleStatusChange(e.target.value)}
+                    value={selectedCourse?.status ?? ""}
+                    className={joinClassNames(
+                      getStatusStyle(selectedCourse?.status!),
+                      "hover:cursor-pointer text-white mt-1 block w-full px-3 py-2 border shadow-sm dark:border-none dark:rounded-md border-slate-300 placeholder-slate-400 focus:outline-none"
+                    )}
+                  >
+                    {statuses.map((status, index) => (
+                      <option
+                        key={index}
+                        value={status || ""}
+                        disabled={status === ""}
+                        className="bg-white text-black hover:cursor-pointer"
+                      >
+                        {status || "Seleccionar estado"}
+                      </option>
+                    ))}
+                  </select>
+                ) : (
+                  <div
+                    className={joinClassNames(
+                      getStatusStyle(selectedCourse?.status!),
+                      "text-white mt-1 block w-full pr-3 pl-4 py-2 border shadow-sm dark:border-none dark:rounded-md border-slate-300 placeholder-slate-400 focus:outline-none"
+                    )}
+                  >
+                    {selectedCourse?.status!}
+                  </div>
+                )}
               </div>
             </div>
           </div>
