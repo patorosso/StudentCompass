@@ -2,6 +2,21 @@ export function joinClassNames(...classNames: string[]) {
   return classNames.filter(Boolean).join(" ");
 }
 
+export function getStatusStyleWithRipple(status: string) {
+  switch (status) {
+    case "Aprobada":
+      return "ripple-success";
+    case "Disponible":
+      return "ripple-yellow-no-opacity";
+    case "No disponible":
+      return "bg-red-500";
+    case "Cursando":
+      return "bg-blue-500";
+    default:
+      return "bg-gray-400";
+  }
+}
+
 export function getStatusStyle(status: string) {
   switch (status) {
     case "Aprobada":
