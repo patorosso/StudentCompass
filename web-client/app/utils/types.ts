@@ -9,7 +9,6 @@ interface Subject {
   isAnnual: boolean;
   isAvailable: boolean;
   status: string;
-  exams: Exam[];
   courseId: number;
   careerPlanId: number;
 }

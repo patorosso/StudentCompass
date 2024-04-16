@@ -35,7 +35,7 @@ non_available_subjects AS ( -- get distinct non available subjects
 	NOT IN ( SELECT subject_code FROM approved_or_in_progress_subjects WHERE status_id = @approved_status_id )
 )
 
--- first query: subjects list
+-- query subjects
 SELECT s.code, s.description, s.weekly_hours, s.year_level, s.is_optional, s.career_plan_id,
 s.is_elective, s.is_annual, course_info.final_grade, course_info.id as course_id,
 CASE WHEN (j.rn = 1 OR is_elective = 1) THEN @not_available_status_id
@@ -45,12 +45,6 @@ CASE WHEN (j.rn = 1 OR is_elective = 1) THEN @not_available_status_id
 FROM approved_or_in_progress_subjects course_info
 RIGHT JOIN career_subjects s ON course_info.subject_code = s.code -- all subjects with their info
 LEFT JOIN non_available_subjects j ON j.rn = 1 AND j.no_disponible = s.code -- add available logic
-
--- second query: previous subjects grades
-SELECT ex.exam_id, ex.grade, ex.course_id
-FROM app.course_exam ex
-LEFT JOIN app.course c ON c.id = ex.course_id
-WHERE c.student_id = @student_id AND c.career_plan_id IN (@career_plan_id, @transversal_career_plan_id)
 
 END
 

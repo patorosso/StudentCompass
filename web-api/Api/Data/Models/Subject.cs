@@ -7,7 +7,6 @@
         public string Description { get; set; } = null!;
         public byte WeeklyHours { get; set; }
         public byte YearLevel { get; set; }
-        public List<Exam>? Exams { get; set; }
         public bool IsOptional { get; set; }
         public bool IsElective { get; set; }
         public bool IsAnnual { get; set; }

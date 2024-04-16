@@ -41,7 +41,6 @@ namespace Api.Services.Repositories
 
 
             var subjects = new List<Subject>();
-            var courseExams = new Dictionary<int?, List<Exam>>();
             await using var reader = await command.ExecuteReaderAsync();
 
             while (reader.Read())
@@ -63,31 +62,6 @@ namespace Api.Services.Repositories
 
                 subjects.Add(subject);
             }
-
-            await reader.NextResultAsync();
-            while (reader.Read())
-            {
-                var exam = new Exam
-                {
-                    Grade = (byte)reader["grade"],
-                    Description = AcademicHelpers.GetExamDescription((ExamType)(byte)reader["exam_id"])
-                };
-
-                var examCourseId = (int)reader["course_id"];
-
-                if (!courseExams.ContainsKey(examCourseId))
-                    courseExams[examCourseId] = new List<Exam>();
-
-                courseExams[examCourseId].Add(exam);
-            }
-
-            if (courseExams.IsNullOrEmpty())
-                return subjects.AsEnumerable();
-
-            foreach (var subject in subjects.Where(x => x.CourseId != null))
-                if (courseExams.TryGetValue(subject.CourseId, out var examsList))
-                    subject.Exams = examsList;
-
 
             return subjects.AsEnumerable();
         }
@@ -122,7 +96,7 @@ namespace Api.Services.Repositories
         {
             await using var connection = await CreateConnection() ?? throw new SqlConnectionException("DB Connection could not be established.");
             var subjectDtoList = new List<SubjectDto>();
-            SqlTransaction transaction = null;
+            SqlTransaction? transaction = null;
 
             try
             {
@@ -159,7 +133,7 @@ namespace Api.Services.Repositories
             }
             finally
             {
-                transaction?.Dispose();
+                transaction?.DisposeAsync();
             }
 
             return subjectDtoList;
@@ -224,9 +198,9 @@ namespace Api.Services.Repositories
 
         public async Task<IEnumerable<Subject>> GetProgressOverview(short studentId, byte careerPlanId)
         {
-            SqlConnection? connection = null;
             SqlCommand? command = null;
             SqlDataReader? reader = null;
+            SqlConnection? connection = null;
 
             try
             {
@@ -239,7 +213,6 @@ namespace Api.Services.Repositories
                 command.Parameters.Add(new SqlParameter("@career_plan_id", careerPlanId));
 
                 var subjects = new List<Subject>();
-                var courseExams = new Dictionary<int?, List<Exam>>();
 
                 reader = await command.ExecuteReaderAsync();
                 while (reader.Read())
@@ -261,31 +234,6 @@ namespace Api.Services.Repositories
 
                     subjects.Add(subject);
                 }
-
-                await reader.NextResultAsync();
-                while (reader.Read())
-                {
-                    var exam = new Exam
-                    {
-                        Grade = (byte)reader["grade"],
-                        Description = AcademicHelpers.GetExamDescription((ExamType)(byte)reader["exam_id"])
-                    };
-
-                    var examCourseId = (int)reader["course_id"];
-
-                    if (!courseExams.ContainsKey(examCourseId))
-                        courseExams[examCourseId] = new List<Exam>();
-
-                    courseExams[examCourseId].Add(exam);
-                }
-
-                if (courseExams.IsNullOrEmpty())
-                    return subjects.AsEnumerable();
-
-                foreach (var subject in subjects.Where(x => x.CourseId != null))
-                    if (courseExams.TryGetValue(subject.CourseId, out var examsList))
-                        subject.Exams = examsList;
-
 
                 return subjects.AsEnumerable();
             }
@@ -309,8 +257,8 @@ namespace Api.Services.Repositories
 
         public async Task SubjectToInProgress(int? courseId)
         {
-            SqlConnection? connection = null;
             SqlCommand? command = null;
+            SqlConnection? connection = null;
 
             try
             {
