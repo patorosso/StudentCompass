@@ -124,7 +124,11 @@ BEGIN TRAN
 			IF(@existing_course_status = @approved_status_id AND @status_id <> @approved_status_id)
 			BEGIN
 				-- Use function to remove dependant subjects courses
-				SELECT * FROM app.get_subjects_to_remove_courses(@student_id,@career_plan_id,@subject_code)
+				DELETE FROM app.course 
+				WHERE student_id = @student_id AND career_plan_id IN (@career_plan_id, @transversal_career_plan_id)
+				AND subject_code IN (
+									  SELECT * FROM 
+									  app.get_subjects_to_remove_courses(@student_id,@career_plan_id,@subject_code))
 
 				IF(@status_id = @available_status_id)
 				BEGIN
