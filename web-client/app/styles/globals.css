@@ -125,6 +125,32 @@ body {
   background-size: 100%;
 }
 
+.ripple-primary {
+  background-color: #6561c0;
+  transition: background 0.6s;
+  background-position: center;
+  background-image: radial-gradient(circle, transparent 1%, #6561c0 1%);
+  background-size: 12000%;
+}
+.ripple-primary:active {
+  background-color: hsl(258, 13%, 85%);
+  transition: background 0s;
+  background-size: 10%;
+}
+
+.ripple-primary-dark {
+  background-color: #19173e;
+  transition: background 0.6s;
+  background-position: center;
+  background-image: radial-gradient(circle, transparent 1%, #19173e 1%);
+  background-size: 12000%;
+}
+.ripple-primary-dark:active {
+  background-color: hsl(258, 13%, 85%);
+  transition: background 0s;
+  background-size: 1%;
+}
+
 .ripple-yellow-no-opacity {
   background-color: #eab308;
   transition: background 0.6s;
