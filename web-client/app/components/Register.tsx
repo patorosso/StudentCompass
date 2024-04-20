@@ -16,7 +16,7 @@ const Register = () => {
           >
             Username
           </label>
-          <div className="flex shadow appearance-none rounded-lg w-[370px] py-2 px-3 bg-white dark:bg-primary dark:bg-opacity-20 text-primary border dark:border-primary dark:hover:bg-opacity-40 duration-350">
+          <div className="flex shadow appearance-none rounded-lg w-[370px] py-2 px-3 bg-white hover:bg-opacity-70 bg-opacity-20 dark:bg-primary dark:bg-opacity-20 text-primary border border-slate-300 dark:border-primary dark:hover:bg-opacity-40 duration-350">
             <Image
               src="/user.svg"
               alt="user-login"
@@ -26,7 +26,7 @@ const Register = () => {
             />
             <input
               type="text"
-              className="bg-transparent pl-4 text-white w-full select-none focus:outline-none"
+              className="bg-transparent pl-4 text-slate-500 dark:text-white w-full select-none focus:outline-none"
             />
           </div>
         </div>
@@ -37,7 +37,7 @@ const Register = () => {
           >
             Password
           </label>
-          <div className="flex shadow appearance-none rounded-lg w-[370px] py-2 px-3 bg-white dark:bg-primary dark:bg-opacity-20 text-primary border dark:border-primary dark:hover:bg-opacity-40 duration-350">
+          <div className="flex shadow appearance-none rounded-lg w-[370px] py-2 px-3 bg-white hover:bg-opacity-70 bg-opacity-20 dark:bg-primary dark:bg-opacity-20 text-primary border border-slate-300 dark:border-primary dark:hover:bg-opacity-40 duration-350">
             <Image
               src="/password.svg"
               alt="user-register"
@@ -48,7 +48,7 @@ const Register = () => {
             <input
               id="password"
               type="password"
-              className="bg-transparent pl-4 text-white w-full select-none focus:outline-none"
+              className="bg-transparent pl-4 text-slate-500 dark:text-white w-full select-none focus:outline-none"
             />
           </div>
         </div>
@@ -59,7 +59,7 @@ const Register = () => {
           >
             Confirm password
           </label>
-          <div className="flex shadow appearance-none rounded-lg w-[370px] py-2 px-3 bg-white dark:bg-primary dark:bg-opacity-20 text-primary border dark:border-primary dark:hover:bg-opacity-40 duration-350">
+          <div className="flex shadow appearance-none rounded-lg w-[370px] py-2 px-3 bg-white hover:bg-opacity-70 bg-opacity-20 dark:bg-primary dark:bg-opacity-20 text-primary border border-slate-300 dark:border-primary dark:hover:bg-opacity-40 duration-350">
             <Image
               src="/password.svg"
               alt="user-register"
@@ -70,7 +70,7 @@ const Register = () => {
             <input
               id="password"
               type="password"
-              className="bg-transparent pl-4 text-white w-full select-none focus:outline-none"
+              className="bg-transparent pl-4 text-slate-500 dark:text-white w-full select-none focus:outline-none"
             />
           </div>
         </div>
