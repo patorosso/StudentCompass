@@ -6,7 +6,8 @@ INSERT INTO app.course_status VALUES
 	('Cursando'), -- 3
 	('Cursada'),-- 4
 	('Diponible'), -- 5
-	('No disponible'); -- 6
+	('No disponible'), -- 6
+	('Ausente'); -- 7
 
 INSERT INTO app.exam VALUES
 	('Primer parcial'),
