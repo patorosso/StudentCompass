@@ -43,11 +43,11 @@ END;
 
 --Check all grades
 SELECT @error = CASE WHEN EXISTS (
-	SELECT 1 FROM @exams_table WHERE grade > 10 OR grade < 1)
+	SELECT 1 FROM @exams_table WHERE grade > 10 OR grade < 0)
 	THEN 1 ELSE 0 END;
 IF @error = 1
 	BEGIN 
-	SET @error_message = 'Grades must be in the range of 1-10.'
+	SET @error_message = 'Grades must be in the range of 1-10, or 0 for absence.'
 	;THROW 50003, @error_message, 1;
 END;
 
@@ -57,6 +57,11 @@ SELECT @error = CASE WHEN EXISTS (
 	AND NOT EXISTS (SELECT 1 FROM @exams_table WHERE exam_id = @first_exam_id)  
 	)
 	THEN 1 ELSE 0 END;
+IF @error = 1
+	BEGIN 
+	SET @error_message = 'Second exam requires first exam.'
+	;THROW 50004, @error_message, 1;
+END;
 
 --Check first rec exam
 SELECT @error = CASE WHEN EXISTS (
@@ -64,6 +69,11 @@ SELECT @error = CASE WHEN EXISTS (
 	AND NOT EXISTS (SELECT 1 FROM @exams_table WHERE exam_id = @first_exam_id AND grade < 7)  
 	)
 	THEN 1 ELSE 0 END;
+IF @error = 1
+	BEGIN 
+	SET @error_message = 'First recovery exam needs first exam with a grade lower than 7.'
+	;THROW 50005, @error_message, 1;
+END;
 
 --Check second rec exam
 SELECT @error = CASE WHEN EXISTS (
@@ -71,6 +81,11 @@ SELECT @error = CASE WHEN EXISTS (
 	AND NOT EXISTS (SELECT 1 FROM @exams_table WHERE exam_id = @second_exam_id AND grade < 7)  
 	)
 	THEN 1 ELSE 0 END;
+IF @error = 1
+	BEGIN 
+	SET @error_message = 'Second recovery exam needs second exam with a grade lower than 7.'
+	;THROW 50006, @error_message, 1;
+END;
 
 --Check integrator exam
 SELECT @error = CASE WHEN EXISTS (
@@ -78,14 +93,23 @@ SELECT @error = CASE WHEN EXISTS (
 	AND EXISTS (SELECT 1 FROM @exams_table WHERE exam_id = @first_exam_id OR exam_id = @second_exam_id)
 	)
 	THEN 1 ELSE 0 END;
+IF @error = 1
+	BEGIN 
+	SET @error_message = 'Integrator exam cannot exist if there is a first or second exam taken.'
+	;THROW 50007, @error_message, 1;
+END;
 
 --Check rec integrator exam (more freedom in this one)
 SELECT @error = CASE WHEN EXISTS (
 	SELECT 1 FROM @exams_table WHERE exam_id = @integrator_rec_id
-	AND NOT EXISTS (SELECT 1 FROM @exams_table WHERE exam_id IN (@first_exam_id, @second_exam_id,
-	@integrator_exam_id))
+	AND NOT EXISTS (SELECT 1 FROM @exams_table WHERE exam_id = @integrator_exam_id)
 	)
 	THEN 1 ELSE 0 END;
+IF @error = 1
+	BEGIN 
+	SET @error_message = 'Recovery integrator exam cannot exist if there is not a an integrator exam taken.'
+	;THROW 50007, @error_message, 1;
+END;
 
 --Check final
 SELECT @error = CASE WHEN EXISTS (
@@ -95,18 +119,24 @@ SELECT @error = CASE WHEN EXISTS (
 	--Two exams case:
 	(SELECT 1 WHERE EXISTS (
 		--First exams coursed:
-		SELECT 1 FROM @exams_table WHERE exam_id IN (@first_exam_id, @first_rec_id) AND grade < 7 AND grade > 4) 
+		SELECT 1 FROM @exams_table WHERE exam_id IN (@first_exam_id, @first_rec_id) AND grade < 7 AND grade > 3) 
 		AND EXISTS (
 		--Second exams coursed:
-		SELECT 1 FROM @exams_table WHERE exam_id IN (@first_exam_id, @first_rec_id) AND grade < 7 AND grade > 4) 
+		SELECT 1 FROM @exams_table WHERE exam_id IN (@first_exam_id, @first_rec_id) AND grade < 7 AND grade > 3) 
 	) 
 	OR EXISTS 
 	--Integrators case:
 	(SELECT 1 WHERE EXISTS (
-		SELECT 1 FROM @exams_table WHERE exam_id IN (@integrator_exam_id, @integrator_rec_id) AND grade < 7 AND grade > 4)
+		SELECT 1 FROM @exams_table WHERE exam_id IN (@integrator_exam_id, @integrator_rec_id) AND grade < 7 AND grade > 3)
 	)
 )))
 THEN 1 ELSE 0 END;
+IF @error = 1
+	BEGIN 
+	SET @error_message = 'Final exam needs to have a first and second exams (or its recoveries) with a note greater
+	than 3 and less than 7 or an integrator (or its recovery) with that note.'
+	;THROW 50008, @error_message, 1;
+END;
 
 END TRY
 BEGIN CATCH
@@ -119,9 +149,4 @@ END CATCH
 
 END
 
-
--- para q haya un seg parcial debe haber un primero
--- lo mismo para recuperatorios... ( si es del prim, que este exista y para el seg lo mismo),
-
--- final tiene que haber 1 parcial integrador con menos de 7 o 
 

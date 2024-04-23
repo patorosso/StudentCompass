@@ -142,7 +142,7 @@ CREATE TABLE app.course_exam(
 	CONSTRAINT pk_course_exam PRIMARY KEY (course_id, exam_id),
 	CONSTRAINT fk_course_exam FOREIGN KEY (exam_id) REFERENCES app.exam(id),
 	CONSTRAINT fk_course_exam_course FOREIGN KEY (course_id) REFERENCES app.course(id),
-	CONSTRAINT ck_grade CHECK (grade > 0 AND grade <= 10)
+	CONSTRAINT ck_grade CHECK (grade >= 0 AND grade <= 10)
 );
 
 COMMIT TRAN
