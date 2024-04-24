@@ -22,6 +22,8 @@ namespace Api.Services.Helpers
                     return "Disponible";
                 case SubjectStatus.NotAvailable:
                     return "No disponible";
+                case SubjectStatus.Absence:
+                    return "Ausente";
                 default:
                     return "Desconocido";
             }
@@ -35,14 +37,21 @@ namespace Api.Services.Helpers
                     return "Primer parcial";
                 case ExamType.Second:
                     return "Segundo parcial";
-                case ExamType.Recovery:
-                    return "Recuperatorio";
+                case ExamType.Integrator:
+                    return "Integrador";
+                case ExamType.FirstRecovery:
+                    return "Recuperatorio primer parcial";
+                case ExamType.SecondRecovery:
+                    return "Recuperatorio segundo parcial";
+                case ExamType.IntegratorRecovery:
+                    return "Recuperatorio integrador";
                 case ExamType.Final:
                     return "Final";
                 case ExamType.Assignment:
                     return "Trabajo práctico";
                 default:
                     return "Desconocido";
+
             }
         }
 
@@ -57,6 +66,7 @@ namespace Api.Services.Helpers
                 "Cursada" => (byte)SubjectStatus.Coursed,
                 "Disponible" => (byte)SubjectStatus.Available,
                 "No disponible" => (byte)SubjectStatus.NotAvailable,
+                "Ausente" => (byte)SubjectStatus.Absence,
                 _ => 0
             };
         }

@@ -11,8 +11,12 @@
     {
         First = 1,
         Second = 2,
-        Recovery = 3,
-        Final = 4,
-        Assignment = 5
+        Integrator = 3,
+        Assignment = 4,
+        FirstRecovery = 5,
+        SecondRecovery = 6,
+        IntegratorRecovery = 7,
+        Final = 8,
+
     }
 }

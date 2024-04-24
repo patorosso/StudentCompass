@@ -25,7 +25,8 @@
         Failed,
         Coursed,
         Available,
-        NotAvailable
+        NotAvailable,
+        Absence
     }
 
 
