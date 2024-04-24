@@ -18,6 +18,7 @@ IF OBJECT_ID('app.student', 'U') IS NOT NULL DROP TABLE app.student;
 
 -- Table creation for the app schema
 
+BEGIN TRY
 BEGIN TRAN
 
 CREATE TABLE app.student(
@@ -146,3 +147,8 @@ CREATE TABLE app.course_exam(
 );
 
 COMMIT TRAN
+END TRY
+
+BEGIN CATCH
+ROLLBACK TRAN
+END CATCH
