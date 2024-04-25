@@ -63,7 +63,7 @@ CREATE TABLE app.career_plan(
 CREATE TABLE app.enrolled(
 	student_id SMALLINT,
 	career_plan_id TINYINT,
-	enrollment_date DATE NOT NULL,
+	enrollment_year SMALLINT NOT NULL,
 	CONSTRAINT pk_enrolled PRIMARY KEY (student_id, career_plan_id),
 	CONSTRAINT fk_enrolled_student FOREIGN KEY (student_id) REFERENCES app.student(id),
 	CONSTRAINT fk_enrolled_career_plan FOREIGN KEY (career_plan_id) 
