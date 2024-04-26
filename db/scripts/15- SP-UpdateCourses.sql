@@ -37,15 +37,7 @@ CREATE OR ALTER PROCEDURE app.update_courses
 AS
 BEGIN
 
-DECLARE @status_exists BIT;
-DECLARE @subject_exists BIT;
-DECLARE @student_exists BIT;
-DECLARE @valid_grade BIT;
-DECLARE @valid_year BIT;
-DECLARE @valid_term BIT;
-DECLARE @course_exists BIT;
-DECLARE @is_status_duplicated BIT;
-DECLARE @is_approvable BIT;
+DECLARE @is_valid BIT;
 DECLARE @existing_course_status TINYINT = 0;
 DECLARE @transversal_career_plan_id TINYINT = 0;
 DECLARE @approved_status_id TINYINT = 1;
@@ -57,21 +49,21 @@ BEGIN TRY
 BEGIN TRAN
 
 -- Check subject
-SELECT @subject_exists = CASE WHEN EXISTS(
+SELECT @is_valid = CASE WHEN EXISTS(
 	SELECT 1 FROM app.subject WHERE code = @subject_code AND career_plan_id = @career_plan_id
 	) THEN 1 ELSE 0 END;
-IF @subject_exists = 0
+IF @is_valid = 0
 BEGIN 
 	SET @error_message = CONCAT('Subject with code ', CAST(@subject_code AS NVARCHAR), ' does not exist or does not belong to the provided career plan.');
 	;THROW 50001, @error_message, 1;
    END
 
 -- Check student
-SELECT @student_exists = CASE WHEN EXISTS(
+SELECT @is_valid = CASE WHEN EXISTS(
 	SELECT 1 FROM app.enrolled WHERE student_id = @student_id 
 	AND (career_plan_id = @career_plan_id OR @career_plan_id = @transversal_career_plan_id)
 	) THEN 1 ELSE 0 END;
-IF @student_exists = 0
+IF @is_valid = 0
 BEGIN 
 	SET @error_message = CONCAT('Student with ID = ', CAST(@student_id AS NVARCHAR), 
 	' does not exist or is not enrolled in the provided career plan with ID = ', CAST(@career_plan_id AS NVARCHAR));
@@ -79,38 +71,38 @@ BEGIN
 END;
 
 -- Check status
-SELECT @status_exists = CASE WHEN EXISTS(
+SELECT @is_valid = CASE WHEN EXISTS(
 	SELECT 1 FROM app.course_status WHERE @status_id = id
 	) THEN 1 ELSE 0 END;
-IF @status_exists = 0
+IF @is_valid = 0
 BEGIN 
 	SET @error_message = CONCAT('Status with ID = ', CAST(@status_id AS NVARCHAR), ' does not exist.');
 	;THROW 50003, @error_message, 1;
 END;
 
 -- Check grade
-SELECT @valid_grade = CASE WHEN ((@status_id = @approved_status_id AND @final_grade IN (4,5,6,7,8,9,10)) 
+SELECT @is_valid = CASE WHEN ((@status_id = @approved_status_id AND @final_grade IN (4,5,6,7,8,9,10)) 
 OR (@status_id <> @approved_status_id AND @final_grade IS NULL)
 	) THEN 1 ELSE 0 END;
-IF @valid_grade = 0
+IF @is_valid = 0
 BEGIN 
 	SET @error_message = 'Final grade must be between 4-10 if the status is approved. Otherwise, null.';
 	;THROW 50004, @error_message, 1;
 END;
 
 -- Check year
-SELECT @valid_year = CASE WHEN @year < 1988 AND @year > YEAR(GETDATE()) 
-AND @year < (SELECT enrollment_date FROM app.enrolled)
+SELECT @is_valid = CASE WHEN @year > 1988 AND @year < YEAR(GETDATE()) 
+AND @year > (SELECT enrollment_date FROM app.enrolled)
 THEN 1 ELSE 0 END;
-IF @valid_year = 1
+IF @is_valid = 0
 BEGIN 
 	;THROW 50007, 'Year must be greater than 1988 and not in the future!', 1;
 END;
 
 -- Check term
-SELECT @valid_term = CASE WHEN @term_id NOT IN ( SELECT id FROM app.term )
+SELECT @is_valid = CASE WHEN @term_id IN ( SELECT id FROM app.term )
 THEN 1 ELSE 0 END;
-IF @valid_term = 1
+IF @is_valid = 0
 BEGIN
 	;THROW 50008, 'Invalid term id.', 1;
 END;
@@ -130,7 +122,7 @@ BEGIN
 	IF @status_id IN (@approved_status_id, @coursing_status_id)
 	BEGIN
 		-- Search availability
-		SET @is_approvable = (SELECT 1
+		SET @is_valid = (SELECT 1
 							  FROM app.correlative 
 							  WHERE subject_code = @subject_code
 							  AND subject_career_plan_id = @career_plan_id
@@ -142,19 +134,31 @@ BEGIN
 																		FROM app.correlative 
 																		WHERE subject_code = @subject_code
 																		AND subject_career_plan_id = @career_plan_id))alias) )
-		IF @is_approvable = 0
+		IF @is_valid = 0
 		BEGIN
 			SET @error_message = CONCAT('Subject with code ', CAST(@subject_code AS NVARCHAR), ' is not available.');
 			;THROW 50007, @error_message, 1;
 		END
 
+		-- Check dependant subjects dates (poor perfomance)
+		SELECT @is_valid = CASE WHEN NOT EXISTS (
+			SELECT 1 FROM app.get_dependant_subjects(@student_id,@career_plan_id,@subject_code) ds
+			JOIN app.course c ON c.id = ds.subject_code
+			WHERE student_id = @student_id AND career_plan_id = @career_plan_id
+			AND app.validate_course_dates(@term_id,c.term_id,@year,c.year) = 0) 
+			THEN 1 ELSE 0 END;
+			IF @is_valid = 0
+			BEGIN 
+				;THROW 50006, 'This course cannot happen after dependant subjects courses dates (coursed status maybe can).', 1;
+			END;
+
 		-- Check no two approved or in-progress courses happen simultaneously (maybe don't needed)
-		SELECT @is_status_duplicated = CASE WHEN EXISTS(
+		SELECT @is_valid = CASE WHEN NOT EXISTS(
 			SELECT 1 FROM app.course 
 			WHERE @student_id = student_id AND @career_plan_id = career_plan_id 
 			AND @subject_code = subject_code AND status_id = @status_id
 			) THEN 1 ELSE 0 END;
-		IF @is_status_duplicated = 1
+		IF @is_valid = 0
 		BEGIN 
 			;THROW 50006, 'There can be only one approved or in-progress subject simultaneously.', 1;
 		END;
