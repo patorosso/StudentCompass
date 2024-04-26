@@ -128,7 +128,7 @@ BEGIN TRAN
 				WHERE student_id = @student_id AND career_plan_id IN (@career_plan_id, @transversal_career_plan_id)
 				AND subject_code IN (
 									  SELECT * FROM 
-									  app.get_subjects_to_remove_courses(@student_id,@career_plan_id,@subject_code))
+									  app.get_dependant_subjects(@student_id,@career_plan_id,@subject_code))
 
 				IF(@status_id = @available_status_id)
 				BEGIN

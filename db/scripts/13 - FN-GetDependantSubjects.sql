@@ -2,7 +2,7 @@ USE studentcompass
 
 GO
 
-CREATE OR ALTER FUNCTION app.get_subjects_to_remove_courses
+CREATE OR ALTER FUNCTION app.get_dependant_subjects
 (
     @student_id SMALLINT,
     @career_plan_id TINYINT,
