@@ -61,3 +61,25 @@ BEGIN
     RETURN;
 END;
 
+DECLARE @subject_code INT = 3629;
+DECLARE @student_id INT  = 1;
+DECLARE @career_plan_id INT = 1;
+DECLARE @approved_status_id TINYINT = 1;
+DECLARE @coursing_status_id TINYINT = 2;
+DECLARE @coursed_status_id TINYINT = 3;
+DECLARE @absent_status_id TINYINT = 4;
+
+ SELECT cor.correlative_code
+        FROM app.correlative cor
+        INNER JOIN app.course cou ON cou.subject_code = cor.subject_code 
+        AND cou.career_plan_id = cor.subject_career_plan_id
+        AND cou.status_id IN (@approved_status_id, @coursing_status_id,
+		@coursed_status_id, @absent_status_id)
+        WHERE cor.correlative_code = @subject_code
+        AND cor.subject_career_plan_id = @career_plan_id
+        AND cou.student_id = @student_id
+
+		SELECT * from app.course
+
+
+		select * from app.correlative where subject_career_plan_id = 1
