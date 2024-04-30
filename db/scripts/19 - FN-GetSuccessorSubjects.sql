@@ -2,7 +2,7 @@ USE studentcompass
 
 GO
 
-CREATE OR ALTER FUNCTION app.get_precursor_subjects
+CREATE OR ALTER FUNCTION app.get_successor_subjects
 (
     @career_plan_id TINYINT,
     @subject_code SMALLINT
@@ -17,28 +17,28 @@ BEGIN
     -- Temporary table to hold the recursive results
     DECLARE @temp_table TABLE
     (
-        correlative_code SMALLINT
+        subject_code SMALLINT
     );
 
     -- Populate the temporary table using a recursive CTE
     WITH recursive_correlatives AS 
     (
         -- Anchor member: get approved subjects dependant on initial subject
-        SELECT cor.correlative_code
+        SELECT cor.subject_code
         FROM app.correlative cor
-        WHERE cor.subject_code = @subject_code
+        WHERE cor.correlative_code = @subject_code
         AND cor.subject_career_plan_id = @career_plan_id
         
         UNION ALL
         
         -- Recursive member: if the approved subject is found, it becomes the new initial subject
-        SELECT c.correlative_code
+        SELECT c.subject_code
         FROM app.correlative c
-        INNER JOIN recursive_correlatives rc ON c.subject_code = rc.correlative_code
+        INNER JOIN recursive_correlatives rc ON c.correlative_code = rc.subject_code
         WHERE c.subject_career_plan_id = @career_plan_id
     )
     INSERT INTO @temp_table
-    SELECT DISTINCT * FROM recursive_correlatives;
+    SELECT * FROM recursive_correlatives;
 
     -- Transfer the results from the temporary table to the return table
     INSERT INTO @return_table
@@ -46,11 +46,3 @@ BEGIN
 
     RETURN;
 END;
-
-GO;
-
-
-
-
-
-
