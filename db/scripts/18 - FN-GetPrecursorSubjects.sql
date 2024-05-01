@@ -2,6 +2,10 @@ USE studentcompass
 
 GO
 
+IF OBJECT_ID('app.get_precursor_subjects ', 'FN') IS NOT NULL DROP FUNCTION app.get_precursor_subjects;
+
+GO
+
 CREATE OR ALTER FUNCTION app.get_precursor_subjects
 (
     @career_plan_id TINYINT,
@@ -47,7 +51,6 @@ BEGIN
     RETURN;
 END;
 
-GO;
 
 
 

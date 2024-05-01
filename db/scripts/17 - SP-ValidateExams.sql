@@ -2,6 +2,10 @@ use studentcompass
 
 GO
 
+IF OBJECT_ID('app.validate_exams', 'P') IS NOT NULL DROP PROCEDURE app.validate_exams;
+
+GO
+
 CREATE OR ALTER PROCEDURE app.validate_exams 
 @exams_table app.exams_table READONLY
 AS
