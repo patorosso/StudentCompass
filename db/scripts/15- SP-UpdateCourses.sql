@@ -2,25 +2,9 @@ USE studentcompass
 
 GO
 
--- Conditional removal of the SP and TVP type
+-- Conditional removal of the SP
 
 IF OBJECT_ID('app.update_courses', 'P') IS NOT NULL DROP PROCEDURE app.update_courses;
-
-IF EXISTS(SELECT * FROM sys.types 
-WHERE is_table_type = 1 AND name = 'exams_table' AND schema_id = SCHEMA_ID('app'))
-BEGIN
-    DROP TYPE app.exams_table;
-END;
-
--- Table-valued parameter creation
-
-CREATE TYPE app.exams_table AS TABLE
-(
-	exam_course_id INT,
-	exam_id TINYINT,
-	taken_on DATE,
-	grade TINYINT NOT NULL
-);
 
 GO
 
@@ -43,6 +27,7 @@ DECLARE @transversal_career_plan_id TINYINT = 0;
 DECLARE @approved_status_id TINYINT = 1;
 DECLARE @coursing_status_id TINYINT = 2;
 DECLARE @available_status_id TINYINT = 5;
+DECLARE @var_exam_id TINYINT;
 DECLARE @error_message VARCHAR(150);
 
 BEGIN TRY
@@ -131,6 +116,47 @@ BEGIN
 	;THROW 50010, 'This course cannot happen before precursor subjects courses dates (coursed status maybe can).', 1;
 END;
 
+-- Check exams
+EXEC app.validate_exams @exams_table_param;
+
+-- Check status logic
+IF @status_id IN (@approved_status_id, @coursing_status_id)
+BEGIN
+	-- Check availability
+	EXEC app.validate_availability @student_id, @career_plan_id, @subject_code
+	
+	-- Check no two approved or in-progress courses happen simultaneously (maybe don't needed)
+	SELECT @is_valid = CASE WHEN NOT EXISTS(
+		SELECT 1 FROM app.course 
+		WHERE @student_id = student_id AND @career_plan_id = career_plan_id 
+		AND @subject_code = subject_code AND status_id = @status_id
+		) THEN 1 ELSE 0 END;
+	IF @is_valid = 0
+	BEGIN 
+		;THROW 50006, 'There can be only one approved or in-progress subject simultaneously.', 1;
+	END;
+END
+ELSE
+BEGIN
+
+	-- Check no approved or in-progress exist before this course
+	SELECT @is_valid = CASE WHEN NOT EXISTS(
+		SELECT 1 FROM app.course 
+		WHERE @student_id = student_id AND @career_plan_id = career_plan_id 
+		AND @subject_code = subject_code AND status_id IN (@approved_status_id, @coursing_status_id)
+		AND app.validate_course_dates(term_id,@term_id,year,@year) = 0 
+		) THEN 1 ELSE 0 END;
+	IF @is_valid = 0
+	BEGIN 
+		;THROW 50006, 'There is a previous approved or in-progress course, adding more courses after is not allowed.', 1;
+	END;
+END
+
+-- Insert exams into temp table
+SELECT *
+INTO   #temp_exams
+FROM   @exams_table_param;
+
 IF @course_id IS NOT NULL
 BEGIN
 	-- Check course
@@ -143,74 +169,14 @@ BEGIN
 		;THROW 50005, @error_message, 1;
 	END;
 
-	IF @status_id IN (@approved_status_id, @coursing_status_id)
-	BEGIN
-		-- Search availability
-		SET @is_valid = (SELECT 1
-							  FROM app.correlative 
-							  WHERE subject_code = @subject_code
-							  AND subject_career_plan_id = @career_plan_id
-							  HAVING COUNT(*) = (SELECT qty FROM (SELECT COUNT(*) as qty FROM app.course 
-												WHERE student_id = @student_id
-												AND career_plan_id = @career_plan_id
-												AND status_id = @approved_status_id
-												AND subject_code IN (	SELECT correlative_code
-																		FROM app.correlative 
-																		WHERE subject_code = @subject_code
-																		AND subject_career_plan_id = @career_plan_id))alias) )
-		IF @is_valid = 0
-		BEGIN
-			SET @error_message = CONCAT('Subject with code ', CAST(@subject_code AS NVARCHAR), ' is not available.');
-			;THROW 50007, @error_message, 1;
-		END
-
-		
-		-- Check no two approved or in-progress courses happen simultaneously (maybe don't needed)
-		SELECT @is_valid = CASE WHEN NOT EXISTS(
-			SELECT 1 FROM app.course 
-			WHERE @student_id = student_id AND @career_plan_id = career_plan_id 
-			AND @subject_code = subject_code AND status_id = @status_id
-			) THEN 1 ELSE 0 END;
-		IF @is_valid = 0
-		BEGIN 
-			;THROW 50006, 'There can be only one approved or in-progress subject simultaneously.', 1;
-		END;
-	END
-	ELSE
-	BEGIN
-	
-		-- Check no approved or in-progress exist before this course
-		SELECT @is_valid = CASE WHEN NOT EXISTS(
-			SELECT 1 FROM app.course 
-			WHERE @student_id = student_id AND @career_plan_id = career_plan_id 
-			AND @subject_code = subject_code AND status_id IN (@approved_status_id, @coursing_status_id)
-			AND app.validate_course_dates(term_id,@term_id,year,@year) = 0 
-			) THEN 1 ELSE 0 END;
-		IF @is_valid = 0
-		BEGIN 
-			;THROW 50006, 'There can be only one approved or in-progress subject simultaneously.', 1;
-		END;
-
-	END
-
-	-- Check exams
-	EXEC app.validate_exams @exams_table_param; 
-	
 	-- Update exams
 	DELETE FROM app.course_exam WHERE course_id = @course_id;
 
-	SELECT *
-	INTO   #temp_exams
-	FROM   @exams_table_param;
-	
 	WHILE (SELECT COUNT(1) FROM #temp_exams) > 0
 	BEGIN
-	DECLARE @var_exam_id TINYINT;
-	SELECT TOP 1 @var_exam_id = exam_id FROM #temp_exams;
-
-	INSERT INTO app.course_exam SELECT TOP 1 * FROM #temp_exams
-
-	DELETE FROM #temp_exams WHERE exam_course_id = @course_id AND exam_id = @var_exam_id
+		SELECT TOP 1 @var_exam_id = exam_id FROM #temp_exams;
+		INSERT INTO app.course_exam SELECT TOP 1 * FROM #temp_exams;
+		DELETE FROM #temp_exams WHERE exam_id = @var_exam_id;
 	END
 
 	-- Update course
@@ -231,11 +197,26 @@ BEGIN
 END
 ELSE
 BEGIN
--- course viene NULO:
-	SELECT 1
+	-- Course is NULL
+	INSERT INTO app.course(subject_code,career_plan_id,final_grade,status_id,student_id,year,term_id)
+	VALUES(@subject_code,@career_plan_id,@final_grade,@status_id,@student_id,@year,@term_id);
+
+	DECLARE @generated_course_id INT;
+	SET @generated_course_id = SCOPE_IDENTITY();
+
+	-- Update exams
+	UPDATE #temp_exams SET exam_course_id = @generated_course_id;
+
+	WHILE (SELECT COUNT(1) FROM #temp_exams) > 0
+	BEGIN
+		SELECT TOP 1 @var_exam_id = exam_id FROM #temp_exams;
+		INSERT INTO app.course_exam SELECT TOP 1 * FROM #temp_exams;
+		DELETE FROM #temp_exams WHERE exam_id = @var_exam_id;
+	END
+
 END
 
-
+DROP TABLE #temp_exams;
 COMMIT TRAN;
 
 END TRY
