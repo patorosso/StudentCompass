@@ -33,7 +33,7 @@ CREATE OR ALTER PROCEDURE app.update_courses
 @final_grade TINYINT,
 @subject_code SMALLINT,
 @career_plan_id TINYINT,
-@exams_table app.exams_table READONLY
+@exams_table_param app.exams_table READONLY
 AS
 BEGIN
 
@@ -107,6 +107,30 @@ BEGIN
 	;THROW 50008, 'Invalid term id.', 1;
 END;
 
+-- Check successor subjects dates
+SELECT @is_valid = CASE WHEN NOT EXISTS (
+SELECT 1 FROM app.get_successor_subjects(@career_plan_id,@subject_code) ss
+JOIN app.course c ON c.id = ss.subject_code
+WHERE student_id = @student_id AND career_plan_id = @career_plan_id
+AND app.validate_course_dates(@term_id,c.term_id,@year,c.year) = 0) 
+THEN 1 ELSE 0 END;
+IF @is_valid = 0
+BEGIN 
+	;THROW 50009, 'This course cannot happen after successor subjects courses dates (coursed status maybe can).', 1;
+END;
+
+-- Check precursor subjects dates
+SELECT @is_valid = CASE WHEN NOT EXISTS (
+SELECT 1 FROM app.get_precursor_subjects(@career_plan_id,@subject_code) ps
+JOIN app.course c ON c.id = ps.subject_code
+WHERE student_id = @student_id AND career_plan_id = @career_plan_id
+AND app.validate_course_dates(c.term_id,@term_id,c.year,@year) = 0) 
+THEN 1 ELSE 0 END;
+IF @is_valid = 0
+BEGIN 
+	;THROW 50010, 'This course cannot happen before precursor subjects courses dates (coursed status maybe can).', 1;
+END;
+
 IF @course_id IS NOT NULL
 BEGIN
 	-- Check course
@@ -140,18 +164,7 @@ BEGIN
 			;THROW 50007, @error_message, 1;
 		END
 
-		-- Check dependant subjects dates (poor perfomance)
-		SELECT @is_valid = CASE WHEN NOT EXISTS (
-			SELECT 1 FROM app.get_dependant_subjects(@student_id,@career_plan_id,@subject_code) ds
-			JOIN app.course c ON c.id = ds.subject_code
-			WHERE student_id = @student_id AND career_plan_id = @career_plan_id
-			AND app.validate_course_dates(@term_id,c.term_id,@year,c.year) = 0) 
-			THEN 1 ELSE 0 END;
-			IF @is_valid = 0
-			BEGIN 
-				;THROW 50006, 'This course cannot happen after dependant subjects courses dates (coursed status maybe can).', 1;
-			END;
-
+		
 		-- Check no two approved or in-progress courses happen simultaneously (maybe don't needed)
 		SELECT @is_valid = CASE WHEN NOT EXISTS(
 			SELECT 1 FROM app.course 
@@ -163,11 +176,62 @@ BEGIN
 			;THROW 50006, 'There can be only one approved or in-progress subject simultaneously.', 1;
 		END;
 	END
-
+	ELSE
+	BEGIN
 	
+		-- Check no approved or in-progress exist before this course
+		SELECT @is_valid = CASE WHEN NOT EXISTS(
+			SELECT 1 FROM app.course 
+			WHERE @student_id = student_id AND @career_plan_id = career_plan_id 
+			AND @subject_code = subject_code AND status_id IN (@approved_status_id, @coursing_status_id)
+			AND app.validate_course_dates(term_id,@term_id,year,@year) = 0 
+			) THEN 1 ELSE 0 END;
+		IF @is_valid = 0
+		BEGIN 
+			;THROW 50006, 'There can be only one approved or in-progress subject simultaneously.', 1;
+		END;
+
+	END
+
+	-- Check exams
+	EXEC app.validate_exams @exams_table_param; 
+	
+	-- Update exams
+	DELETE FROM app.course_exam WHERE course_id = @course_id;
+
+	SELECT *
+	INTO   #temp_exams
+	FROM   @exams_table_param;
+	
+	WHILE (SELECT COUNT(1) FROM #temp_exams) > 0
+	BEGIN
+	DECLARE @var_exam_id TINYINT;
+	SELECT TOP 1 @var_exam_id = exam_id FROM #temp_exams;
+
+	INSERT INTO app.course_exam SELECT TOP 1 * FROM #temp_exams
+
+	DELETE FROM #temp_exams WHERE exam_course_id = @course_id AND exam_id = @var_exam_id
+	END
+
+	-- Update course
+	IF(@existing_course_status = @approved_status_id AND @status_id <> @approved_status_id)
+	BEGIN
+		-- Use function to remove dependant subjects courses
+		DELETE FROM app.course 
+		WHERE student_id = @student_id AND career_plan_id = @career_plan_id
+		AND subject_code IN (
+							  SELECT * FROM 
+							  app.get_dependant_subjects(@student_id,@career_plan_id,@subject_code))
+	END
+
+	-- Update logic
+	UPDATE app.course
+	SET term_id = @term_id, year = @year, final_grade = @final_grade, status_id = @status_id
+	WHERE id = @course_id;
 END
 ELSE
 BEGIN
+-- course viene NULO:
 	SELECT 1
 END
 
@@ -183,32 +247,4 @@ BEGIN CATCH
      RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState);
 END CATCH
 
-END
-
-GO
-
-
--- course:
-
--- revisar fechas:
-
--- segundo, buscar las que dependen de esa materia (si las fechas son mayores a sus
--- inmediatas correlativas anteriores y menores a sus inmediatas correlativas posteriores.
-
--- ojo, si viene un desaprobada no puede haber un APROBADA que esté antes
-
--- ahora se verifican los examenes. 
--- CHECK ACA QUE LOS EXAM_COURSE_ID existan y llamar al proc para verificarlos mejor
-
--- update  -> implica que si estaba APROBADA debo eliminar los cursos que la necesitaban
-
--- ... .mas cosas quizas
-
--- course viene NULO:
-
---- ........
-
-
-
--- tipos de examenes: primer parcial, segundo parcial, recuperatorio primer/segundo, recuperatorio integrador,
--- tp, presentación, 
+END;
