@@ -111,10 +111,13 @@ DECLARE @MySubjectsToUpdate AS app.subjects_to_update_type;
 -- Step 2: Populate the table variable
 INSERT INTO @MySubjectsToUpdate (subject_code, career_plan_id, status_id, final_grade, course_id)
 VALUES 
-(3628, 1, 1, 4, NULL); -- Example row 1
+(903, 1, 3, NULL, 4004);
 
-EXEC app.update_subjects 
+EXEC app.update_subjects
+	@student_career_plan_id = 1,
     @student_id = 1, -- Assume this is the ID of the student you're updating subjects for
     @subjects_to_update = @MySubjectsToUpdate; 
 
+
+	select * from app.course
 
