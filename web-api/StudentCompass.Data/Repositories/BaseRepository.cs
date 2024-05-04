@@ -1,6 +1,8 @@
 ﻿using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 
-namespace Api.Services.Repositories
+namespace StudentCompass.Data.Repositories
 {
     public class BaseRepository<T>
     {

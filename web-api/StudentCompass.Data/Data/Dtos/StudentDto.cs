@@ -1,12 +1,9 @@
-﻿namespace Api.Data.Models
+﻿namespace StudentCompass.Data.Data.Dtos
 {
-    public class Student
+    public class StudentDto
     {
-        public short Id { get; set; }
         public string Name { get; set; } = null!;
-        public string PasswordHash { get; set; } = null!;
         public string? Mail { get; set; }
         public bool IsActive { get; set; }
-
     }
 }

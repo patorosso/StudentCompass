@@ -1,6 +1,6 @@
-﻿using Api.Data.Models;
+﻿using StudentCompass.Data.Data.Models;
 
-namespace Api.Services.Helpers
+namespace StudentCompass.Data.Helpers
 {
     public static class AcademicHelpers
     {

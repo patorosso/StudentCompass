@@ -1,6 +1,6 @@
-﻿using Api.Data.Dtos;
+﻿using StudentCompass.Data.Data.Dtos;
 
-namespace Api.Services.Contracts
+namespace StudentCompass.Data.Contracts
 {
     public interface IStudentRepository
     {

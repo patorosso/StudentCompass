@@ -1,7 +1,7 @@
-﻿using Api.Data.Dtos;
-using Api.Data.Models;
+﻿using StudentCompass.Data.Data.Dtos;
+using StudentCompass.Data.Data.Models;
 
-namespace Api.Services.Contracts
+namespace StudentCompass.Data.Contracts
 {
     public interface IAcademicRepository
     {

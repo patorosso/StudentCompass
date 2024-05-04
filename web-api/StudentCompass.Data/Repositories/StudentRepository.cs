@@ -1,8 +1,10 @@
-﻿using Api.Data.Dtos;
-using Api.Services.Contracts;
-using Microsoft.Data.SqlClient;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using StudentCompass.Data.Contracts;
+using StudentCompass.Data.Data.Dtos;
 
-namespace Api.Services.Repositories
+namespace StudentCompass.Data.Repositories
 {
     public class StudentRepository : BaseRepository<StudentRepository>, IStudentRepository
     {

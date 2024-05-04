@@ -1,12 +1,14 @@
-﻿using Api.Data.Dtos;
-using Api.Data.Models;
-using Api.Services.Contracts;
-using Api.Services.Helpers;
-using Microsoft.Data.SqlClient;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using StudentCompass.Data.Contracts;
+using StudentCompass.Data.Data.Dtos;
+using StudentCompass.Data.Data.Models;
+using StudentCompass.Data.Helpers;
 using System.Data;
 
-namespace Api.Services.Repositories
+namespace StudentCompass.Data.Repositories
 {
     public class AcademicRepository : BaseRepository<AcademicRepository>, IAcademicRepository
     {

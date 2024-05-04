@@ -1,11 +1,11 @@
-﻿using Api.Data.Dtos;
-using Api.Data.Models;
-using Api.Services.Contracts;
-using Api.Services.Helpers;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
+using StudentCompass.Data.Contracts;
+using StudentCompass.Data.Data.Dtos;
+using StudentCompass.Data.Data.Models;
+using StudentCompass.Data.Helpers;
 
-namespace Api.Controllers
+namespace StudentCompass.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
