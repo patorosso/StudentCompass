@@ -83,6 +83,21 @@ export const coursesSlice = createSlice({
       .addCase(fetchCourses.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
+      })
+      .addCase(addNewCourse.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(addNewCourse.fulfilled, (state, action) => {
+        const newCourse = action.payload;
+        const subjectCode = newCourse.subjectCode;
+        state.coursesDict[subjectCode].push(newCourse);
+        state.selectedCourse = newCourse;
+        toast.success("Curso agregado exitosamente");
+      })
+      .addCase(addNewCourse.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+        toast.error("Error al agregar el curso");
       });
   },
 });
@@ -93,6 +108,23 @@ export const fetchCourses = createAsyncThunk(
   async ({ subjectCode }: GetCoursesArgs) => {
     const response = await fetch(
       `https://localhost:7006/api/Dashboard/getCourses?careerPlanId=1&studentId=1&subjectCode=${subjectCode}`
+    );
+    return response.json();
+  }
+);
+
+export const addNewCourse = createAsyncThunk(
+  "courses/addNewCourse",
+  async (newCourse: Course) => {
+    const response = await fetch(
+      "https://localhost:7006/api/Dashboard/addCourse",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newCourse),
+      }
     );
     return response.json();
   }
