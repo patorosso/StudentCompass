@@ -13,10 +13,12 @@ IF OBJECT_ID('app.term', 'U') IS NOT NULL DROP TABLE app.term;
 IF OBJECT_ID('app.career_plan', 'U') IS NOT NULL DROP TABLE app.career_plan;
 IF OBJECT_ID('app.career', 'U') IS NOT NULL DROP TABLE app.career;
 IF OBJECT_ID('app.department', 'U') IS NOT NULL DROP TABLE app.department;
+IF OBJECT_ID('app.student_preferences', 'U') IS NOT NULL DROP TABLE app.student_preferences;
 IF OBJECT_ID('app.student', 'U') IS NOT NULL DROP TABLE app.student;
 
 -- Table creation for the app schema
 
+BEGIN TRY
 BEGIN TRAN
 
 CREATE TABLE app.student(
@@ -26,6 +28,14 @@ CREATE TABLE app.student(
 	is_active BIT NOT NULL, 
 	CONSTRAINT pk_student PRIMARY KEY (id),
 	--CONSTRAINT ck_pass CHECK (LEN(pass) >= 8)
+);
+
+CREATE TABLE app.student_preferences(
+	student_id SMALLINT,
+	dark_theme BIT,
+	edit_style BIT,
+	CONSTRAINT pk_student_id PRIMARY KEY (student_id),
+	CONSTRAINT fk_student_id FOREIGN KEY (student_id) REFERENCES app.student(id)
 );
 
 CREATE TABLE app.department(
@@ -53,7 +63,7 @@ CREATE TABLE app.career_plan(
 CREATE TABLE app.enrolled(
 	student_id SMALLINT,
 	career_plan_id TINYINT,
-	enrollment_date DATE NOT NULL,
+	enrollment_year SMALLINT NOT NULL,
 	CONSTRAINT pk_enrolled PRIMARY KEY (student_id, career_plan_id),
 	CONSTRAINT fk_enrolled_student FOREIGN KEY (student_id) REFERENCES app.student(id),
 	CONSTRAINT fk_enrolled_career_plan FOREIGN KEY (career_plan_id) 
@@ -104,9 +114,9 @@ CREATE TABLE app.course(
 	student_id SMALLINT NOT NULL,
 	subject_code SMALLINT NOT NULL,
 	career_plan_id TINYINT NOT NULL,
-	term_id TINYINT NOT NULL,
+	term_id TINYINT,
 	status_id TINYINT NOT NULL,
-	year SMALLINT NOT NULL,
+	year SMALLINT,
 	final_grade TINYINT,
 	CONSTRAINT pk_course PRIMARY KEY (id),
 	CONSTRAINT fk_course_student FOREIGN KEY (student_id) REFERENCES app.student(id),
@@ -128,11 +138,17 @@ CREATE TABLE app.exam(
 CREATE TABLE app.course_exam(
 	course_id INT,
 	exam_id TINYINT,
+	taken_on DATE,
 	grade TINYINT NOT NULL,
 	CONSTRAINT pk_course_exam PRIMARY KEY (course_id, exam_id),
 	CONSTRAINT fk_course_exam FOREIGN KEY (exam_id) REFERENCES app.exam(id),
 	CONSTRAINT fk_course_exam_course FOREIGN KEY (course_id) REFERENCES app.course(id),
-	CONSTRAINT ck_grade CHECK (grade > 0 AND grade <= 10)
+	CONSTRAINT ck_grade CHECK (grade >= 0 AND grade <= 10)
 );
 
 COMMIT TRAN
+END TRY
+
+BEGIN CATCH
+ROLLBACK TRAN
+END CATCH

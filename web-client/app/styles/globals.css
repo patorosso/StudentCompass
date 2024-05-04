@@ -1,0 +1,225 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import "./fonts.css";
+
+@keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-20px);
+  }
+  60% {
+    transform: translateY(-15px);
+  }
+}
+
+html {
+  font-family: "Noto Sans", sans-serif;
+}
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+.dark {
+  --foreground-rgb: 18, 18, 18;
+  --background-start-rgb: 18, 18, 18;
+  --background-end-rgb: 28, 28, 28;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+    to bottom,
+    rgb(var(--background-start-rgb)) 40%,
+    rgb(var(--background-end-rgb)) 95%
+  );
+}
+
+/* Custom scrollbar */
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 15px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: black;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #6561c0;
+  transition: width 0.2s ease;
+  cursor: pointer;
+}
+
+.custom-scrollbar:hover::-webkit-scrollbar-thumb {
+  width: 12px;
+}
+
+/* Regular scrollbar */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: black;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #6561c0;
+  transition: width 0.2s ease;
+}
+
+/* Filter svg colors */
+
+.filter-primary {
+  filter: brightness(0) saturate(100%) invert(40%) sepia(10%) saturate(3193%)
+    hue-rotate(204deg) brightness(99%) contrast(88%);
+}
+
+.filter-success {
+  filter: invert(56%) sepia(71%) saturate(367%) hue-rotate(73deg)
+    brightness(91%) contrast(92%);
+}
+
+.filter-white {
+  filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(286deg)
+    brightness(205%) contrast(201%);
+}
+
+/* Sidebar special units */
+
+.w-22 {
+  width: 5.8rem;
+}
+
+.duration-350 {
+  transition-duration: 350ms;
+}
+
+/* Button ripple effect */
+
+.ripple {
+  background-color: hsl(200deg, 50%, 50%);
+  transition: background 0.6s;
+  background-position: center;
+  background-image: radial-gradient(
+    circle,
+    transparent 1%,
+    hsl(200deg, 50%, 55%) 1%
+  );
+  background-size: 12000%;
+}
+.ripple:active {
+  background-color: hsla(200, 39%, 68%, 0.32);
+  transition: background 0s;
+  background-size: 100%;
+}
+
+.ripple-primary {
+  background-color: #6561c0;
+  transition: background 0.6s;
+  background-position: center;
+  background-image: radial-gradient(circle, transparent 1%, #6561c0 1%);
+  background-size: 12000%;
+}
+.ripple-primary:active {
+  background-color: hsl(258, 13%, 85%);
+  transition: background 0s;
+  background-size: 10%;
+}
+
+.ripple-primary-dark {
+  background-color: #19173e;
+  transition: background 0.6s;
+  background-position: center;
+  background-image: radial-gradient(circle, transparent 1%, #19173e 1%);
+  background-size: 12000%;
+}
+.ripple-primary-dark:active {
+  background-color: hsl(258, 13%, 85%);
+  transition: background 0s;
+  background-size: 1%;
+}
+
+.ripple-yellow-no-opacity {
+  background-color: #eab308;
+  transition: background 0.6s;
+  background-position: center;
+  background-image: radial-gradient(circle, transparent 1%, #eab308 1%);
+  background-size: 12000%;
+}
+
+.ripple-yellow-no-opacity:active:not(:disabled) {
+  background-color: hsla(60, 25%, 88%, 0.911);
+  transition: background 0s;
+  background-size: 100%;
+}
+
+.ripple-yellow-no-opacity:disabled {
+  background-color: #eab308;
+}
+
+.ripple-yellow {
+  background-color: #eab308;
+  transition: background 1s;
+  background-position: center;
+  background-image: radial-gradient(circle, transparent 1%, #eab308 1%);
+  background-size: 12000%;
+}
+
+.ripple-yellow:active:not(:disabled) {
+  background-color: hsla(60, 25%, 88%, 0.911);
+  transition: background 0s;
+  background-size: 100%;
+}
+
+.ripple-yellow:disabled {
+  background-color: #eab308;
+  opacity: 0.5;
+}
+
+.ripple-cancel {
+  background-color: #f44336;
+  transition: background 1s;
+  background-position: center;
+  background-image: radial-gradient(
+    circle,
+    transparent 1%,
+    hsl(0, 81%, 55%) 1%
+  );
+  background-size: 12000%;
+}
+
+.ripple-cancel:active {
+  background-color: hsla(0, 25%, 88%, 0.911);
+  transition: background 0s;
+  background-size: 100%;
+}
+
+.ripple-success {
+  background-color: #4caf50;
+  transition: background 1s;
+  background-position: center;
+  background-image: radial-gradient(circle, transparent 1%, #4caf50 1%);
+  background-size: 12000%;
+}
+
+.ripple-success:active:not(:disabled) {
+  background-color: hsla(0, 25%, 88%, 0.911);
+  transition: background 0s;
+  background-size: 100%;
+}
+
+.ripple-success:disabled {
+  background-color: #4caf50;
+}

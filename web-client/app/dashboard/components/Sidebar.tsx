@@ -1,12 +1,9 @@
 "use client";
 import React, { useState } from "react";
 import { useSelectedLayoutSegment } from "next/navigation";
+import { joinClassNames } from "../../utils/helpers";
 import Link from "next/link";
 import Image from "next/image";
-
-function joinClassNames(...classNames: string[]) {
-  return classNames.filter(Boolean).join(" ");
-}
 
 const Sidebar = () => {
   const segment = useSelectedLayoutSegment();
@@ -20,8 +17,8 @@ const Sidebar = () => {
     {
       name: "Progress",
       icon: "/dashboard.svg",
-      path: "/dashboard",
-      current: segment === null,
+      path: "/dashboard/progress",
+      current: segment === "progress",
     },
     {
       name: "Planner",
@@ -42,7 +39,7 @@ const Sidebar = () => {
         isSidebarOpen ? "w-22 s1ml:w-72" : "w-22"
       }`}
     >
-      <div className="flex grow flex-col gap-y-5 bg-black border-black dark:border-gray-500 border-r-[1px] pt-4 px-4 pb-2">
+      <div className="flex grow flex-col gap-y-5 bg-slate-300 opacity-90 dark:bg-black border-gray-400 dark:border-gray-500 border-r-[1px] pt-4 px-4 pb-2">
         <div className="s1ml:flex s1ml:justify-end hidden">
           <button
             className="bg-surface-300 rounded-full flex items-center justify-center w-9 h-9 mr-2 mt-2 hover:cursor-pointer hover:bg-surface-400 select-none"

@@ -4,10 +4,10 @@ using Microsoft.Data.SqlClient;
 
 namespace Api.Services.Repositories
 {
-    public class StudentRepository : BaseRepository, IStudentRepository
+    public class StudentRepository : BaseRepository<StudentRepository>, IStudentRepository
     {
         private readonly ILogger<StudentRepository> _logger;
-        public StudentRepository(IConfiguration configuration, ILogger<StudentRepository> logger) : base(configuration)
+        public StudentRepository(IConfiguration configuration, ILogger<StudentRepository> logger) : base(configuration, logger)
         {
             _logger = logger;
         }

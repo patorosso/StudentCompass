@@ -45,21 +45,13 @@ const config: Config = {
           DEFAULT: "#541c7c",
           dark: "#6e3d94",
         },
-        fourth: {
-          DEFAULT: "#e2d7e8",
-          dark: "#ebe2f0",
+        success: {
+          DEFAULT: "#4caf50",
+          dark: "#66bb6a",
         },
-        sixth: {
-          DEFAULT: "#39a0db",
-          dark: "#61b2e4",
-        },
-        seventh: {
-          DEFAULT: "#5f2762",
-          dark: "#7a3e78",
-        },
-        eigth: {
-          DEFAULT: "#0b0e1b",
-          dark: "#1c1f2c",
+        cancel: {
+          DEFAULT: "#f44336",
+          dark: "#f6685e",
         },
         surface: {
           "100": "#121212",
