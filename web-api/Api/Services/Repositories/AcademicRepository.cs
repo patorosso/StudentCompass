@@ -8,10 +8,10 @@ using System.Data;
 
 namespace Api.Services.Repositories
 {
-    public class AcademyRepository : BaseRepository<AcademyRepository>, IAcademicRepository
+    public class AcademicRepository : BaseRepository<AcademicRepository>, IAcademicRepository
     {
-        private readonly ILogger<AcademyRepository> _logger;
-        public AcademyRepository(IConfiguration configuration, ILogger<AcademyRepository> logger) : base(configuration, logger)
+        private readonly ILogger<AcademicRepository> _logger;
+        public AcademicRepository(IConfiguration configuration, ILogger<AcademicRepository> logger) : base(configuration, logger)
         {
             _logger = logger;
         }
