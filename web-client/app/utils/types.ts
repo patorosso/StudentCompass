@@ -30,7 +30,7 @@ interface CorrelativesDict {
 }
 
 interface Course {
-  id: number;
+  id: number | null;
   subjectCode: number;
   careerPlanId: number;
   year: string | null;
