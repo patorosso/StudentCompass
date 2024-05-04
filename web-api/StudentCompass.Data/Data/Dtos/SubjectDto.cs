@@ -1,4 +1,4 @@
-﻿namespace Api.Data.Dtos
+﻿namespace StudentCompass.Data.Data.Dtos
 {
     public class SubjectDto
     {

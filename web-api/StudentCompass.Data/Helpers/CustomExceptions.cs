@@ -1,4 +1,4 @@
-﻿namespace Api.Services.Helpers
+﻿namespace StudentCompass.Data.Helpers
 {
     public class SqlConnectionException : Exception
     {

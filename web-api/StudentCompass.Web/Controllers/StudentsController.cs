@@ -1,7 +1,7 @@
-﻿using Api.Services.Contracts;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using StudentCompass.Data.Contracts;
 
-namespace Api.Controllers
+namespace StudentCompass.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -30,8 +30,6 @@ namespace Api.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
-
-
 
     }
 }

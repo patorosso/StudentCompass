@@ -1,4 +1,4 @@
-﻿namespace Api.Data.Models
+﻿namespace StudentCompass.Data.Data.Models
 {
     public class Exam
     {
