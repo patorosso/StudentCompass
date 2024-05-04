@@ -55,71 +55,71 @@ const SubjectsMenu = () => {
           className="invert"
         />
       </button>
-      {isMenuVisible && (
-        <div
-          className="origin-top-right absolute left-7 mt-2 w-48 rounded-sm shadow-2xl bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 z-50"
-          role="menu"
-          aria-orientation="vertical"
-          aria-labelledby="menu-button"
-          tabIndex={-1}
-          ref={menuRef}
-        >
-          <div className="py-1" role="none">
-            <div className="flex border-b-2 border-slate-300 px-4">
-              <Image
-                src="/edit.svg"
-                alt="Toggle Sidebar"
-                width={20}
-                height={20}
-              />
-              <p className="text-gray-700 block px-4 py-2 text-sm">Edición</p>
-            </div>
-            <button
-              className={`${
-                preferences.editStyle === "Fast"
-                  ? "text-second"
-                  : "text-gray-700 hover:bg-gray-300"
-              } block px-4 py-2 text-sm w-full text-left `}
-              role="menuitem"
-              tabIndex={-1}
-              onClick={() => onEditClick("Fast")}
-              disabled={preferences.editStyle === "Fast"}
-            >
-              Rápida
-            </button>
-            <button
-              className={`${
-                preferences.editStyle === "Detailed"
-                  ? "text-second"
-                  : "text-gray-700 hover:bg-gray-300"
-              } block px-4 py-2 text-sm w-full text-left border-b-2 border-black`}
-              role="menuitem"
-              tabIndex={-1}
-              onClick={() => onEditClick("Detailed")}
-            >
-              Detallada
-            </button>
+
+      <div
+        className="origin-top-right absolute left-7 mt-2 w-48 rounded-sm shadow-2xl bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 z-50 duration-200"
+        role="menu"
+        aria-orientation="vertical"
+        aria-labelledby="menu-button"
+        tabIndex={-1}
+        ref={menuRef}
+        style={{ maxHeight: isMenuVisible ? "200px" : "0", overflow: "hidden" }}
+      >
+        <div className="py-1" role="none">
+          <div className="flex border-b-2 border-slate-300 px-4">
+            <Image
+              src="/edit.svg"
+              alt="Toggle Sidebar"
+              width={20}
+              height={20}
+            />
+            <p className="text-gray-700 block px-4 py-2 text-sm">Edición</p>
           </div>
-          <div className="py-1" role="none">
-            <div className="flex border-b-2 border-slate-300 px-4">
-              <Image
-                src="/edit.svg"
-                alt="Toggle Sidebar"
-                width={20}
-                height={20}
-              />
-              <p className="text-gray-700 block px-4 py-2 text-sm">Orden</p>
-            </div>
-            <button
-              className="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-300 w-full text-left"
-              role="menuitem"
-              tabIndex={-1}
-            >
-              Código
-            </button>
-          </div>
+          <button
+            className={`${
+              preferences.editStyle === "Fast"
+                ? "text-second"
+                : "text-gray-700 hover:bg-gray-300"
+            } block px-4 py-2 text-sm w-full text-left `}
+            role="menuitem"
+            tabIndex={-1}
+            onClick={() => onEditClick("Fast")}
+            disabled={preferences.editStyle === "Fast"}
+          >
+            Rápida
+          </button>
+          <button
+            className={`${
+              preferences.editStyle === "Detailed"
+                ? "text-second"
+                : "text-gray-700 hover:bg-gray-300"
+            } block px-4 py-2 text-sm w-full text-left border-b-2 border-black`}
+            role="menuitem"
+            tabIndex={-1}
+            onClick={() => onEditClick("Detailed")}
+          >
+            Detallada
+          </button>
         </div>
-      )}
+        <div className="py-1" role="none">
+          <div className="flex border-b-2 border-slate-300 px-4">
+            <Image
+              src="/edit.svg"
+              alt="Toggle Sidebar"
+              width={20}
+              height={20}
+            />
+            <p className="text-gray-700 block px-4 py-2 text-sm">Orden</p>
+          </div>
+          <button
+            className="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-300 w-full text-left"
+            role="menuitem"
+            tabIndex={-1}
+          >
+            Código
+          </button>
+        </div>
+      </div>
     </div>
   );
 };

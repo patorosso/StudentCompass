@@ -11,7 +11,7 @@ import {
   selectDetailedModal,
 } from "@/lib/features/subjectsSlice";
 import { setSelectedCourse } from "@/lib/features/coursesSlice";
-import Courses from "./Courses";
+import CoursesIndex from "../courses/CoursesIndex";
 
 const DetailedEdit = () => {
   const dispatch = useAppDispatch();
@@ -30,15 +30,15 @@ const DetailedEdit = () => {
       {isEditing && editStyle === "Detailed" && (
         <Modal
           title="Vista detallada"
-          width="800px"
-          height="500px"
+          width="850px"
+          height="525px"
           isOpen={modalOpen}
           hasAcceptButton={false}
           hasCancelIcon={true}
           hasCancelButton={false}
           onClose={() => handleClose()}
         >
-          <Courses />
+          <CoursesIndex />
         </Modal>
       )}
     </div>

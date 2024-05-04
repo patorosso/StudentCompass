@@ -13,7 +13,7 @@ export function getStatusStyleWithRipple(status: string) {
     case "Cursando":
       return "bg-blue-500";
     default:
-      return "bg-gray-400";
+      return "bg-slate-600";
   }
 }
 
@@ -28,7 +28,7 @@ export function getStatusStyle(status: string) {
     case "Cursando":
       return "bg-blue-500";
     default:
-      return "bg-gray-400";
+      return "bg-slate-600";
   }
 }
 

@@ -14,17 +14,17 @@ const CurrentSubjectsTable = () => {
         <thead className="text-left text-sm text-white sticky top-0 border-b-[1px]">
           <tr>
             <th className="py-4">Descripción</th>
-            <th className="py-4">Acción</th>
+            <th className="py-4 w-32">Acción</th>
           </tr>
         </thead>
         <tbody>
           {currentSubjects.map((subject) => (
-            <tr key={subject.code} className="cursor-pointer hover:text-second">
+            <tr key={subject.code} className="hover:text-second">
               <td className="border-b dark:border-gray-700 py-4 text-sm text-black dark:text-white">
                 {subject.description}
               </td>
               <td className="border-b dark:border-gray-700 text-sm">
-                <div className="rounded-md text-center shadow-lg bg-yellow-500 text-gray-200  py-1 ripple select-none">
+                <div className="rounded-md text-center shadow-lg bg-yellow-500 text-gray-200  py-1 ripple select-none cursor-pointer">
                   VER EXÁMENES
                 </div>
               </td>

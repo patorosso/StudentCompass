@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 
 interface ModalProps {
@@ -28,22 +29,37 @@ const Modal = ({
   onClose,
   onAccept,
 }: ModalProps) => {
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    if (isOpen) {
+      setTimeout(() => {
+        setVisible(true);
+      }, 10);
+    } else {
+      setVisible(false);
+    }
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 bg-black dark:bg-gray-500 dark:bg-opacity-55 bg-opacity-30 backdrop-blur-sm flex items-center justify-center z-50">
       <div
-        className="flex flex-col bg-white dark:bg-slate-900 p-6 rounded-lg shadow-lg"
-        style={{ height, width }}
+        className="flex flex-col bg-white dark:bg-surface-100 p-6 rounded-lg shadow-lg transition-all duration-350"
+        style={{
+          transform: visible ? "scaleY(1)" : "scaleY(0)",
+          opacity: visible ? 1 : 0,
+          width: width,
+          height: height,
+          transformOrigin: "center",
+          overflow: "hidden",
+        }}
       >
         <div className="flex justify-between">
-          {title && (
-            <h2 className="text-xl font-bold text-slate-600 dark:text-slate-400">
-              {title}
-            </h2>
-          )}
+          {title && <h2 className="text-xl font-bold">{title}</h2>}
           {hasCancelIcon && (
-            <button onClick={onClose} className="select-none">
+            <button onClick={onClose}>
               <Image
                 src="/cancel.svg"
                 alt="Close"
@@ -54,9 +70,7 @@ const Modal = ({
             </button>
           )}
         </div>
-        {subtitle && (
-          <p className="my-6 text-slate-600 dark:text-slate-200">{subtitle}</p>
-        )}
+        {subtitle && <p className="my-6">{subtitle}</p>}
 
         <div className="flex-grow my-6">{children}</div>
 
