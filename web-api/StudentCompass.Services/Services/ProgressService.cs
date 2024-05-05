@@ -22,8 +22,8 @@ namespace StudentCompass.Services.Services
                 if (studentId <= 0 || careerPlanId <= 0)
                     throw new ArgumentException("Invalid studentId or careerPlanId.");
 
-                var enroll = await _progressRepository.GetEnrollByStudentAndCareer(studentId, careerPlanId)
-                             ?? throw new ArgumentException("Student is not enrolled in the career.");
+                _ = await _progressRepository.GetEnrollByStudentAndCareer(studentId, careerPlanId)
+                    ?? throw new ArgumentException("Student is not enrolled in the career.");
 
                 var correlativesDict = await _progressRepository.GetCorrelativesByCareer(careerPlanId);
                 var subjectCourses = await _progressRepository.GetProgressOverviewCourses(studentId, careerPlanId);
@@ -69,7 +69,7 @@ namespace StudentCompass.Services.Services
 
                     if (correlatives == null)
                         subjectCourseDto.Status = AcademicHelpers.GetStatusDescription((byte)CourseStatus.Available);
-                    else if (approvedSubjects.All(sc => correlatives.Contains(sc.Code)))
+                    else if (correlatives.All(sc => approvedSubjects.Exists(x => x.Code == sc)))
                         subjectCourseDto.Status = AcademicHelpers.GetStatusDescription((byte)CourseStatus.NotAvailable);
                 }
                 result.Add(subjectCourseDto);
