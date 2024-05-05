@@ -14,6 +14,9 @@ namespace StudentCompass.Data.Contracts
 
         // new repo methods
         Task<List<Subject>> GetSubjectsByCareer(byte careerPlanId);
-        Task<List<(short, short)>> GetCorrelativesByCareer(byte careerPlanId);
+        Task<Dictionary<short, List<short>>> GetCorrelativesByCareer(byte careerPlanId);
+        Task<(short, byte)?> GetEnrollByStudentAndCareer(short studentId, byte careerPlanId);
+        Task<List<Course>> GetCoursesByCareerAndStudent(byte careerPlanId, short studentId);
+        Task<List<SubjectCourse>> GetProgressOverviewCourses(short studentId, byte careerPlanId);
     }
 }
