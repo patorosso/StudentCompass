@@ -10,10 +10,10 @@ using System.Data;
 
 namespace StudentCompass.Data.Repositories
 {
-    public class AcademicRepository : BaseRepository<AcademicRepository>, IAcademicRepository
+    public class ProgressRepository : BaseRepository<ProgressRepository>, IProgressRepository
     {
-        private readonly ILogger<AcademicRepository> _logger;
-        public AcademicRepository(IConfiguration configuration, ILogger<AcademicRepository> logger) : base(configuration, logger)
+        private readonly ILogger<ProgressRepository> _logger;
+        public ProgressRepository(IConfiguration configuration, ILogger<ProgressRepository> logger) : base(configuration, logger)
         {
             _logger = logger;
         }

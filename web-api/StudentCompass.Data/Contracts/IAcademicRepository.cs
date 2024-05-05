@@ -3,7 +3,7 @@ using StudentCompass.Data.Data.Models;
 
 namespace StudentCompass.Data.Contracts
 {
-    public interface IAcademicRepository
+    public interface IProgressRepository
     {
         Task<IEnumerable<Subject>> GetProgressOverview(short studentId, byte careerPlanId);
         Task SubjectToInProgress(int? courseId);

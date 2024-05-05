@@ -1,6 +1,6 @@
 ﻿namespace StudentCompass.Services.Contracts
 {
-    public interface IAcademicService
+    public interface IProgressService
     {
     }
 }
