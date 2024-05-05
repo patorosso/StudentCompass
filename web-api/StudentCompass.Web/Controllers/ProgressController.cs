@@ -9,12 +9,12 @@ namespace StudentCompass.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class DashboardController : ControllerBase
+    public class ProgressController : ControllerBase
     {
         private readonly IProgressRepository _progressRepository;
-        private readonly ILogger<DashboardController> _logger;
+        private readonly ILogger<ProgressController> _logger;
 
-        public DashboardController(IProgressRepository progressRepository, ILogger<DashboardController> logger)
+        public ProgressController(IProgressRepository progressRepository, ILogger<ProgressController> logger)
         {
             _progressRepository = progressRepository;
             _logger = logger;
