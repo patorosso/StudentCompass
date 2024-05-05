@@ -4,25 +4,25 @@ namespace StudentCompass.Data.Helpers
 {
     public static class AcademicHelpers
     {
-        public static string GetStatusDescription(SubjectStatus status)
+        public static string GetStatusDescription(byte? status)
         {
             switch (status)
             {
-                case SubjectStatus.Pending:
+                case (byte)CourseStatus.Pending:
                     return "Pendiente";
-                case SubjectStatus.Approved:
+                case (byte)CourseStatus.Approved:
                     return "Aprobada";
-                case SubjectStatus.InProgress:
+                case (byte)CourseStatus.InProgress:
                     return "Cursando";
-                case SubjectStatus.Failed:
+                case (byte)CourseStatus.Failed:
                     return "Reprobada";
-                case SubjectStatus.Coursed:
+                case (byte)CourseStatus.Coursed:
                     return "Cursada";
-                case SubjectStatus.Available:
+                case (byte)CourseStatus.Available:
                     return "Disponible";
-                case SubjectStatus.NotAvailable:
+                case (byte)CourseStatus.NotAvailable:
                     return "No disponible";
-                case SubjectStatus.Absence:
+                case (byte)CourseStatus.Absence:
                     return "Ausente";
                 default:
                     return "Desconocido";
@@ -59,14 +59,14 @@ namespace StudentCompass.Data.Helpers
         {
             return status switch
             {
-                "Pendiente" => (byte)SubjectStatus.Pending,
-                "Aprobada" => (byte)SubjectStatus.Approved,
-                "Cursando" => (byte)SubjectStatus.InProgress,
-                "Desaprobada" => (byte)SubjectStatus.Failed,
-                "Cursada" => (byte)SubjectStatus.Coursed,
-                "Disponible" => (byte)SubjectStatus.Available,
-                "No disponible" => (byte)SubjectStatus.NotAvailable,
-                "Ausente" => (byte)SubjectStatus.Absence,
+                "Pendiente" => (byte)CourseStatus.Pending,
+                "Aprobada" => (byte)CourseStatus.Approved,
+                "Cursando" => (byte)CourseStatus.InProgress,
+                "Desaprobada" => (byte)CourseStatus.Failed,
+                "Cursada" => (byte)CourseStatus.Coursed,
+                "Disponible" => (byte)CourseStatus.Available,
+                "No disponible" => (byte)CourseStatus.NotAvailable,
+                "Ausente" => (byte)CourseStatus.Absence,
                 _ => 0
             };
         }

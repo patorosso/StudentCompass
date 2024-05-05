@@ -1,5 +1,7 @@
 ﻿using StudentCompass.Data.Contracts;
+using StudentCompass.Data.Data.Dtos;
 using StudentCompass.Data.Data.Models;
+using StudentCompass.Data.Helpers;
 using StudentCompass.Services.Contracts;
 
 namespace StudentCompass.Services.Services
@@ -13,23 +15,67 @@ namespace StudentCompass.Services.Services
             _progressRepository = progressRepository;
         }
 
-        public async Task<IEnumerable<Subject>> GetProgressOverview(short studentId, byte careerPlanId)
+        public async Task<IEnumerable<SubjectCourseDto>> GetProgressOverview(short studentId, byte careerPlanId)
         {
             try
             {
                 if (studentId <= 0 || careerPlanId <= 0)
                     throw new ArgumentException("Invalid studentId or careerPlanId.");
 
+                var enroll = await _progressRepository.GetEnrollByStudentAndCareer(studentId, careerPlanId)
+                             ?? throw new ArgumentException("Student is not enrolled in the career.");
 
+                var correlativesDict = await _progressRepository.GetCorrelativesByCareer(careerPlanId);
+                var subjectCourses = await _progressRepository.GetProgressOverviewCourses(studentId, careerPlanId);
 
-                var subjects = new List<Subject>();
-                return subjects;
+                return MapCoursesToDtoAndCalculateStatus(subjectCourses, correlativesDict);
 
             }
             catch (Exception e)
             {
                 throw e;
             }
+        }
+
+        private IEnumerable<SubjectCourseDto> MapCoursesToDtoAndCalculateStatus(List<SubjectCourse> subjectCourses, IDictionary<short, List<short>> correlativesDict)
+        {
+            var approvedSubjects = subjectCourses.Where(sc => sc.StatusId == (byte)CourseStatus.Approved).ToList();
+
+            var result = new List<SubjectCourseDto>();
+
+            foreach (var subjectCourse in subjectCourses)
+            {
+                // Map course to dto
+                var subjectCourseDto = new SubjectCourseDto()
+                {
+                    Code = subjectCourse.Code,
+                    Description = subjectCourse.Description,
+                    WeeklyHours = subjectCourse.WeeklyHours,
+                    YearLevel = subjectCourse.YearLevel,
+                    IsOptional = subjectCourse.IsOptional,
+                    IsElective = subjectCourse.IsElective,
+                    IsAnnual = subjectCourse.IsAnnual,
+                    FinalGrade = subjectCourse.FinalGrade,
+                    CourseId = subjectCourse.CourseId,
+                    CareerPlanId = subjectCourse.CareerPlanId
+                };
+
+                // Calculate status
+                if (subjectCourse.StatusId != null)
+                    subjectCourseDto.Status = AcademicHelpers.GetStatusDescription(subjectCourse.StatusId);
+                else
+                {
+                    correlativesDict.TryGetValue(subjectCourse.Code, out var correlatives);
+
+                    if (correlatives == null)
+                        subjectCourseDto.Status = AcademicHelpers.GetStatusDescription((byte)CourseStatus.Available);
+                    else if (approvedSubjects.All(sc => correlatives.Contains(sc.Code)))
+                        subjectCourseDto.Status = AcademicHelpers.GetStatusDescription((byte)CourseStatus.NotAvailable);
+                }
+                result.Add(subjectCourseDto);
+            }
+
+            return result;
         }
     }
 }
