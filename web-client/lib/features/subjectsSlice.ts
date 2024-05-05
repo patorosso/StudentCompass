@@ -234,7 +234,7 @@ export const fetchSubjects = createAsyncThunk(
   "subjects/fetchSubjects",
   async ({ student, career }: FetchSubjectsArgs, { rejectWithValue }) => {
     const response = await fetch(
-      `https://localhost:7006/api/Dashboard?studentId=${student}&careerPlanId=${career}`
+      `https://localhost:7006/api/Progress?studentId=${student}&careerPlanId=${career}`
     );
     if (response.status === 500) {
       return rejectWithValue({
