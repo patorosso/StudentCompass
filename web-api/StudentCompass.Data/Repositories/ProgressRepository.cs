@@ -17,6 +17,71 @@ namespace StudentCompass.Data.Repositories
         {
             _logger = logger;
         }
+        public async Task<List<Subject>> GetSubjectsByCareer(byte careerPlanId)
+        {
+            var connection = await CreateConnection() ?? throw new SqlConnectionException("DB Connection could not be established.");
+
+            var query = $"SELECT * FROM app.subject WHERE career_plan_id = {careerPlanId}";
+            await using var command = new SqlCommand(query, connection);
+            await using var reader = await command.ExecuteReaderAsync();
+
+            var subjects = MapSubjects(reader);
+
+            await CloseConnection(connection, command, reader);
+            return subjects;
+        }
+
+        public async Task<List<(short, short)>> GetCorrelativesByCareer(byte careerPlanId)
+        {
+            var connection = await CreateConnection() ?? throw new SqlConnectionException("DB Connection could not be established.");
+
+            var query = $"SELECT * FROM app.correlative WHERE subject_career_plan_id = {careerPlanId}";
+            await using var command = new SqlCommand(query, connection);
+            await using var reader = await command.ExecuteReaderAsync();
+
+            var correlatives = MapCorrelatives(reader);
+
+            await CloseConnection(connection, command, reader);
+            return correlatives;
+        }
+
+        private List<Subject> MapSubjects(IDataReader reader)
+        {
+            var subjects = new List<Subject>();
+
+            while (reader.Read())
+            {
+                var subject = new Subject
+                {
+                    Code = (short)reader["code"],
+                    IsAnnual = (bool)reader["is_annual"],
+                    YearLevel = (byte)reader["year_level"],
+                    IsOptional = (bool)reader["is_optional"],
+                    IsElective = (bool)reader["is_elective"],
+                    WeeklyHours = (byte)reader["weekly_hours"],
+                    Description = (string)reader["description"],
+                    CareerPlanId = (byte)reader["career_plan_id"],
+                    CourseId = reader["course_id"] is DBNull ? null : (int?)reader["course_id"],
+                    Status = AcademicHelpers.GetStatusDescription((SubjectStatus)(byte)reader["status"]),
+                    FinalGrade = reader["final_grade"] is DBNull ? default(byte?) : (byte)reader["final_grade"]
+                };
+                subjects.Add(subject);
+            }
+            return subjects;
+        }
+
+        private List<(short, short)> MapCorrelatives(IDataReader reader)
+        {
+            var correlatives = new List<(short, short)>();
+
+            while (reader.Read())
+            {
+                var subjectCode = (short)reader["subject_code"];
+                var correlativeCode = (short)reader["correlative_code"];
+                correlatives.Add((subjectCode, correlativeCode));
+            }
+            return correlatives;
+        }
 
         public async Task<IEnumerable<Subject>> UpdateSubjects(List<UpdateSubjectDto> subjectsToUpdate, short studentId, byte careerPlanId)
         {

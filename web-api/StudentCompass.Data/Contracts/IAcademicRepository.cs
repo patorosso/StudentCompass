@@ -11,5 +11,9 @@ namespace StudentCompass.Data.Contracts
         Task<IEnumerable<Subject>> UpdateSubjects(List<UpdateSubjectDto> subjectsToUpdate, short studentId, byte careerPlanId);
         Task<IEnumerable<SubjectDto>> CreateInProgressCourse(List<Subject> subjects, short studentId);
         Task<IEnumerable<Course>> GetCourses(short studentId, byte careerPlanId, short subjectCode);
+
+        // new repo methods
+        Task<List<Subject>> GetSubjectsByCareer(byte careerPlanId);
+        Task<List<(short, short)>> GetCorrelativesByCareer(byte careerPlanId);
     }
 }

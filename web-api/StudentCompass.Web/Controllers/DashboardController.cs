@@ -11,12 +11,12 @@ namespace StudentCompass.Web.Controllers
     [ApiController]
     public class DashboardController : ControllerBase
     {
-        private readonly IAcademicRepository _academicRepository;
+        private readonly IProgressRepository _progressRepository;
         private readonly ILogger<DashboardController> _logger;
 
-        public DashboardController(IAcademicRepository academicRepository, ILogger<DashboardController> logger)
+        public DashboardController(IProgressRepository progressRepository, ILogger<DashboardController> logger)
         {
-            _academicRepository = academicRepository;
+            _progressRepository = progressRepository;
             _logger = logger;
         }
 
@@ -25,7 +25,7 @@ namespace StudentCompass.Web.Controllers
         {
             try
             {
-                var progressOverview = await _academicRepository.GetProgressOverview(studentId, careerPlanId);
+                var progressOverview = await _progressRepository.GetProgressOverview(studentId, careerPlanId);
                 return Ok(progressOverview);
             }
             catch (Exception e)
@@ -40,7 +40,7 @@ namespace StudentCompass.Web.Controllers
         {
             try
             {
-                await _academicRepository.SubjectToInProgress(courseId);
+                await _progressRepository.SubjectToInProgress(courseId);
                 return Ok();
             }
             catch (Exception e)
@@ -56,7 +56,7 @@ namespace StudentCompass.Web.Controllers
         {
             try
             {
-                var newCurrentSubjects = await _academicRepository.CreateInProgressCourse(subjects, studentId);
+                var newCurrentSubjects = await _progressRepository.CreateInProgressCourse(subjects, studentId);
                 return Ok(newCurrentSubjects);
             }
             catch (SqlException e)
@@ -75,7 +75,7 @@ namespace StudentCompass.Web.Controllers
         {
             try
             {
-                var correlatives = await _academicRepository.GetCorrelatives(careerPlanId);
+                var correlatives = await _progressRepository.GetCorrelatives(careerPlanId);
                 return Ok(correlatives);
             }
             catch (SqlException e)
@@ -94,7 +94,7 @@ namespace StudentCompass.Web.Controllers
         {
             try
             {
-                var updatedSubjects = await _academicRepository.UpdateSubjects(subjectsToUpdate, studentId, careerPlanId);
+                var updatedSubjects = await _progressRepository.UpdateSubjects(subjectsToUpdate, studentId, careerPlanId);
                 return Ok(updatedSubjects);
             }
             catch (SqlException e)
@@ -114,7 +114,7 @@ namespace StudentCompass.Web.Controllers
         {
             try
             {
-                var courses = await _academicRepository.GetCourses(studentId, careerPlanId, subjectCode);
+                var courses = await _progressRepository.GetCourses(studentId, careerPlanId, subjectCode);
                 return Ok(new Dictionary<short, IEnumerable<Course>> { { subjectCode, courses } });
             }
             catch (SqlException e)

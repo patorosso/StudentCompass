@@ -11,10 +11,10 @@ namespace StudentCompass.Web.Helpers
         {
             // Repositories
             services.AddScoped<IStudentRepository, StudentRepository>();
-            services.AddScoped<IAcademicRepository, AcademicRepository>(); // todo: singleton ... ?
+            services.AddScoped<IProgressRepository, ProgressRepository>(); // todo: singleton ... ?
 
             // Services
-            services.AddScoped<IAcademicService, AcademicService>();
+            services.AddScoped<IProgressService, ProgressService>();
 
             return services;
         }
