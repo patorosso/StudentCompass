@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    name: Build and analyze
+    name: Build and Test
     runs-on: windows-latest
 
     steps:
@@ -29,4 +29,4 @@ jobs:
           dotnet build web-api/web-api.sln
       - name: Test
         run: |
-          dotnet dotcover test --dcReportType=HTML
+          dotnet dotcover test web-api/web-api.sln --dcReportType=HTML
