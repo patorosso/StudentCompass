@@ -10,12 +10,191 @@ using System.Data;
 
 namespace StudentCompass.Data.Repositories
 {
-    public class AcademicRepository : BaseRepository<AcademicRepository>, IAcademicRepository
+    public class ProgressRepository : BaseRepository<ProgressRepository>, IProgressRepository
     {
-        private readonly ILogger<AcademicRepository> _logger;
-        public AcademicRepository(IConfiguration configuration, ILogger<AcademicRepository> logger) : base(configuration, logger)
+        private readonly ILogger<ProgressRepository> _logger;
+        public ProgressRepository(IConfiguration configuration, ILogger<ProgressRepository> logger) : base(configuration, logger)
         {
             _logger = logger;
+        }
+
+        public async Task<List<SubjectCourse>> GetProgressOverviewCourses(short studentId, byte careerPlanId)
+        {
+            var connection = await CreateConnection() ?? throw new SqlConnectionException("DB Connection could not be established.");
+
+            var approvedOrInProgressCte = "WITH approved_or_in_progress_subjects AS (" +
+                                          "SELECT subject_code, career_plan_id, status_id, final_grade, id " +
+                                          "FROM app.course c " +
+                                          $"WHERE student_id = {studentId} " +
+                                          $"AND status_id IN ({(byte)CourseStatus.Approved}, {(byte)CourseStatus.InProgress}) " +
+                                          $"AND career_plan_id IN ({Constants.TransversalCode},{careerPlanId})),";
+
+            var careerSubjectsCte = "career_subjects AS ( SELECT * FROM app.subject " +
+                                    $"WHERE career_plan_id IN ({Constants.TransversalCode},{careerPlanId})) ";
+
+            var query = approvedOrInProgressCte + careerSubjectsCte +
+                        "SELECT s.*, id, status_id, final_grade FROM approved_or_in_progress_subjects ap " +
+                        "RIGHT JOIN career_subjects s ON ap.subject_code = s.code";
+
+            await using var command = new SqlCommand(query, connection);
+            await using var reader = await command.ExecuteReaderAsync();
+
+            var courses = MapSubjectCourses(reader);
+
+            await CloseConnection(connection, command, reader);
+            return courses;
+        }
+
+        public async Task<List<Course>> GetCoursesByCareerAndStudent(byte careerPlanId, short studentId)
+        {
+            var connection = await CreateConnection() ?? throw new SqlConnectionException("DB Connection could not be established.");
+
+            var query = $"SELECT * FROM app.course WHERE student_id = {studentId} AND career_plan_id = {careerPlanId}";
+            await using var command = new SqlCommand(query, connection);
+            await using var reader = await command.ExecuteReaderAsync();
+
+            var courses = MapCourses(reader);
+
+            await CloseConnection(connection, command, reader);
+            return courses;
+        }
+
+        public async Task<List<Subject>> GetSubjectsByCareer(byte careerPlanId)
+        {
+            var connection = await CreateConnection() ?? throw new SqlConnectionException("DB Connection could not be established.");
+
+            var query = $"SELECT * FROM app.subject WHERE career_plan_id = {careerPlanId}";
+            await using var command = new SqlCommand(query, connection);
+            await using var reader = await command.ExecuteReaderAsync();
+
+            var subjects = MapSubjects(reader);
+
+            await CloseConnection(connection, command, reader);
+            return subjects;
+        }
+
+        public async Task<Dictionary<short, List<short>>> GetCorrelativesByCareer(byte careerPlanId)
+        {
+            var connection = await CreateConnection() ?? throw new SqlConnectionException("DB Connection could not be established.");
+
+            var query = $"SELECT * FROM app.correlative WHERE subject_career_plan_id IN ({Constants.TransversalCode}, {careerPlanId})";
+            await using var command = new SqlCommand(query, connection);
+            await using var reader = await command.ExecuteReaderAsync();
+
+            var correlatives = MapCorrelatives(reader);
+
+            await CloseConnection(connection, command, reader);
+            return correlatives;
+        }
+
+        public async Task<(short, byte)?> GetEnrollByStudentAndCareer(short studentId, byte careerPlanId)
+        {
+            var connection = await CreateConnection() ?? throw new SqlConnectionException("DB Connection could not be established.");
+
+            var query = $"SELECT * FROM app.student s JOIN app.enrolled e ON s.id = e.student_id " +
+                        $"WHERE s.id = {studentId} AND e.career_plan_id = {careerPlanId}";
+
+            await using var command = new SqlCommand(query, connection);
+            await using var reader = await command.ExecuteReaderAsync();
+
+            var enroll = MapEnroll(reader);
+
+            await CloseConnection(connection, command, reader);
+            return enroll;
+        }
+
+        private List<SubjectCourse> MapSubjectCourses(SqlDataReader reader)
+        {
+            var subjectCourses = new List<SubjectCourse>();
+            while (reader.Read())
+            {
+                var subjectCourse = new SubjectCourse
+                {
+                    Code = (short)reader["code"],
+                    Description = (string)reader["description"],
+                    WeeklyHours = (byte)reader["weekly_hours"],
+                    YearLevel = (byte)reader["year_level"],
+                    IsOptional = (bool)reader["is_optional"],
+                    IsElective = (bool)reader["is_elective"],
+                    IsAnnual = (bool)reader["is_annual"],
+                    StatusId = reader["status_id"] is DBNull ? null : (byte)reader["status_id"],
+                    FinalGrade = reader["final_grade"] is DBNull ? default : (byte)reader["final_grade"],
+                    CourseId = reader["id"] is DBNull ? default : (int)reader["id"],
+                    CareerPlanId = (byte)reader["career_plan_id"]
+                };
+                subjectCourses.Add(subjectCourse);
+            }
+            return subjectCourses;
+        }
+
+        private List<Course> MapCourses(SqlDataReader reader)
+        {
+            var courses = new List<Course>();
+            while (reader.Read())
+            {
+                var course = new Course
+                {
+                    Id = (int)reader["id"],
+                    Term = reader["term_id"] is DBNull ? default : AcademicHelpers.GetTerm((byte)reader["term_id"]),
+                    Year = reader["year"] is DBNull ? default : ((short)reader["year"]).ToString(),
+                    StatusId = (byte)reader["status_id"],
+                    FinalGrade = reader["final_grade"] is DBNull ? default : (byte)reader["final_grade"],
+                    SubjectCode = (short)reader["subject_code"],
+                    CareerPlanId = (byte)reader["career_plan_id"]
+                };
+                courses.Add(course);
+            }
+            return courses;
+        }
+
+        private List<Subject> MapSubjects(IDataReader reader)
+        {
+            var subjects = new List<Subject>();
+
+            while (reader.Read())
+            {
+                var subject = new Subject
+                {
+                    Code = (short)reader["code"],
+                    IsAnnual = (bool)reader["is_annual"],
+                    YearLevel = (byte)reader["year_level"],
+                    IsOptional = (bool)reader["is_optional"],
+                    IsElective = (bool)reader["is_elective"],
+                    WeeklyHours = (byte)reader["weekly_hours"],
+                    Description = (string)reader["description"],
+                    CareerPlanId = (byte)reader["career_plan_id"],
+                };
+                subjects.Add(subject);
+            }
+            return subjects;
+        }
+
+        private Dictionary<short, List<short>> MapCorrelatives(IDataReader reader)
+        {
+            var correlatives = new Dictionary<short, List<short>>();
+
+            while (reader.Read())
+            {
+                var subjectCode = (short)reader["subject_code"];
+                var correlativeCode = (short)reader["correlative_code"];
+
+                if (correlatives.TryGetValue(subjectCode, out var correlativeList))
+                    correlativeList?.Add(correlativeCode);
+                else
+                    correlatives.Add(subjectCode, new List<short> { correlativeCode });
+            }
+
+            return correlatives;
+        }
+
+        private (short, byte)? MapEnroll(IDataReader reader)
+        {
+            if (!reader.Read())
+                return null;
+
+            var studentId = (short)reader["student_id"];
+            var careerPlanId = (byte)reader["career_plan_id"];
+            return (studentId, careerPlanId);
         }
 
         public async Task<IEnumerable<Subject>> UpdateSubjects(List<UpdateSubjectDto> subjectsToUpdate, short studentId, byte careerPlanId)
@@ -56,10 +235,7 @@ namespace StudentCompass.Data.Repositories
                     IsElective = (bool)reader["is_elective"],
                     WeeklyHours = (byte)reader["weekly_hours"],
                     Description = (string)reader["description"],
-                    CareerPlanId = (byte)reader["career_plan_id"],
-                    CourseId = reader["course_id"] is DBNull ? null : (int?)reader["course_id"],
-                    Status = AcademicHelpers.GetStatusDescription((SubjectStatus)(byte)reader["status"]),
-                    FinalGrade = reader["final_grade"] is DBNull ? default(byte?) : (byte)reader["final_grade"]
+                    CareerPlanId = (byte)reader["career_plan_id"]
                 };
 
                 subjects.Add(subject);
@@ -162,7 +338,7 @@ namespace StudentCompass.Data.Repositories
                     Id = (int)reader["id"],
                     Term = reader["term_id"] is DBNull ? default : AcademicHelpers.GetTerm((byte)reader["term_id"]),
                     Year = reader["year"] is DBNull ? default : ((short)reader["year"]).ToString(),
-                    Status = AcademicHelpers.GetStatusDescription((SubjectStatus)(byte)reader["status_id"]),
+                    StatusId = (byte)reader["status_id"],
                     FinalGrade = reader["final_grade"] is DBNull ? default : (byte)reader["final_grade"],
                     SubjectCode = (short)reader["subject_code"],
                     CareerPlanId = (byte)reader["career_plan_id"]
@@ -229,13 +405,12 @@ namespace StudentCompass.Data.Repositories
                         WeeklyHours = (byte)reader["weekly_hours"],
                         Description = (string)reader["description"],
                         CareerPlanId = (byte)reader["career_plan_id"],
-                        CourseId = reader["course_id"] is DBNull ? null : (int?)reader["course_id"],
-                        Status = AcademicHelpers.GetStatusDescription((SubjectStatus)(byte)reader["status"]),
-                        FinalGrade = reader["final_grade"] is DBNull ? default(byte?) : (byte)reader["final_grade"]
                     };
 
                     subjects.Add(subject);
                 }
+
+
 
                 return subjects.AsEnumerable();
             }

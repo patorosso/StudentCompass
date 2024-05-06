@@ -32,5 +32,19 @@ namespace StudentCompass.Data.Repositories
             }
         }
 
+        protected async Task CloseConnection(SqlConnection connection, SqlCommand command)
+        {
+            await command.DisposeAsync();
+            await connection.CloseAsync();
+            await connection.DisposeAsync();
+        }
+
+        protected async Task CloseConnection(SqlConnection connection, SqlCommand command, SqlDataReader reader)
+        {
+            await reader.DisposeAsync();
+            await command.DisposeAsync();
+            await connection.CloseAsync();
+            await connection.DisposeAsync();
+        }
     }
 }
