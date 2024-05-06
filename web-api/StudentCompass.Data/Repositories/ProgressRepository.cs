@@ -26,14 +26,14 @@ namespace StudentCompass.Data.Repositories
                                           "SELECT subject_code, career_plan_id, status_id, final_grade, id " +
                                           "FROM app.course c " +
                                           $"WHERE student_id = {studentId} " +
-                                          $"AND status_id IN ({CourseStatus.Approved},{CourseStatus.InProgress}) " +
+                                          $"AND status_id IN ({(byte)CourseStatus.Approved}, {(byte)CourseStatus.InProgress}) " +
                                           $"AND career_plan_id IN ({Constants.TransversalCode},{careerPlanId})),";
 
             var careerSubjectsCte = "career_subjects AS ( SELECT * FROM app.subject " +
                                     $"WHERE career_plan_id IN ({Constants.TransversalCode},{careerPlanId})) ";
 
             var query = approvedOrInProgressCte + careerSubjectsCte +
-                        "SELECT * FROM approved_or_in_progress_subjects ap " +
+                        "SELECT s.*, id, status_id, final_grade FROM approved_or_in_progress_subjects ap " +
                         "RIGHT JOIN career_subjects s ON ap.subject_code = s.code";
 
             await using var command = new SqlCommand(query, connection);
@@ -77,7 +77,7 @@ namespace StudentCompass.Data.Repositories
         {
             var connection = await CreateConnection() ?? throw new SqlConnectionException("DB Connection could not be established.");
 
-            var query = $"SELECT * FROM app.correlative WHERE subject_career_plan_id = {careerPlanId}";
+            var query = $"SELECT * FROM app.correlative WHERE subject_career_plan_id IN ({Constants.TransversalCode}, {careerPlanId})";
             await using var command = new SqlCommand(query, connection);
             await using var reader = await command.ExecuteReaderAsync();
 
@@ -117,7 +117,7 @@ namespace StudentCompass.Data.Repositories
                     IsOptional = (bool)reader["is_optional"],
                     IsElective = (bool)reader["is_elective"],
                     IsAnnual = (bool)reader["is_annual"],
-                    StatusId = (byte)reader["status_id"],
+                    StatusId = reader["status_id"] is DBNull ? null : (byte)reader["status_id"],
                     FinalGrade = reader["final_grade"] is DBNull ? default : (byte)reader["final_grade"],
                     CourseId = reader["id"] is DBNull ? default : (int)reader["id"],
                     CareerPlanId = (byte)reader["career_plan_id"]
@@ -409,6 +409,8 @@ namespace StudentCompass.Data.Repositories
 
                     subjects.Add(subject);
                 }
+
+
 
                 return subjects.AsEnumerable();
             }
