@@ -4,6 +4,7 @@ using StudentCompass.Data.Contracts;
 using StudentCompass.Data.Data.Dtos;
 using StudentCompass.Data.Data.Models;
 using StudentCompass.Data.Helpers;
+using StudentCompass.Services.Contracts;
 
 namespace StudentCompass.Web.Controllers
 {
@@ -12,11 +13,13 @@ namespace StudentCompass.Web.Controllers
     public class ProgressController : ControllerBase
     {
         private readonly IProgressRepository _progressRepository;
+        private readonly IProgressService _progressService;
         private readonly ILogger<ProgressController> _logger;
 
-        public ProgressController(IProgressRepository progressRepository, ILogger<ProgressController> logger)
+        public ProgressController(IProgressRepository progressRepository, IProgressService progressService, ILogger<ProgressController> logger)
         {
             _progressRepository = progressRepository;
+            _progressService = progressService;
             _logger = logger;
         }
 
@@ -25,7 +28,7 @@ namespace StudentCompass.Web.Controllers
         {
             try
             {
-                var progressOverview = await _progressRepository.GetProgressOverview(studentId, careerPlanId);
+                var progressOverview = await _progressService.GetProgressOverview(studentId, careerPlanId);
                 return Ok(progressOverview);
             }
             catch (Exception e)
