@@ -1,3 +1,5 @@
+[![Quality Gate Status](http://186.23.126.152:9000/api/project_badges/measure?project=StudentCompass&metric=alert_status&token=sqb_c77648187b7b050cc75d196eaebf6b094b1fd5a0)](http://186.23.126.152:9000/dashboard?id=StudentCompass)
+
 # StudentCompass
 
 ## Overview
