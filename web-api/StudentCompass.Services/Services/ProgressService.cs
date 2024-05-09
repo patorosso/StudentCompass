@@ -65,11 +65,11 @@ namespace StudentCompass.Services.Services
                 else
                 {
                     correlativesDict.TryGetValue(subjectCourse.Code, out var correlatives);
+                    var allCorrelativesApproved = correlatives == null || correlatives.All(c => approvedSubjects.Exists(sc => sc.Code == c));
 
-                    if (correlatives == null || approvedSubjects.All(sc => correlatives.Contains(sc.Code)))
-                        subjectCourseDto.Status = AcademicHelpers.GetStatusDescription((byte)CourseStatus.Available);
-                    else
-                        subjectCourseDto.Status = AcademicHelpers.GetStatusDescription((byte)CourseStatus.NotAvailable);
+                    subjectCourseDto.Status = allCorrelativesApproved ?
+                        AcademicHelpers.GetStatusDescription((byte)CourseStatus.Available) :
+                        AcademicHelpers.GetStatusDescription((byte)CourseStatus.NotAvailable);
                 }
                 result.Add(subjectCourseDto);
             }
