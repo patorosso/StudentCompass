@@ -5,14 +5,14 @@ using StudentCompass.Data.Helpers;
 using StudentCompass.Services.Contracts;
 using StudentCompass.Services.Services;
 
-namespace StudentCompass.ServicesTests
+namespace StudentCompass.ServicesTests.ProgressTests
 {
-    public class ProgressServiceTests
+    public class GetProgressOverviewTests
     {
         private readonly Mock<IProgressRepository> _progressRepositoryMock = new();
         private readonly IProgressService _progressService;
 
-        public ProgressServiceTests()
+        public GetProgressOverviewTests()
         {
             _progressService = new ProgressService(_progressRepositoryMock.Object);
         }
