@@ -47,7 +47,7 @@ export const getCorrelatives = createAsyncThunk(
   "correlatives/getCorrelatives",
   async ({ career }: GetCorrelativesArgs) => {
     const response = await fetch(
-      `https://localhost:7006/api/Dashboard/getCorrelatives?careerPlanId=${career}`
+      `https://localhost:7006/api/dashboard/progress/getCorrelatives?careerPlanId=${career}`
     );
     return response.json();
   }

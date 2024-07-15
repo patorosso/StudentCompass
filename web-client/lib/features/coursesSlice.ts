@@ -107,7 +107,7 @@ export const fetchCourses = createAsyncThunk(
   "courses/fetchCourses",
   async ({ subjectCode }: GetCoursesArgs) => {
     const response = await fetch(
-      `https://localhost:7006/api/Dashboard/getCourses?careerPlanId=1&studentId=1&subjectCode=${subjectCode}`
+      `https://localhost:7006/api/dashboard/progress/getCourses?careerPlanId=1&studentId=1&subjectCode=${subjectCode}`
     );
     return response.json();
   }
@@ -117,7 +117,7 @@ export const addNewCourse = createAsyncThunk(
   "courses/addNewCourse",
   async (newCourse: Course) => {
     const response = await fetch(
-      "https://localhost:7006/api/Dashboard/addCourse",
+      "https://localhost:7006/api/dashboard/progress/addCourse",
       {
         method: "POST",
         headers: {

@@ -45,6 +45,53 @@ namespace StudentCompass.Data.Repositories
             return courses;
         }
 
+        public async Task<IEnumerable<Subject>> UpdateSubjects(List<UpdateSubjectDto> subjectsToUpdate, short studentId, byte careerPlanId)
+        {
+            await using var connection = await CreateConnection() ?? throw new SqlConnectionException("DB Connection could not be established.");
+
+            await using var command = new SqlCommand("app.update_subjects", connection);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@student_id", studentId);
+            command.Parameters.AddWithValue("@student_career_plan_id", careerPlanId);
+            var table = new DataTable();
+            table.Columns.Add("subject_code", typeof(short));
+            table.Columns.Add("career_plan_id", typeof(byte));
+            table.Columns.Add("status_id", typeof(byte));
+            table.Columns.Add("final_grade", typeof(byte));
+            table.Columns.Add("course_id", typeof(int));
+
+            foreach (var subject in subjectsToUpdate)
+                table.Rows.Add(subject.Code, subject.CareerPlanId, AcademicHelpers.GetStatusId(subject.Status),
+                    subject.FinalGrade == null ? DBNull.Value : subject.FinalGrade, subject.CourseId);
+
+            var tvpParam = command.Parameters.AddWithValue("@subjects_to_update", table);
+            tvpParam.SqlDbType = SqlDbType.Structured;
+            tvpParam.TypeName = "app.subjects_to_update_type";
+
+
+            var subjects = new List<Subject>();
+            await using var reader = await command.ExecuteReaderAsync();
+
+            while (reader.Read())
+            {
+                var subject = new Subject
+                {
+                    Code = (short)reader["code"],
+                    IsAnnual = (bool)reader["is_annual"],
+                    YearLevel = (byte)reader["year_level"],
+                    IsOptional = (bool)reader["is_optional"],
+                    IsElective = (bool)reader["is_elective"],
+                    WeeklyHours = (byte)reader["weekly_hours"],
+                    Description = (string)reader["description"],
+                    CareerPlanId = (byte)reader["career_plan_id"]
+                };
+
+                subjects.Add(subject);
+            }
+
+            return subjects.AsEnumerable();
+        }
+
         public async Task<List<Course>> GetCoursesByCareerAndStudent(byte careerPlanId, short studentId)
         {
             var connection = await CreateConnection() ?? throw new SqlConnectionException("DB Connection could not be established.");
@@ -197,7 +244,7 @@ namespace StudentCompass.Data.Repositories
             return (studentId, careerPlanId);
         }
 
-        public async Task<IEnumerable<Subject>> UpdateSubjects(List<UpdateSubjectDto> subjectsToUpdate, short studentId, byte careerPlanId)
+        public async Task<IEnumerable<Subject>> OldUpdateSubjects(List<UpdateSubjectDto> subjectsToUpdate, short studentId, byte careerPlanId)
         {
             await using var connection = await CreateConnection() ?? throw new SqlConnectionException("DB Connection could not be established.");
 

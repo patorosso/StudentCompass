@@ -234,7 +234,7 @@ export const fetchSubjects = createAsyncThunk(
   "subjects/fetchSubjects",
   async ({ student, career }: FetchSubjectsArgs, { rejectWithValue }) => {
     const response = await fetch(
-      `https://localhost:7006/api/Progress?studentId=${student}&careerPlanId=${career}`
+      `https://localhost:7006/api/dashboard/progress?studentId=${student}&careerPlanId=${career}`
     );
     if (response.status === 500) {
       return rejectWithValue({
@@ -253,7 +253,7 @@ export const addCurrentSubjects = createAsyncThunk(
     { rejectWithValue }
   ) => {
     const response = await fetch(
-      `https://localhost:7006/api/Dashboard/createInProgressCourse?studentId=${student}`,
+      `https://localhost:7006/api/dashboard/progress/createInProgressCourse?studentId=${student}`,
       {
         method: "POST",
         body: JSON.stringify(subjects),
@@ -282,7 +282,7 @@ export const updateSubjects = createAsyncThunk(
     }));
 
     const response = await fetch(
-      `https://localhost:7006/api/Dashboard/updateSubjects?studentId=1&careerPlanId=1`,
+      `https://localhost:7006/api/dashboard/progress/updateSubjects?studentId=1&careerPlanId=1`,
       {
         method: "PUT",
         body: JSON.stringify(subjectsToUpdate),

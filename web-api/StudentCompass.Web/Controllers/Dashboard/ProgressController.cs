@@ -6,9 +6,9 @@ using StudentCompass.Data.Data.Models;
 using StudentCompass.Data.Helpers;
 using StudentCompass.Services.Contracts;
 
-namespace StudentCompass.Web.Controllers
+namespace StudentCompass.Web.Controllers.Dashboard
 {
-    [Route("api/[controller]")]
+    [Route("api/dashboard/[controller]")]
     [ApiController]
     public class ProgressController : ControllerBase
     {
@@ -97,7 +97,7 @@ namespace StudentCompass.Web.Controllers
         {
             try
             {
-                var updatedSubjects = await _progressRepository.UpdateSubjects(subjectsToUpdate, studentId, careerPlanId);
+                var updatedSubjects = await _progressRepository.OldUpdateSubjects(subjectsToUpdate, studentId, careerPlanId);
                 return Ok(updatedSubjects);
             }
             catch (SqlException e)
