@@ -15,6 +15,22 @@ namespace StudentCompass.Services.Services
             _progressRepository = progressRepository;
         }
 
+        public async Task<IEnumerable<Subject>> UpdateSubjects(List<UpdateSubjectDto> subjectsToUpdate, short studentId, byte careerPlanId)
+        {
+            if (studentId <= 0)
+                throw new ArgumentException("Invalid studentId."); // Career is unsigned, so no check.
+
+            _ = await _progressRepository.GetEnrollByStudentAndCareer(studentId, careerPlanId)
+                ?? throw new ArgumentException("Student is not enrolled in the career.");
+
+            // Sorting the original list by subject code
+            subjectsToUpdate.Sort((a, b) => a.Code.CompareTo(b.Code));
+
+            return await _progressRepository.OldUpdateSubjects(subjectsToUpdate, studentId, careerPlanId);
+
+
+        }
+
         public async Task<IEnumerable<SubjectCourseDto>> GetProgressOverview(short studentId, byte careerPlanId)
         {
             try

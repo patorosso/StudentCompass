@@ -8,7 +8,6 @@ namespace StudentCompass.Data.Contracts
         Task<IEnumerable<Subject>> GetProgressOverview(short studentId, byte careerPlanId);
         Task SubjectToInProgress(int? courseId);
         Task<Dictionary<short, List<short>>> GetCorrelatives(byte careerPlanId);
-        Task<IEnumerable<Subject>> UpdateSubjects(List<UpdateSubjectDto> subjectsToUpdate, short studentId, byte careerPlanId);
         Task<IEnumerable<SubjectDto>> CreateInProgressCourse(List<Subject> subjects, short studentId);
         Task<IEnumerable<Course>> GetCourses(short studentId, byte careerPlanId, short subjectCode);
 
@@ -18,5 +17,6 @@ namespace StudentCompass.Data.Contracts
         Task<(short, byte)?> GetEnrollByStudentAndCareer(short studentId, byte careerPlanId);
         Task<List<Course>> GetCoursesByCareerAndStudent(byte careerPlanId, short studentId);
         Task<List<SubjectCourse>> GetProgressOverviewCourses(short studentId, byte careerPlanId);
+        Task<IEnumerable<Subject>> OldUpdateSubjects(List<UpdateSubjectDto> subjectsToUpdate, short studentId, byte careerPlanId);
     }
 }
