@@ -46,7 +46,7 @@ const config: Config = {
           dark: "#6e3d94",
         },
         success: {
-          DEFAULT: "#4caf50",
+          DEFAULT: "#22c55e",
           dark: "#66bb6a",
         },
         cancel: {
