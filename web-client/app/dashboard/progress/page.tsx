@@ -1,6 +1,6 @@
 import React from "react";
 import Subjects from "./components/subjects/Subjects";
-import Analytics from "./components/Analytics";
+import Summary from "./components/summary/Summary";
 
 const Dashboard = () => {
   return (
@@ -12,7 +12,7 @@ const Dashboard = () => {
       </div>
       <div className="flex flex-col justify-center items-center s2ml:flex-row s2ml:justify-evenly mt-14">
         <Subjects />
-        <Analytics />
+        <Summary />
       </div>
     </div>
   );

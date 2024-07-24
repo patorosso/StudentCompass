@@ -1,8 +1,8 @@
 import React from "react";
 import RadialProgress from "./RadialProgress";
-import CurrentSubjects from "./currentSubjects/CurrentSubjects";
+import CurrentSubjects from "../currentSubjects/CurrentSubjects";
 
-const Analytics = () => {
+const Summary = () => {
   return (
     <div className="dark:text-white">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -36,4 +36,4 @@ const Analytics = () => {
   );
 };
 
-export default Analytics;
+export default Summary;
