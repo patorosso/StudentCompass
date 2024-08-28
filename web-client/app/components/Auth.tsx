@@ -2,52 +2,73 @@
 import React, { useState } from "react";
 import Login from "./Login";
 import Register from "./Register";
+import { Box, Paper, Tabs, Tab } from "@mui/material";
 
 const Auth = () => {
   const [activeTab, setActiveTab] = useState("login");
 
-  return (
-    <div
-      className="bg-indigo-400 dark:bg-indigo-950 bg-opacity-55 dark:bg-opacity-75 p-4 shadow-lg rounded-lg w-[500px] lg:mr-60"
-      style={{ height: "500px" }}
-    >
-      <div className="border-b border-white dark:border-primary dark:border-opacity-55">
-        <div className="flex space-x-4" role="tablist">
-          <button
-            className={`dark:ripple-primary-dark px-4 py-2 text-sm rounded-t-lg focus:outline-none ${
-              activeTab === "login"
-                ? "bg-slate-50 dark:bg-primary dark:bg-opacity-40 text-black dark:text-white"
-                : "text-slate-600 bg-slate-400"
-            }`}
-            onClick={() => setActiveTab("login")}
-          >
-            Log in
-          </button>
-          <button
-            className={`dark:ripple-primary-dark px-4 py-2 text-sm font-thin rounded-t-lg focus:outline-none ${
-              activeTab === "register"
-                ? "bg-slate-50 dark:bg-primary dark:bg-opacity-40 text-slate-600 dark:text-white"
-                : "text-slate-600 bg-slate-400"
-            }`}
-            onClick={() => setActiveTab("register")}
-          >
-            Register
-          </button>
-        </div>
-      </div>
+  const handleChange = (event: any, newValue: string) => {
+    setActiveTab(newValue);
+  };
 
-      <div className="p-4">
-        {activeTab === "login" ? (
-          <div>
-            <Login />
-          </div>
-        ) : (
-          <div>
-            <Register />
-          </div>
-        )}
-      </div>
-    </div>
+  return (
+    <Paper
+      elevation={3}
+      sx={(theme) => ({
+        p: 4,
+        width: 500,
+        height: 500,
+        bgcolor: theme.palette.background.default,
+        boxShadow: 6,
+        borderRadius: 2,
+        margin: "auto",
+        lg: { marginRight: "60px" },
+      })}
+    >
+      <Tabs
+        value={activeTab}
+        onChange={handleChange}
+        variant="fullWidth"
+        indicatorColor="primary"
+        textColor="primary"
+        sx={{
+          borderBottom: 1,
+          borderColor: "divider",
+          marginBottom: 2,
+        }}
+      >
+        <Tab
+          label="Log in"
+          value="login"
+          sx={(theme) => ({
+            textTransform: "none",
+            fontSize: "1rem",
+            fontWeight: "thin",
+            color:
+              activeTab === "login"
+                ? theme.palette.background.default
+                : theme.palette.background.paper,
+            borderColor: activeTab === "login" ? "primary.main" : "divider",
+            borderBottom: activeTab === "login" ? 2 : 1,
+            borderStyle: "solid",
+          })}
+        />
+        <Tab
+          label="Register"
+          value="register"
+          sx={{
+            textTransform: "none",
+            fontSize: "1rem",
+            fontWeight: "thin",
+            color: activeTab === "register" ? "primary.main" : "text.secondary",
+            borderColor: activeTab === "register" ? "primary.main" : "divider",
+            borderBottom: activeTab === "register" ? 2 : 1,
+            borderStyle: "solid",
+          }}
+        />
+      </Tabs>
+      <Box p={2}>{activeTab === "login" ? <Login /> : <Register />}</Box>
+    </Paper>
   );
 };
 

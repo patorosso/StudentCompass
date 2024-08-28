@@ -9,9 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/cache": "^11.13.1",
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
     "@mui/material": "^6.0.0",
+    "@mui/material-nextjs": "^6.0.0",
     "@reduxjs/toolkit": "^2.2.2",
     "next": "^14.2.7",
     "next-nprogress-bar": "^2.3.11",
