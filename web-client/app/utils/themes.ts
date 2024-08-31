@@ -8,36 +8,32 @@ const figtree = Figtree({
   display: "swap",
 });
 
-export const lightTheme = createTheme({
-  palette: {
-    mode: "light",
-    primary: {
-      main: "#6561c0",
+export const theme = createTheme({
+  cssVariables: true,
+  colorSchemes: {
+    light: {
+      palette: {
+        mode: "light",
+        primary: {
+          main: "#6561c0",
+        },
+        secondary: {
+          main: "#E90B93",
+        },
+      },
     },
-    secondary: {
-      main: "#251f30",
-    },
-    background: {
-      default: "#1e1b4b",
-      paper: "#f7f7f7",
+    dark: {
+      palette: {
+        mode: "dark",
+        primary: {
+          main: "#6561c0",
+        },
+        secondary: {
+          main: "#E90B93",
+        },
+      },
     },
   },
-  typography: { fontFamily: figtree.style.fontFamily },
-});
 
-export const darkTheme = createTheme({
-  palette: {
-    mode: "dark",
-    primary: {
-      main: "#7c7aae",
-    },
-    secondary: {
-      main: "#251f30",
-    },
-    background: {
-      default: "#121212",
-      paper: "#1e1e1e",
-    },
-  },
   typography: { fontFamily: figtree.style.fontFamily },
 });
