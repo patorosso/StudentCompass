@@ -140,7 +140,7 @@ const Login = () => {
         />
         <Box px={4}>
           <Button
-            variant="outlined"
+            variant="contained"
             color="primary"
             fullWidth
             sx={{
