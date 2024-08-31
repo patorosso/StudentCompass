@@ -1,8 +1,8 @@
 "use client";
-import { Roboto } from "next/font/google";
+import { Figtree } from "next/font/google";
 import { createTheme } from "@mui/material/styles";
 
-const roboto = Roboto({
+const figtree = Figtree({
   weight: ["300", "400", "500", "700"],
   subsets: ["latin"],
   display: "swap",
@@ -22,7 +22,7 @@ export const lightTheme = createTheme({
       paper: "#f7f7f7",
     },
   },
-  typography: { fontFamily: roboto.style.fontFamily },
+  typography: { fontFamily: figtree.style.fontFamily },
 });
 
 export const darkTheme = createTheme({
@@ -39,5 +39,5 @@ export const darkTheme = createTheme({
       paper: "#1e1e1e",
     },
   },
-  typography: { fontFamily: roboto.style.fontFamily },
+  typography: { fontFamily: figtree.style.fontFamily },
 });
