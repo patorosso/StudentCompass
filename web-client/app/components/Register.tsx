@@ -1,88 +1,178 @@
 "use client";
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import Image from "next/image";
+import {
+  Box,
+  TextField,
+  Button,
+  InputAdornment,
+  Typography,
+} from "@mui/material";
+import { AccountCircle, Lock } from "@mui/icons-material";
 
 const Register = () => {
   const router = useRouter();
+  const usernameRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (usernameRef.current) {
+      usernameRef.current.focus();
+    }
+  }, []);
+
   return (
-    <div className="w-full items-center justify-center">
-      <form className="px-8 pt-6">
-        <div className="mb-4">
-          <label
-            className="block font-bold text-gray-700 dark:text-slate-500 text-sm mb-2"
-            htmlFor="username"
-          >
-            Username
-          </label>
-          <div className="flex shadow appearance-none rounded-lg w-[370px] py-2 px-3 bg-white hover:bg-opacity-70 bg-opacity-20 dark:bg-primary dark:bg-opacity-20 text-primary border border-slate-300 dark:border-primary dark:hover:bg-opacity-40 duration-350">
-            <Image
-              src="/user.svg"
-              alt="user-login"
-              width={24}
-              height={24}
-              className="select-none"
+    <Box
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+      width="100%"
+      height="100%"
+    >
+      <form>
+        <Box px={4}>
+          <Box my={4}>
+            <TextField
+              label="Username"
+              id="username"
+              variant="outlined"
+              fullWidth
+              inputRef={usernameRef} // Automatically focus on render
+              slotProps={{
+                input: {
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <AccountCircle sx={{ color: "primary.light" }} />
+                    </InputAdornment>
+                  ),
+                  style: { color: "white" },
+                },
+              }}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": {
+                    borderColor: "primary.light",
+                    backgroundColor: "transparent",
+                  },
+                  "&:hover fieldset": {
+                    borderColor: "primary.main",
+                  },
+                  "&.Mui-focused fieldset": {
+                    borderColor: "primary.main",
+                    backgroundColor: "rgba(255, 255, 255, 0.03)",
+                  },
+                },
+                "& .MuiInputLabel-root": {
+                  color: "primary.light",
+                },
+                "& .MuiInputLabel-root.Mui-focused": {
+                  color: "primary.main",
+                },
+                minWidth: "370px",
+              }}
             />
-            <input
-              type="text"
-              className="bg-transparent pl-4 text-slate-500 dark:text-white w-full select-none focus:outline-none"
-            />
-          </div>
-        </div>
-        <div className="mb-6">
-          <label
-            className="block font-bold text-gray-700 dark:text-slate-500 text-sm mb-2"
-            htmlFor="password"
-          >
-            Password
-          </label>
-          <div className="flex shadow appearance-none rounded-lg w-[370px] py-2 px-3 bg-white hover:bg-opacity-70 bg-opacity-20 dark:bg-primary dark:bg-opacity-20 text-primary border border-slate-300 dark:border-primary dark:hover:bg-opacity-40 duration-350">
-            <Image
-              src="/password.svg"
-              alt="user-register"
-              width={24}
-              height={24}
-              className="select-none"
-            />
-            <input
+          </Box>
+          <Box mb={4}>
+            <TextField
+              label="Password"
               id="password"
+              variant="outlined"
               type="password"
-              className="bg-transparent pl-4 text-slate-500 dark:text-white w-full select-none focus:outline-none"
+              fullWidth
+              slotProps={{
+                input: {
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <Lock sx={{ color: "primary.light" }} />
+                    </InputAdornment>
+                  ),
+                  style: { color: "white" },
+                },
+              }}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": {
+                    borderColor: "primary.light",
+                    backgroundColor: "transparent",
+                  },
+                  "&:hover fieldset": {
+                    borderColor: "primary.main",
+                  },
+                  "&.Mui-focused fieldset": {
+                    borderColor: "primary.main",
+                    backgroundColor: "rgba(255, 255, 255, 0.03)",
+                  },
+                },
+                "& .MuiInputLabel-root": {
+                  color: "primary.light",
+                },
+                "& .MuiInputLabel-root.Mui-focused": {
+                  color: "primary.main",
+                },
+                minWidth: "370px",
+              }}
             />
-          </div>
-        </div>
-        <div className="mb-6">
-          <label
-            className="block font-bold text-gray-700 dark:text-slate-500 text-sm mb-2"
-            htmlFor="password"
+          </Box>
+          <Box mb={4}>
+            <TextField
+              label="Confirm Password"
+              id="confirm-password"
+              variant="outlined"
+              type="password"
+              fullWidth
+              slotProps={{
+                input: {
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <Lock sx={{ color: "primary.light" }} />
+                    </InputAdornment>
+                  ),
+                  style: { color: "white" },
+                },
+              }}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": {
+                    borderColor: "primary.light",
+                    backgroundColor: "transparent",
+                  },
+                  "&:hover fieldset": {
+                    borderColor: "primary.main",
+                  },
+                  "&.Mui-focused fieldset": {
+                    borderColor: "primary.main",
+                    backgroundColor: "rgba(255, 255, 255, 0.03)",
+                  },
+                },
+                "& .MuiInputLabel-root": {
+                  color: "primary.light",
+                },
+                "& .MuiInputLabel-root.Mui-focused": {
+                  color: "primary.main",
+                },
+                minWidth: "370px",
+              }}
+            />
+          </Box>
+          <Button
+            variant="contained"
+            color="primary"
+            fullWidth
+            component={Link}
+            href="/dashboard"
+            sx={{
+              py: 2,
+              mt: 2,
+              minWidth: "370px",
+              textTransform: "none",
+              fontWeight: "bold",
+            }}
           >
-            Confirm password
-          </label>
-          <div className="flex shadow appearance-none rounded-lg w-[370px] py-2 px-3 bg-white hover:bg-opacity-70 bg-opacity-20 dark:bg-primary dark:bg-opacity-20 text-primary border border-slate-300 dark:border-primary dark:hover:bg-opacity-40 duration-350">
-            <Image
-              src="/password.svg"
-              alt="user-register"
-              width={24}
-              height={24}
-              className="select-none"
-            />
-            <input
-              id="password"
-              type="password"
-              className="bg-transparent pl-4 text-slate-500 dark:text-white w-full select-none focus:outline-none"
-            />
-          </div>
-        </div>
-        <Link
-          className="ripple-primary text-white py-3 px-4 mt-4 rounded-3xl focus:outline-none focus:shadow-outline w-[370px] text-center"
-          type="submit"
-          href="/dashboard"
-        >
-          Register
-        </Link>
+            <Typography variant="button">Register</Typography>
+          </Button>
+        </Box>
       </form>
-    </div>
+    </Box>
   );
 };
 

@@ -10,7 +10,6 @@ import {
   Divider,
   InputAdornment,
   Typography,
-  IconButton,
 } from "@mui/material";
 import { AccountCircle, Lock } from "@mui/icons-material";
 
@@ -41,13 +40,15 @@ const Login = () => {
               variant="outlined"
               fullWidth
               inputRef={usernameRef}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <AccountCircle sx={{ color: "primary.light" }} />
-                  </InputAdornment>
-                ),
-                style: { color: "white" },
+              slotProps={{
+                input: {
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <AccountCircle sx={{ color: "primary.light" }} />
+                    </InputAdornment>
+                  ),
+                  style: { color: "white" },
+                },
               }}
               sx={{
                 "& .MuiOutlinedInput-root": {
@@ -60,7 +61,7 @@ const Login = () => {
                   },
                   "&.Mui-focused fieldset": {
                     borderColor: "primary.main",
-                    backgroundColor: "rgba(255, 255, 255, 0.05)",
+                    backgroundColor: "rgba(255, 255, 255, 0.03)",
                   },
                 },
                 "& .MuiInputLabel-root": {
@@ -80,13 +81,15 @@ const Login = () => {
               variant="outlined"
               type="password"
               fullWidth
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <Lock sx={{ color: "primary.light" }} />
-                  </InputAdornment>
-                ),
-                style: { color: "white" },
+              slotProps={{
+                input: {
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <Lock sx={{ color: "primary.light" }} />
+                    </InputAdornment>
+                  ),
+                  style: { color: "white" },
+                },
               }}
               sx={{
                 "& .MuiOutlinedInput-root": {
@@ -99,7 +102,7 @@ const Login = () => {
                   },
                   "&.Mui-focused fieldset": {
                     borderColor: "primary.main",
-                    backgroundColor: "rgba(255, 255, 255, 0.05)",
+                    backgroundColor: "rgba(255, 255, 255, 0.03)",
                   },
                 },
                 "& .MuiInputLabel-root": {
@@ -120,7 +123,6 @@ const Login = () => {
             href="/dashboard"
             sx={{
               py: 2,
-              mt: 2,
               minWidth: "370px",
               textTransform: "none",
               fontWeight: "bold",
@@ -128,20 +130,22 @@ const Login = () => {
           >
             <Typography variant="button">Log in</Typography>
           </Button>
-          <Divider
-            sx={{
-              width: "100%",
-              my: 4,
-              borderColor: "primary.light",
-            }}
-          />
+        </Box>
+        <Divider
+          sx={{
+            width: "100%",
+            my: 4,
+            borderColor: "primary.light",
+          }}
+        />
+        <Box px={4}>
           <Button
             variant="outlined"
             color="primary"
             fullWidth
             sx={{
               py: 2,
-              my: 4,
+              mt: 4,
               minWidth: "370px",
               textTransform: "none",
               fontWeight: "bold",

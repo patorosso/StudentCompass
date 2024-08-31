@@ -16,7 +16,7 @@ const Auth = () => {
       elevation={3}
       sx={(theme) => ({
         p: 4,
-        minHeight: 557.55,
+        minHeight: 550,
         bgcolor: theme.palette.background.default,
         boxShadow: 6,
         borderRadius: 2,
