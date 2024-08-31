@@ -16,8 +16,7 @@ const Auth = () => {
       elevation={3}
       sx={(theme) => ({
         p: 4,
-        width: 500,
-        height: 500,
+        minHeight: 557.55,
         bgcolor: theme.palette.background.default,
         boxShadow: 6,
         borderRadius: 2,
@@ -29,8 +28,8 @@ const Auth = () => {
         value={activeTab}
         onChange={handleChange}
         variant="fullWidth"
+        textColor="inherit"
         indicatorColor="primary"
-        textColor="primary"
         sx={{
           borderBottom: 1,
           borderColor: "divider",
@@ -43,28 +42,35 @@ const Auth = () => {
           sx={(theme) => ({
             textTransform: "none",
             fontSize: "1rem",
-            fontWeight: "thin",
+            fontWeight: "bold",
             color:
               activeTab === "login"
-                ? theme.palette.background.default
-                : theme.palette.background.paper,
-            borderColor: activeTab === "login" ? "primary.main" : "divider",
-            borderBottom: activeTab === "login" ? 2 : 1,
-            borderStyle: "solid",
+                ? theme.palette.common.white
+                : theme.palette.primary.main,
+            borderBottom:
+              activeTab === "login"
+                ? `2px solid ${theme.palette.primary.main}`
+                : "none",
+            transition: "all 0.3s ease-in-out",
           })}
         />
         <Tab
           label="Register"
           value="register"
-          sx={{
+          sx={(theme) => ({
             textTransform: "none",
             fontSize: "1rem",
-            fontWeight: "thin",
-            color: activeTab === "register" ? "primary.main" : "text.secondary",
-            borderColor: activeTab === "register" ? "primary.main" : "divider",
-            borderBottom: activeTab === "register" ? 2 : 1,
-            borderStyle: "solid",
-          }}
+            fontWeight: "bold",
+            color:
+              activeTab === "register"
+                ? theme.palette.common.white
+                : theme.palette.primary.main,
+            borderBottom:
+              activeTab === "register"
+                ? `2px solid ${theme.palette.primary.main}`
+                : "none",
+            transition: "all 0.3s ease-in-out",
+          })}
         />
       </Tabs>
       <Box p={2}>{activeTab === "login" ? <Login /> : <Register />}</Box>
