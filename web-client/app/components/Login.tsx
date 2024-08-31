@@ -1,83 +1,172 @@
 "use client";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
+import {
+  Box,
+  TextField,
+  Button,
+  Divider,
+  InputAdornment,
+  Typography,
+  IconButton,
+} from "@mui/material";
+import { AccountCircle, Lock } from "@mui/icons-material";
 
 const Login = () => {
   const router = useRouter();
+  const usernameRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (usernameRef.current) {
+      usernameRef.current.focus();
+    }
+  }, []);
+
   return (
-    <div className="w-full items-center justify-center">
-      <form className="px-8 pt-6">
-        <div className="mb-4">
-          <label
-            className="block font-bold text-gray-700 dark:text-slate-500 text-sm mb-2"
-            htmlFor="username"
-          >
-            Username
-          </label>
-          <div className="flex shadow appearance-none rounded-lg w-[370px] py-2 px-3 bg-white hover:bg-opacity-70 bg-opacity-20 dark:bg-primary dark:bg-opacity-20 text-primary border border-slate-300 dark:border-primary dark:hover:bg-opacity-40 duration-350">
-            <Image
-              src="/user.svg"
-              alt="user-login"
-              width={24}
-              height={24}
-              className="select-none"
+    <Box
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+      width="100%"
+      height="100%"
+    >
+      <form>
+        <Box px={4}>
+          <Box my={4}>
+            <TextField
+              label="Username"
+              id="username"
+              variant="outlined"
+              fullWidth
+              inputRef={usernameRef}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <AccountCircle sx={{ color: "primary.light" }} />
+                  </InputAdornment>
+                ),
+                style: { color: "white" },
+              }}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": {
+                    borderColor: "primary.light",
+                    backgroundColor: "transparent",
+                  },
+                  "&:hover fieldset": {
+                    borderColor: "primary.main",
+                  },
+                  "&.Mui-focused fieldset": {
+                    borderColor: "primary.main",
+                    backgroundColor: "rgba(255, 255, 255, 0.05)",
+                  },
+                },
+                "& .MuiInputLabel-root": {
+                  color: "primary.light",
+                },
+                "& .MuiInputLabel-root.Mui-focused": {
+                  color: "primary.main",
+                },
+                minWidth: "370px",
+              }}
             />
-            <input
-              type="text"
-              className="bg-transparent pl-4 text-slate-500 dark:text-white w-full select-none focus:outline-none"
-            />
-          </div>
-        </div>
-        <div className="mb-6">
-          <label
-            className="block font-bold text-gray-700 dark:text-slate-500 text-sm mb-2"
-            htmlFor="password"
-          >
-            Password
-          </label>
-          <div className="flex shadow appearance-none rounded-lg w-[370px] py-2 px-3 bg-white hover:bg-opacity-70 bg-opacity-20 dark:bg-primary dark:bg-opacity-20 text-primary border border-slate-300 dark:border-primary dark:hover:bg-opacity-40 duration-350">
-            <Image
-              src="/password.svg"
-              alt="user-login"
-              width={24}
-              height={24}
-              className="select-none"
-            />
-            <input
+          </Box>
+          <Box mb={4}>
+            <TextField
+              label="Password"
               id="password"
+              variant="outlined"
               type="password"
-              className="bg-transparent pl-4 text-slate-500 dark:text-white w-full select-none focus:outline-none"
+              fullWidth
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Lock sx={{ color: "primary.light" }} />
+                  </InputAdornment>
+                ),
+                style: { color: "white" },
+              }}
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": {
+                    borderColor: "primary.light",
+                    backgroundColor: "transparent",
+                  },
+                  "&:hover fieldset": {
+                    borderColor: "primary.main",
+                  },
+                  "&.Mui-focused fieldset": {
+                    borderColor: "primary.main",
+                    backgroundColor: "rgba(255, 255, 255, 0.05)",
+                  },
+                },
+                "& .MuiInputLabel-root": {
+                  color: "primary.light",
+                },
+                "& .MuiInputLabel-root.Mui-focused": {
+                  color: "primary.main",
+                },
+                minWidth: "370px",
+              }}
             />
-          </div>
-        </div>
-        <Link
-          className="ripple-primary text-white py-3 px-4 mt-4 rounded-3xl focus:outline-none focus:shadow-outline w-[370px] text-center"
-          type="submit"
-          href="/dashboard"
-        >
-          Log in
-        </Link>
-        <div className="w-[370px] border mt-9 border-slate-300 dark:border-slate-500" />
-        <button
-          className="ripple-primary-dark border border-slate-500 text-white py-3 px-4 mt-9 mb-1 rounded-3xl focus:outline-none focus:shadow-outline w-[370px] flex"
-          type="submit"
-          onClick={(e) => {
-            e.preventDefault();
-          }}
-        >
-          <Image
-            src="/google.svg"
-            alt="continue with google"
-            width={24}
-            height={24}
-            className="mr-16 select-none"
+          </Box>
+          <Button
+            variant="contained"
+            color="primary"
+            fullWidth
+            component={Link}
+            href="/dashboard"
+            sx={{
+              py: 2,
+              mt: 2,
+              minWidth: "370px",
+              textTransform: "none",
+              fontWeight: "bold",
+            }}
+          >
+            <Typography variant="button">Log in</Typography>
+          </Button>
+          <Divider
+            sx={{
+              width: "100%",
+              my: 4,
+              borderColor: "primary.light",
+            }}
           />
-          Continue with Google
-        </button>
+          <Button
+            variant="outlined"
+            color="primary"
+            fullWidth
+            sx={{
+              py: 2,
+              my: 4,
+              minWidth: "370px",
+              textTransform: "none",
+              fontWeight: "bold",
+              display: "flex",
+              justifyContent: "flex-start",
+              alignItems: "center",
+            }}
+            onClick={(e) => {
+              e.preventDefault();
+            }}
+          >
+            <Image
+              src="/google.svg"
+              alt="continue with google"
+              width={24}
+              height={24}
+              style={{ marginRight: "auto" }}
+            />
+            <Box flexGrow={1} textAlign="center">
+              <Typography variant="button">Continue with Google</Typography>
+            </Box>
+          </Button>
+        </Box>
       </form>
-    </div>
+    </Box>
   );
 };
 
