@@ -45,8 +45,8 @@ const Auth = () => {
             fontWeight: "bold",
             color:
               activeTab === "login"
-                ? theme.palette.common.white
-                : theme.palette.primary.main,
+                ? theme.palette.text.primary
+                : theme.palette.text.disabled,
             borderBottom:
               activeTab === "login"
                 ? `2px solid ${theme.palette.primary.main}`
@@ -63,8 +63,8 @@ const Auth = () => {
             fontWeight: "bold",
             color:
               activeTab === "register"
-                ? theme.palette.common.white
-                : theme.palette.primary.main,
+                ? theme.palette.text.primary
+                : theme.palette.text.disabled,
             borderBottom:
               activeTab === "register"
                 ? `2px solid ${theme.palette.primary.main}`

@@ -2,12 +2,13 @@ import Navbar from "./components/Navbar";
 import StoreProvider from "./utils/StoreProvider";
 import ProgressBarProvider from "./utils/ProgressBarProvider";
 import type { Metadata } from "next";
+import { theme } from "./utils/themes";
 import { ToastContainer } from "react-toastify";
 import { ThemeProvider } from "@mui/material/styles";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 import "./styles/globals.css";
 import "react-toastify/dist/ReactToastify.css";
-import { lightTheme } from "./utils/themes";
+import { CssBaseline } from "@mui/material";
 
 export const metadata: Metadata = {
   title: "Student Compass",
@@ -24,7 +25,8 @@ export default function RootLayout({
       <body className="flex flex-col h-full font-figtree">
         <StoreProvider>
           <AppRouterCacheProvider>
-            <ThemeProvider theme={lightTheme}>
+            <ThemeProvider theme={theme} disableTransitionOnChange>
+              <CssBaseline />
               <Navbar />
               <div
                 className="flex-1 overflow-auto bg-light-theme dark:bg-dark-theme"

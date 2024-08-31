@@ -47,10 +47,9 @@ const Login = () => {
                       <AccountCircle sx={{ color: "primary.light" }} />
                     </InputAdornment>
                   ),
-                  style: { color: "white" },
                 },
               }}
-              sx={{
+              sx={(theme) => ({
                 "& .MuiOutlinedInput-root": {
                   "& fieldset": {
                     borderColor: "primary.light",
@@ -71,7 +70,8 @@ const Login = () => {
                   color: "primary.main",
                 },
                 minWidth: "370px",
-              }}
+                input: { color: theme.palette.text.primary },
+              })}
             />
           </Box>
           <Box mb={4}>
@@ -88,10 +88,9 @@ const Login = () => {
                       <Lock sx={{ color: "primary.light" }} />
                     </InputAdornment>
                   ),
-                  style: { color: "white" },
                 },
               }}
-              sx={{
+              sx={(theme) => ({
                 "& .MuiOutlinedInput-root": {
                   "& fieldset": {
                     borderColor: "primary.light",
@@ -112,7 +111,8 @@ const Login = () => {
                   color: "primary.main",
                 },
                 minWidth: "370px",
-              }}
+                input: { color: theme.palette.text.primary },
+              })}
             />
           </Box>
           <Button
@@ -132,11 +132,11 @@ const Login = () => {
           </Button>
         </Box>
         <Divider
-          sx={{
+          sx={(theme) => ({
             width: "100%",
             my: 4,
-            borderColor: "primary.light",
-          }}
+            borderColor: theme.palette.divider,
+          })}
         />
         <Box px={4}>
           <Button
