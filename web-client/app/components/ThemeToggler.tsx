@@ -1,13 +1,18 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
-import { useColorScheme } from "@mui/material";
+import { useColorScheme, useMediaQuery } from "@mui/material";
 
 const ThemeToggler = () => {
   const { mode, setMode } = useColorScheme();
-  if (!mode) {
-    return null;
-  }
+  const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
+
+  useEffect(() => {
+    if (prefersDarkMode) {
+      setMode("dark");
+    } else setMode("light");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [prefersDarkMode]);
 
   return (
     <button
