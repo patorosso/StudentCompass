@@ -9,7 +9,9 @@ const figtree = Figtree({
 });
 
 export const theme = createTheme({
-  cssVariables: true,
+  cssVariables: {
+    colorSchemeSelector: "class",
+  },
   colorSchemes: {
     light: {
       palette: {
