@@ -22,8 +22,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="h-full">
-      <body className="flex flex-col h-full font-figtree">
+    <html lang="en" className="h-full" suppressHydrationWarning>
+      <body className="flex flex-col h-full">
         <InitColorSchemeScript attribute="class" />
         <main>
           <StoreProvider>
