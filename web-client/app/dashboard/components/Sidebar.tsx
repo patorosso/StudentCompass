@@ -35,6 +35,7 @@ const Sidebar = () => {
   ];
   return (
     <div
+      style={{ minHeight: "calc(100vh - 5rem)" }}
       className={`sticky top-0 h-full s0ml:flex flex-col hidden transition-all duration-350 ease-in-out ${
         isSidebarOpen ? "w-22 s1ml:w-72" : "w-22"
       }`}

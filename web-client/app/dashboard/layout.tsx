@@ -1,4 +1,5 @@
 import Sidebar from "./components/Sidebar";
+import { Box, Container } from "@mui/material";
 
 export default function RootLayout({
   children,
@@ -6,9 +7,24 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex mx-auto w-full h-full overflow-auto">
+    <Box
+      sx={{
+        display: "flex",
+        width: "100%",
+        height: "100%",
+        overflow: "auto",
+        mx: "auto",
+        minHeight: "calc(100vh - 5rem)",
+      }}
+    >
       <Sidebar />
-      <main className="w-full">{children}</main>
-    </div>
+      <Box
+        sx={{
+          width: "100%",
+        }}
+      >
+        {children}
+      </Box>
+    </Box>
   );
 }
