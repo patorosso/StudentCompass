@@ -192,8 +192,6 @@ publish/
 # in these scripts will be unencrypted
 PublishScripts/
 
-# NuGet Packages
-*.nupkg
 # NuGet Symbol Packages
 *.snupkg
 # The packages folder can be ignored because of Package Restore
@@ -301,7 +299,7 @@ node_modules/
 *.dsw
 *.dsp
 
-# Visual Studio 6 technical files 
+# Visual Studio 6 technical files
 *.ncb
 *.aps
 
@@ -396,5 +394,4 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
-
-appsettings.json
+SealSiher.SmartFactory.Web/ClientApp/.env.development.local
