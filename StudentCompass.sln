@@ -7,13 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudentCompass.Server", "St
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "studentcompass.client", "studentcompass.client\studentcompass.client.esproj", "{B0FB66B3-C6BB-4FB2-A43B-45CA74CE3EFE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentCompass.Data", "StudentCompass.Data\StudentCompass.Data.csproj", "{55476565-8105-4041-BE8D-053FE18D7CF1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudentCompass.Data", "StudentCompass.Data\StudentCompass.Data.csproj", "{55476565-8105-4041-BE8D-053FE18D7CF1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentCompass.Services", "StudentCompass.Services\StudentCompass.Services.csproj", "{AE412534-A327-4FBE-9D2F-04D571F0B766}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudentCompass.Services", "StudentCompass.Services\StudentCompass.Services.csproj", "{AE412534-A327-4FBE-9D2F-04D571F0B766}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentCompass.Repositories", "StudentCompass.Repositories\StudentCompass.Repositories.csproj", "{81808943-2EBF-483C-84ED-6FCD663C1122}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentCompass.TestsServices", "StudentCompass.ServicesTests\StudentCompass.TestsServices.csproj", "{0DE51B1E-9858-44A2-A335-4700392F607E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudentCompass.TestsServices", "StudentCompass.ServicesTests\StudentCompass.TestsServices.csproj", "{0DE51B1E-9858-44A2-A335-4700392F607E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,10 +37,6 @@ Global
 		{AE412534-A327-4FBE-9D2F-04D571F0B766}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AE412534-A327-4FBE-9D2F-04D571F0B766}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AE412534-A327-4FBE-9D2F-04D571F0B766}.Release|Any CPU.Build.0 = Release|Any CPU
-		{81808943-2EBF-483C-84ED-6FCD663C1122}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{81808943-2EBF-483C-84ED-6FCD663C1122}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{81808943-2EBF-483C-84ED-6FCD663C1122}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{81808943-2EBF-483C-84ED-6FCD663C1122}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0DE51B1E-9858-44A2-A335-4700392F607E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0DE51B1E-9858-44A2-A335-4700392F607E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0DE51B1E-9858-44A2-A335-4700392F607E}.Release|Any CPU.ActiveCfg = Release|Any CPU

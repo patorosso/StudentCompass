@@ -18,7 +18,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\StudentCompass.Repositories\StudentCompass.Repositories.csproj" />
     <ProjectReference Include="..\StudentCompass.Services\StudentCompass.Services.csproj" />
   </ItemGroup>
 

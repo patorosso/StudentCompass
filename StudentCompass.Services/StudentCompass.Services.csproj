@@ -12,7 +12,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\StudentCompass.Data\StudentCompass.Data.csproj" />
-    <ProjectReference Include="..\StudentCompass.Repositories\StudentCompass.Repositories.csproj" />
   </ItemGroup>
 
 </Project>
