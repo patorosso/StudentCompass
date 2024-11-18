@@ -35,6 +35,8 @@ namespace StudentCompass.Data.Context
                         .HasNoKey();
             modelBuilder.Entity<SubjectDto>()
                         .HasNoKey();
+            modelBuilder.Entity<CourseWithExamDto>()
+                        .HasNoKey();
 
             // Extra configurations
             modelBuilder.Entity<GetProgressOverviewDto>()

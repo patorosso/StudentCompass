@@ -13,5 +13,6 @@ namespace StudentCompass.Services.Contracts
         Task<List<SubjectDto>> CreateAttendingCourse(List<Subject> subjects, short studentId);
         Task CourseToAttending(int? courseId);
         Task<(short, byte)?> GetEnrollByStudentAndCareer(short studentId, byte careerPlanId);
+        Task<List<CourseWithExamsDto>> GetCoursesWithExams(short studentId, byte careerPlanId, short subjectCode);
     }
 }

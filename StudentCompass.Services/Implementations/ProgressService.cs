@@ -188,63 +188,24 @@ namespace StudentCompass.Services.Implementations
             }
         }
 
+        //TODO: re-think this method, it was used different ( the old SP return 2 tables, one with courses and the other for the exams )
+        public async Task<List<CourseWithExamsDto>> GetCoursesWithExams(short studentId, byte careerPlanId, short subjectCode)
+        {
+            try
+            {
+                var coursesWithExamsDto = await _dbContext.Set<CourseWithExamsDto>()
+                                .FromSqlRaw(StoredProcedure
+                                .CourseToAttending("StudentId", studentId, "SubjectCode", subjectCode, "CareerPlanId", careerPlanId))
+                                .ToListAsync();
 
-
-        //public async Task<IEnumerable<Course>> GetCourses(short studentId, byte careerPlanId, short subjectCode)
-        //{
-        //    await using var connection = await CreateConnection() ?? throw new SqlConnectionException("DB Connection could not be established.");
-
-        //    await using var command = new SqlCommand("app.get_courses", connection);
-        //    command.CommandType = CommandType.StoredProcedure;
-        //    command.Parameters.Add(new SqlParameter("@student_id", studentId));
-        //    command.Parameters.Add(new SqlParameter("@career_plan_id", careerPlanId));
-        //    command.Parameters.Add(new SqlParameter("@subject_code", subjectCode));
-
-        //    var courses = new List<Course>();
-        //    var courseExams = new Dictionary<int, List<Exam>>();
-
-        //    await using var reader = await command.ExecuteReaderAsync();
-        //    while (reader.Read())
-        //    {
-        //        var course = new Course
-        //        {
-        //            Id = (int)reader["id"],
-        //            Term = reader["term_id"] is DBNull ? default : AcademicHelpers.GetTerm((byte)reader["term_id"]),
-        //            Year = reader["year"] is DBNull ? default : ((short)reader["year"]).ToString(),
-        //            StatusId = (byte)reader["status_id"],
-        //            FinalGrade = reader["final_grade"] is DBNull ? default : (byte)reader["final_grade"],
-        //            SubjectCode = (short)reader["subject_code"],
-        //            CareerPlanId = (byte)reader["career_plan_id"]
-        //        };
-        //        courses.Add(course);
-        //    }
-
-        //    await reader.NextResultAsync();
-        //    while (reader.Read())
-        //    {
-        //        var exam = new Exam
-        //        {
-        //            Grade = (byte)reader["grade"],
-        //            Description = AcademicHelpers.GetExamDescription((ExamType)(byte)reader["exam_id"]),
-        //            Date = (DateTime)reader["taken_on"]
-        //        };
-
-        //        var examCourseId = (int)reader["course_id"];
-
-        //        if (!courseExams.ContainsKey(examCourseId))
-        //            courseExams[examCourseId] = new List<Exam>();
-
-        //        courseExams[examCourseId].Add(exam);
-        //    }
-
-        //    if (courseExams.IsNullOrEmpty())
-        //        return courses.AsEnumerable();
-
-        //    foreach (var course in courses)
-        //        if (courseExams.TryGetValue(course.Id, out var examsList))
-        //            course.Exams = examsList;
-
-        //    return courses.AsEnumerable();
-        //}
+                return coursesWithExamsDto;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Error while updating progress");
+                throw;
+            }
+        }
     }
+
 }
