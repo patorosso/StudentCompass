@@ -12,15 +12,6 @@
         public List<short> Correlatives { get; set; } = [];
     }
 
-    public class UpdateSubjectDto
-    {
-        public short Code { get; set; }
-        public int? CourseId { get; set; }
-        public string Status { get; set; } = null!;
-        public byte CareerPlanId { get; set; }
-        public byte? FinalGrade { get; set; }
-    }
-
     public class SubjectCourseDto
     {
         public short Code { get; set; }

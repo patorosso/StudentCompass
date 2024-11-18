@@ -33,11 +33,13 @@ namespace StudentCompass.Data.Context
             // Query DTO's
             modelBuilder.Entity<GetProgressOverviewDto>()
                         .HasNoKey();
+            modelBuilder.Entity<SubjectDto>()
+                        .HasNoKey();
+
+            // Extra configurations
             modelBuilder.Entity<GetProgressOverviewDto>()
                         .Property(e => e.Status)
                         .HasConversion<byte>();
-
-            // Extra configurations
 
             modelBuilder.Entity<Course>()
                         .HasIndex(c => new { c.StudentId, c.SubjectCode, c.CareerPlanId, c.TermId, c.Year })
@@ -96,8 +98,6 @@ namespace StudentCompass.Data.Context
             var pendingMigrations = Database.GetPendingMigrations();
             if (pendingMigrations.Any()) Database.Migrate();
         }
-
-        
 
     }
 
