@@ -2,9 +2,7 @@
 using StudentCompass.Data.Context;
 using Microsoft.Extensions.Logging;
 using StudentCompass.Services.Contracts;
-using StudentCompass.Repositories.Contracts;
 using StudentCompass.Services.Implementations;
-using Microsoft.EntityFrameworkCore;
 using StudentCompass.Data.Entities;
 using StudentCompass.Data.Enums;
 

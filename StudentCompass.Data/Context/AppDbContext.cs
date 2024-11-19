@@ -35,7 +35,7 @@ namespace StudentCompass.Data.Context
                         .HasNoKey();
             modelBuilder.Entity<SubjectDto>()
                         .HasNoKey();
-            modelBuilder.Entity<CourseWithExamDto>()
+            modelBuilder.Entity<CourseWithExamsDto>()
                         .HasNoKey();
 
             // Extra configurations

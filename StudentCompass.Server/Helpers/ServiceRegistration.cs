@@ -3,8 +3,6 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using StudentCompass.Services.Contracts;
 using StudentCompass.Services.Implementations;
-using StudentCompass.Repositories.Contracts;
-using StudentCompass.Repositories.Implementations;
 
 namespace StudentCompass.Server.Helpers;
 
@@ -17,7 +15,6 @@ public static class ServiceRegistration
         //services.AddHttpClient();
 
         services.AddScoped<IProgressService, ProgressService>();
-        services.AddScoped<IProgressRepository, ProgressRepository>();
 
         // JwtToken
 
