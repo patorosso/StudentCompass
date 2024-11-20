@@ -35,7 +35,6 @@ const Navbar = () => {
             About Us
           </Link>
         </Box>
-        <ThemeToggler />
         <Box sx={boxThemeStyle}>
           <ThemeToggler />
         </Box>

@@ -3,16 +3,19 @@ import { theme } from "./utils/themes";
 import Navbar from "./components/Navbar";
 import { ToastContainer } from "react-toastify";
 import { Box, ThemeProvider } from "@mui/material";
+import { BrowserRouter } from "react-router-dom";
 
 function App() {
   return (
-    <ThemeProvider theme={theme} disableTransitionOnChange>
-      <Navbar />
-      <Box className={boxClassName} sx={boxStyle}>
-        <p>Content</p>
-      </Box>
-      <ToastContainer style={toastStyle} />
-    </ThemeProvider>
+    <BrowserRouter>
+      <ThemeProvider theme={theme}>
+        <Navbar />
+        <Box className={boxClassName} sx={boxStyle}>
+          <p>Content</p>
+        </Box>
+        <ToastContainer style={toastStyle} />
+      </ThemeProvider>
+    </BrowserRouter>
   );
 }
 

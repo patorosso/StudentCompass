@@ -1,6 +1,8 @@
 import { useEffect } from "react";
+import { Box, Button } from "@mui/material";
+import { useMediaQuery } from "@mui/material";
+import { useColorScheme } from "@mui/material/styles";
 import BrightnessMediumIcon from "@mui/icons-material/BrightnessMedium";
-import { Button, useColorScheme, useMediaQuery, Box } from "@mui/material";
 
 const ThemeToggler = () => {
   const { mode, setMode } = useColorScheme();
@@ -15,19 +17,15 @@ const ThemeToggler = () => {
 
   return (
     <Button
+      disableRipple
+      style={buttonStyle}
       onClick={() => (mode === "light" ? setMode("dark") : setMode("light"))}
-      className="focus:outline-none transition ease-in-out duration-300 dark:invert select-none"
     >
-      <Box
-        className={`w-6 h-6 transition-transform duration-500 ${
-          mode === "dark" ? "rotate-0" : "rotate-180"
-        }`}
-      >
+      <Box style={boxStyle(mode)}>
         <BrightnessMediumIcon
           color="primary"
+          style={iconStyle}
           aria-label="Theme Toggler"
-          width={24}
-          height={24}
         />
       </Box>
     </Button>
@@ -37,3 +35,23 @@ const ThemeToggler = () => {
 export default ThemeToggler;
 
 // -------- Styles ----------
+
+const buttonStyle = {
+  outline: "none",
+  transition: "ease-in-out 300ms",
+  cursor: "pointer",
+  background: "transparent",
+  border: "none",
+};
+
+const boxStyle = (mode: string | undefined) => ({
+  width: "24px",
+  height: "24px",
+  transform: `rotate(${mode === "dark" ? "0" : "180deg"})`,
+  transition: "transform 500ms",
+});
+
+const iconStyle = {
+  width: "24px",
+  height: "24px",
+};
