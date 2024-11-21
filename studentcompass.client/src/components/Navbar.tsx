@@ -52,15 +52,13 @@ const appBarStyle = {
   borderColor: "grey.400",
   backgroundColor: "background.default",
   color: "text.primary",
+  padding: "0 200px",
 };
 
 const toolbarStyle = {
   display: "flex",
   justifyContent: "space-between",
-  maxWidth: "1200px",
-  margin: "auto",
   padding: "16px",
-  height: "80px",
 };
 
 const typographyStyle = {
