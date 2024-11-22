@@ -1,5 +1,6 @@
 import React from "react";
 import { Box } from "@mui/material";
+import Home from "./components/Home";
 import Navbar from "./components/Navbar";
 
 function App() {
@@ -7,7 +8,7 @@ function App() {
     <React.Fragment>
       <Navbar />
       <Box sx={boxStyle}>
-        <p>Content</p>
+        <Home />
       </Box>
     </React.Fragment>
   );
@@ -18,6 +19,6 @@ export default App;
 // -------- Styles ----------
 
 const boxStyle = {
-  overflow: "auto",
   flexDirection: "column",
+  minHeight: "100vh",
 };

@@ -11,6 +11,13 @@ export const theme = createTheme({
         secondary: {
           main: "#E90B93",
         },
+        background: {
+          default: "#ffffff",
+          paper: "#f7f7f7",
+        },
+      },
+      custom: {
+        backgroundImage: "url('/background-light.png')",
       },
     },
     dark: {
@@ -22,6 +29,13 @@ export const theme = createTheme({
         secondary: {
           main: "#E90B93",
         },
+        background: {
+          default: "#121212",
+          paper: "#1e1e1e",
+        },
+      },
+      custom: {
+        backgroundImage: "url('/background-dark.png')",
       },
     },
   },
