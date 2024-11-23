@@ -16,13 +16,17 @@ const Sidebar = () => {
     <Box sx={boxWrapperStyle}>
       <Drawer variant="permanent" open={open} sx={drawerStyle(open)}>
         <Box sx={boxIconStyle}>
-          <IconButton onClick={() => setOpen(!open)}>{open ? <ChevronLeftIcon /> : <ChevronRightIcon />}</IconButton>
+          <IconButton onClick={() => setOpen(!open)} sx={iconButtonStyle}>
+            {open ? <ChevronLeftIcon sx={iconStyle} /> : <ChevronRightIcon sx={iconStyle} />}
+          </IconButton>
         </Box>
         <List>
           {sideBarOptions(location.pathname).map((option: SidebarOption) => (
             <ListItem key={option.name} disablePadding>
-              <ListItemButton component={Link} to={option.path} selected={option.current} sx={listItemButtonStyle(open, option)}>
-                <ListItemIcon sx={listItemIconStyle(option)}>{option.icon}</ListItemIcon>
+              <ListItemButton component={Link} to={option.path} selected={option.current} sx={listItemButtonStyle(option)}>
+                <Box sx={iconWrapperStyle}>
+                  <ListItemIcon sx={listItemIconStyle(option)}>{option.icon}</ListItemIcon>
+                </Box>
                 <ListItemText primary={option.name} sx={listItemTextStyle(open)} />
               </ListItemButton>
             </ListItem>
@@ -40,19 +44,19 @@ export default Sidebar;
 const sideBarOptions = (pathname: string) => [
   {
     name: 'Progress',
-    icon: <DashboardIcon />,
+    icon: <DashboardIcon sx={iconStyle} />,
     path: '/dashboard/progress',
     current: pathname === '/dashboard/progress',
   },
   {
     name: 'Planner',
-    icon: <CalendarTodayIcon />,
+    icon: <CalendarTodayIcon sx={iconStyle} />,
     path: '/dashboard/planner',
     current: pathname === '/dashboard/planner',
   },
   {
     name: 'Analytics',
-    icon: <BarChartIcon />,
+    icon: <BarChartIcon sx={iconStyle} />,
     path: '/dashboard/analytics',
     current: pathname === '/dashboard/analytics',
   },
@@ -60,53 +64,76 @@ const sideBarOptions = (pathname: string) => [
 
 // -------- Styles ----------
 
+const drawerStyle = (open: boolean) => ({
+  width: open ? 240 : 90,
+  flexShrink: 0,
+  top: NAVBAR_HEIGHT,
+  height: `calc(100vh - ${NAVBAR_HEIGHT})`,
+  overflow: 'hidden',
+  transition: 'width 0.3s ease-in-out',
+  [`& .MuiDrawer-paper`]: {
+    width: open ? 240 : 100,
+    boxSizing: 'border-box',
+    transition: 'width 0.3s ease-in-out',
+    top: NAVBAR_HEIGHT,
+    height: `calc(100vh - ${NAVBAR_HEIGHT})`,
+    overflow: 'hidden',
+    boxShadow: '2px 0 10px rgba(0, 0, 0, 0.1)',
+  },
+});
+
 const boxWrapperStyle = {
   display: 'flex',
   position: 'relative',
   minHeight: `calc(100vh - ${NAVBAR_HEIGHT})`,
+  backgroundColor: 'background.paper',
+  overflow: 'hidden',
 };
-
-const drawerStyle = (open: boolean) => ({
-  width: open ? 240 : 64,
-  flexShrink: 0,
-  top: NAVBAR_HEIGHT,
-  height: `calc(100vh - ${NAVBAR_HEIGHT})`,
-  [`& .MuiDrawer-paper`]: {
-    width: open ? 240 : 64,
-    boxSizing: 'border-box',
-    transition: 'width 0.3s',
-    top: NAVBAR_HEIGHT,
-    height: `calc(100vh - ${NAVBAR_HEIGHT})`,
-  },
-});
 
 const boxIconStyle = {
   display: 'flex',
   justifyContent: 'flex-end',
   alignItems: 'center',
   paddingTop: '1rem',
-  paddingRight: 1.3,
+  paddingRight: 3.35,
+  paddingBottom: '2rem',
 };
 
-const listItemButtonStyle = (open: boolean, option: SidebarOption) => ({
-  justifyContent: open ? 'flex-start' : 'center',
+const iconButtonStyle = {
+  backgroundColor: 'background.paperChannel',
+};
+
+const listItemButtonStyle = (option: SidebarOption) => ({
+  justifyContent: 'flex-start',
+  py: 1.5,
   px: 2.5,
   ...(option.current && {
     backgroundColor: 'rgba(0, 0, 0, 0.08)',
   }),
 });
 
-const listItemIconStyle = (option: SidebarOption) => ({
+const iconWrapperStyle = {
+  display: 'flex',
   justifyContent: 'center',
+  alignItems: 'center',
+  transition: 'padding 0.3s',
+  paddingLeft: '12px',
+};
+
+const listItemIconStyle = (option: SidebarOption) => ({
   color: option.current ? 'primary.main' : 'text.secondary',
 });
 
 const listItemTextStyle = (open: boolean) => ({
   opacity: open ? 1 : 0,
-  marginLeft: open ? 2 : 0,
   transition: 'opacity 0.3s, margin-left 0.3s',
   whiteSpace: 'nowrap',
 });
+
+const iconStyle = {
+  height: 30,
+  width: 30,
+};
 
 // -------- Types ----------
 

@@ -44,7 +44,6 @@ const tabsStyle = {
 const firstTabStyle = (theme: Theme, activeTab: string) => ({
   textTransform: 'none',
   fontSize: '1rem',
-  fontWeight: 'bold',
   color: activeTab === 'login' ? theme.palette.text.primary : theme.palette.text.disabled,
   borderBottom: activeTab === 'login' ? `2px solid ${theme.palette.primary.main}` : 'none',
   transition: 'all 0.3s ease-in-out',
@@ -53,7 +52,6 @@ const firstTabStyle = (theme: Theme, activeTab: string) => ({
 const secondTabStyle = (theme: Theme, activeTab: string) => ({
   textTransform: 'none',
   fontSize: '1rem',
-  fontWeight: 'bold',
   color: activeTab === 'register' ? theme.palette.text.primary : theme.palette.text.disabled,
   borderBottom: activeTab === 'register' ? `2px solid ${theme.palette.primary.main}` : 'none',
   transition: 'all 0.3s ease-in-out',
