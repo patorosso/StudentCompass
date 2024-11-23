@@ -84,7 +84,8 @@ const boxIconStyle = {
   display: 'flex',
   justifyContent: 'flex-end',
   alignItems: 'center',
-  padding: '1rem',
+  paddingTop: '1rem',
+  paddingRight: 1.3,
 };
 
 const listItemButtonStyle = (open: boolean, option: SidebarOption) => ({
