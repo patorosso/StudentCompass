@@ -94,7 +94,7 @@ const boxIconStyle = {
   display: 'flex',
   justifyContent: 'flex-end',
   alignItems: 'center',
-  paddingTop: '1rem',
+  paddingTop: '3rem',
   paddingRight: 3.35,
   paddingBottom: '2rem',
 };

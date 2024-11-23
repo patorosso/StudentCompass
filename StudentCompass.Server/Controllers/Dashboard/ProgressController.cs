@@ -3,7 +3,7 @@ using StudentCompass.Services.Contracts;
 
 namespace StudentCompass.Server.Controllers.Dashboard
 {
-    [Route("api/dashboard/[controller]")]
+    [Route("dashboard/[controller]")]
     [ApiController]
     public class ProgressController : ControllerBase
     {
@@ -17,7 +17,6 @@ namespace StudentCompass.Server.Controllers.Dashboard
         }
 
         [HttpGet]
-        [Route("Action")]
         public async Task<IActionResult> GetProgressOverview(short studentId, byte careerPlanId)
         {
             try
