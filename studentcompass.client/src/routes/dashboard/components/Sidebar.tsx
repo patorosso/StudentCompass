@@ -41,24 +41,26 @@ export default Sidebar;
 
 // -------- Helper Functions ----------
 
+const lastSlash = /\/[^/]*$/;
+
 const sideBarOptions = (pathname: string) => [
   {
     name: 'Progress',
     icon: <DashboardIcon sx={iconStyle} />,
-    path: '/dashboard/progress',
-    current: pathname === '/dashboard/progress',
+    path: pathname.replace(lastSlash, '/progress'),
+    current: pathname.endsWith('progress'),
   },
   {
     name: 'Planner',
     icon: <CalendarTodayIcon sx={iconStyle} />,
-    path: '/dashboard/planner',
-    current: pathname === '/dashboard/planner',
+    path: pathname.replace(lastSlash, '/planner'),
+    current: pathname.endsWith('planner'),
   },
   {
     name: 'Analytics',
     icon: <BarChartIcon sx={iconStyle} />,
-    path: '/dashboard/analytics',
-    current: pathname === '/dashboard/analytics',
+    path: pathname.replace(lastSlash, '/analytics'),
+    current: pathname.endsWith('analytics'),
   },
 ];
 

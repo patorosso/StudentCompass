@@ -1,9 +1,10 @@
+import { observer } from 'mobx-react';
 import { Box, Typography } from '@mui/material';
 import SubjectsContainer from './SubjectsContainer';
 import { useProgressStore } from '../store/manager';
 // import SummaryContainer from "./components/summary/SummaryContainer";
 
-const Content = () => {
+const ContentComponent = () => {
   const { ContentComponent } = useProgressStore();
   return (
     <Box>
@@ -20,6 +21,7 @@ const Content = () => {
   );
 };
 
+const Content = observer(ContentComponent);
 export default Content;
 
 // -------- Styles ----------

@@ -16,6 +16,7 @@ import ScreenLoader from './routes/main/components/ScreenLoader';
 // const Stats = lazy(() => import('./components/dashboard/Stats'));
 const LandingDashboard = lazy(() => import('./routes/dashboard/View'));
 const Progress = lazy(() => import('./routes/dashboard/progress/View'));
+const DashboardWithSidebar = lazy(() => import('./routes/dashboard/DashboardWithSidebar'));
 
 // const DashboardLayout = withDelay(() => import('./routes/dashboard/View'), 3000); // 3-second delay
 // const Progress = withDelay(() => import('./routes/dashboard/progress/View'), 3000); // 3-second delay
@@ -28,8 +29,11 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/dashboard/*" element={<LandingDashboard />} />
-          <Route path="/dashboard/:careerPlan/progress" element={<Progress />} />
-          {/* <Route path="/dashboard/:careerPlan/stats" element={<Progress />} /> */}
+          <Route path="/dashboard/:careerPlan" element={<DashboardWithSidebar />}>
+            <Route index element={<Navigate to="progress" replace />} />
+            <Route path="progress" element={<Progress />} />
+            {/* <Route path="stats" element={<Stats />} /> */}
+          </Route>
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </Suspense>
