@@ -17,17 +17,19 @@ namespace StudentCompass.Server.Controllers.Dashboard
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetProgressOverview(short studentId, byte careerPlanId)
+        public async Task<IActionResult> GetProgressOverview(byte careerPlan)
         {
             try
             {
-                var progressOverview = await _progressService.GetProgressOverview(studentId, careerPlanId);
+                //TODO: Get studentId from token
+                short studentId = 1;
+
+                var progressOverview = await _progressService.GetProgressOverview(studentId, careerPlan);
                 return Ok(progressOverview);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error while getting progress overview");
-                return StatusCode(500, "Internal server error");
+                return StatusCode(500, ex.Message);
             }
         }
 

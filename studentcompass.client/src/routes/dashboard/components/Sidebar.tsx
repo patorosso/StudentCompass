@@ -20,7 +20,7 @@ const Sidebar = () => {
             {open ? <ChevronLeftIcon sx={iconStyle} /> : <ChevronRightIcon sx={iconStyle} />}
           </IconButton>
         </Box>
-        <List>
+        <List disablePadding>
           {sideBarOptions(location.pathname).map((option: SidebarOption) => (
             <ListItem key={option.name} disablePadding>
               <ListItemButton component={Link} to={option.path} selected={option.current} sx={listItemButtonStyle(option)}>
@@ -78,7 +78,7 @@ const drawerStyle = (open: boolean) => ({
     top: NAVBAR_HEIGHT,
     height: `calc(100vh - ${NAVBAR_HEIGHT})`,
     overflow: 'hidden',
-    boxShadow: '2px 0 10px rgba(0, 0, 0, 0.1)',
+    boxShadow: '2px 0 10px rgba(0, 0, 0, 0.3)',
   },
 });
 
@@ -94,12 +94,15 @@ const boxIconStyle = {
   display: 'flex',
   justifyContent: 'flex-end',
   alignItems: 'center',
-  paddingTop: '3rem',
+  paddingTop: '2.6rem',
   paddingRight: 3.35,
   paddingBottom: '2rem',
+  borderBottom: 2,
+  borderColor: 'divider',
 };
 
 const iconButtonStyle = {
+  borderRadius: 2,
   backgroundColor: 'background.paperChannel',
 };
 

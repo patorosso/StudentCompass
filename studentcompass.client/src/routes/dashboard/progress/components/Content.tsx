@@ -42,6 +42,7 @@ const typographyBoxStyle = {
   borderColor: 'divider',
   opacity: 0.9,
   boxShadow: 2,
+  borderRadius: 2,
 };
 
 const titleStyle = { color: 'text.primary' };

@@ -14,7 +14,7 @@ import ScreenLoader from './routes/main/components/ScreenLoader';
 // }
 
 // const Stats = lazy(() => import('./components/dashboard/Stats'));
-const DashboardLayout = lazy(() => import('./routes/dashboard/View'));
+const LandingDashboard = lazy(() => import('./routes/dashboard/View'));
 const Progress = lazy(() => import('./routes/dashboard/progress/View'));
 
 // const DashboardLayout = withDelay(() => import('./routes/dashboard/View'), 3000); // 3-second delay
@@ -27,9 +27,9 @@ const App = () => {
       <Suspense fallback={<ScreenLoader />}>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/dashboard/*" element={<DashboardLayout />}>
-            <Route path="progress" element={<Progress />} />
-          </Route>
+          <Route path="/dashboard/*" element={<LandingDashboard />} />
+          <Route path="/dashboard/:careerPlan/progress" element={<Progress />} />
+          {/* <Route path="/dashboard/:careerPlan/stats" element={<Progress />} /> */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </Suspense>

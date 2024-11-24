@@ -1,4 +1,5 @@
 import './index.css';
+import 'react-toastify/dist/ReactToastify.css';
 import App from './App.tsx';
 import { theme } from './utils/themes';
 import { createRoot } from 'react-dom/client';
