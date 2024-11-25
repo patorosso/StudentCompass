@@ -1,7 +1,7 @@
 import Auth from './components/Auth';
 import { Box, Typography } from '@mui/material';
 
-const Home = () => {
+const LandingPage = () => {
   return (
     <Box component="section" sx={sectionStyle}>
       <Box sx={contentWrapperStyle}>
@@ -20,7 +20,7 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default LandingPage;
 
 // -------- Styles ----------
 

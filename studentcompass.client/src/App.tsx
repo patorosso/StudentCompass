@@ -1,4 +1,3 @@
-import Home from './routes/main/View';
 import React, { lazy, Suspense } from 'react';
 import Navbar from './routes/main/components/Navbar';
 import { Routes, Route, Navigate } from 'react-router-dom';
@@ -14,9 +13,10 @@ import ScreenLoader from './routes/main/components/ScreenLoader';
 // }
 
 // const Stats = lazy(() => import('./components/dashboard/Stats'));
-const LandingDashboard = lazy(() => import('./routes/dashboard/View'));
+const LandingPage = lazy(() => import('./routes/main/View'));
+const Dashboard = lazy(() => import('./routes/dashboard/View'));
 const Progress = lazy(() => import('./routes/dashboard/progress/View'));
-const DashboardWithSidebar = lazy(() => import('./routes/dashboard/DashboardWithSidebar'));
+const DashboardGroup = lazy(() => import('./routes/dashboard/components/DashboardGroup'));
 
 // const DashboardLayout = withDelay(() => import('./routes/dashboard/View'), 3000); // 3-second delay
 // const Progress = withDelay(() => import('./routes/dashboard/progress/View'), 3000); // 3-second delay
@@ -27,9 +27,9 @@ const App = () => {
       <Navbar />
       <Suspense fallback={<ScreenLoader />}>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/dashboard/*" element={<LandingDashboard />} />
-          <Route path="/dashboard/:careerPlan" element={<DashboardWithSidebar />}>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/dashboard/*" element={<Dashboard />} />
+          <Route path="/dashboard/:careerPlan" element={<DashboardGroup />}>
             <Route index element={<Navigate to="progress" replace />} />
             <Route path="progress" element={<Progress />} />
             {/* <Route path="stats" element={<Stats />} /> */}

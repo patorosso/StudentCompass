@@ -1,8 +1,8 @@
 import { Box } from '@mui/system';
 import { Outlet } from 'react-router-dom';
-import Sidebar from './components/Sidebar';
+import Sidebar from './Sidebar';
 
-const DashboardWithSidebar = () => {
+const DashboardGroup = () => {
   return (
     <Box sx={boxWrapperStyle}>
       <Sidebar />
@@ -13,7 +13,7 @@ const DashboardWithSidebar = () => {
   );
 };
 
-export default DashboardWithSidebar;
+export default DashboardGroup;
 
 // -------- Styles ----------
 
