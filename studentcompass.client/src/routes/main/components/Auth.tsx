@@ -31,8 +31,6 @@ const paperStyle = (theme: Theme) => ({
   bgcolor: theme.palette.background.default,
   boxShadow: 6,
   borderRadius: 2,
-  margin: 'auto',
-  lg: { marginRight: '60px' },
 });
 
 const tabsStyle = {

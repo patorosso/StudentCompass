@@ -3,18 +3,16 @@ import { Box, Typography } from '@mui/material';
 
 const LandingPage = () => {
   return (
-    <Box component="section" sx={sectionStyle}>
-      <Box sx={contentWrapperStyle}>
-        <Box sx={leftSectionStyle}>
-          <Box>
-            <p style={flatStudentTextStyle}>student</p>
-            <p style={flatCompassTextStyle}>Compass</p>
-          </Box>
-          <Typography sx={subtitleStyle}>Navigate your college journey</Typography>
+    <Box sx={contentWrapperStyle}>
+      <Box sx={leftSectionStyle}>
+        <Box>
+          <p style={flatStudentTextStyle}>student</p>
+          <p style={flatCompassTextStyle}>Compass</p>
         </Box>
-        <Box sx={rightSectionStyle}>
-          <Auth />
-        </Box>
+        <Typography sx={subtitleStyle}>Navigate your college journey</Typography>
+      </Box>
+      <Box sx={rightSectionStyle}>
+        <Auth />
       </Box>
     </Box>
   );
@@ -24,30 +22,18 @@ export default LandingPage;
 
 // -------- Styles ----------
 
-const sectionStyle = {
-  display: 'flex',
-  flexDirection: 'column',
-  height: '100%',
-  justifyContent: 'space-between',
-  minHeight: '100vh',
-  paddingTop: '4rem',
-};
-
 const contentWrapperStyle = {
   display: 'flex',
-  flexDirection: { xs: 'column', lg: 'row' },
   alignItems: 'center',
   justifyContent: 'center',
 };
 
 const leftSectionStyle = {
-  display: 'flex',
+  display: { lg: 'flex', md: 'none', sm: 'none', xs: 'none' },
   flexDirection: 'column',
   justifyContent: 'center',
   alignItems: '',
   padding: '0 15rem',
-  width: '100%',
-  lg: { width: '60%', marginLeft: '30px' },
 };
 
 const flatStudentTextStyle = {
@@ -82,7 +68,5 @@ const rightSectionStyle = {
   justifyContent: 'center',
   alignItems: 'center',
   paddingTop: '3rem',
-  paddingRight: '15rem',
-  width: '100%',
-  lg: { width: '40%' },
+  paddingRight: { lg: '15rem', md: 0, sm: 0, xs: 0 },
 };
