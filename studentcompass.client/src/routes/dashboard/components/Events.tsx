@@ -1,10 +1,10 @@
-import { Paper, Typography, Box, Divider, List, ListItem } from '@mui/material';
+import { Paper, Typography, Box, Divider, List, ListItem, Chip } from '@mui/material';
 
 const eventList: Event[] = [
-  { id: 1, date: 'Thu, Nov 28, 2024', time: '3:30 pm - 5:00 pm', description: 'Mathematics Final Exam' },
-  { id: 2, date: 'Sun, Dec 2, 2024', time: '12:30 pm - 2:00 pm', description: 'Submit Research Paper on AI' },
-  { id: 3, date: 'Wed, Dec 5, 2024', time: '7:00 am - 9:00 am', description: 'Physics Midterm Exam' },
-  { id: 4, date: 'Thu, Dec 10, 2024', time: 'All Day', description: 'Hackathon: Coding for Sustainability' },
+  { id: 1, date: 'Thu, Nov 28, 2024', time: '3:30 pm - 5:00 pm', description: 'Mathematics Final Exam', type: 'Exam' },
+  { id: 2, date: 'Sun, Dec 2, 2024', time: '12:30 pm - 2:00 pm', description: 'Submit Research Paper on AI', type: 'Paper' },
+  { id: 3, date: 'Wed, Dec 5, 2024', time: '7:00 am - 9:00 am', description: 'Physics Midterm Exam', type: 'Exam' },
+  { id: 4, date: 'Thu, Dec 10, 2024', time: 'All Day', description: 'Hackathon: Coding for Sustainability', type: 'Event' },
 ];
 
 const Events = () => {
@@ -39,9 +39,12 @@ const Events = () => {
               </Box>
               {/* Event Details */}
               <Box sx={eventDetailsStyle}>
-                <Typography variant="body2" color="text.secondary">
-                  {event.time}
-                </Typography>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                  <Chip label={event.type} size="small" color="primary" />
+                  <Typography variant="body2" color="text.secondary">
+                    {event.time}
+                  </Typography>
+                </Box>
                 <Typography variant="body1">{event.description}</Typography>
               </Box>
             </ListItem>
@@ -59,7 +62,6 @@ export default Events;
 // Extract the Month and Year from the date
 const getMonthYear = (dateString: string) => {
   const date = new Date(dateString);
-  // month with first letter capitalized, full year
   const month = date.toLocaleString('default', { month: 'long' });
   const monthUpper = month.charAt(0).toUpperCase() + month.slice(1);
   const year = date.getFullYear();
@@ -163,4 +165,5 @@ type Event = {
   date: string;
   time: string;
   description: string;
+  type: 'Exam' | 'Paper' | 'Event';
 };
