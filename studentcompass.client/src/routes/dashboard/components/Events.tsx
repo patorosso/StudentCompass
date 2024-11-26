@@ -1,12 +1,10 @@
-import { Paper, Typography, Box, Divider, List, ListItem, ListItemText, Chip } from '@mui/material';
+import { Paper, Typography, Box, Divider, List, ListItem } from '@mui/material';
 
-const eventList = [
-  { id: 1, date: 'Nov 28, 2024', type: 'Exam', description: 'Mathematics Final Exam' },
-  { id: 2, date: 'Dec 2, 2024', type: 'Paper', description: 'Submit Research Paper on AI' },
-  { id: 3, date: 'Dec 5, 2024', type: 'Exam', description: 'Physics Midterm Exam' },
-  { id: 4, date: 'Dec 10, 2024', type: 'Event', description: 'Hackathon: Coding for Sustainability' },
-  { id: 5, date: 'Dec 15, 2024', type: 'Exam', description: 'Computer Science Final Exam' },
-  { id: 6, date: 'Dec 18, 2024', type: 'Paper', description: 'Submit Thesis Draft' },
+const eventList: Event[] = [
+  { id: 1, date: 'Thu, Nov 28, 2024', time: '3:30 pm - 5:00 pm', description: 'Mathematics Final Exam' },
+  { id: 2, date: 'Sun, Dec 2, 2024', time: '12:30 pm - 2:00 pm', description: 'Submit Research Paper on AI' },
+  { id: 3, date: 'Wed, Dec 5, 2024', time: '7:00 am - 9:00 am', description: 'Physics Midterm Exam' },
+  { id: 4, date: 'Thu, Dec 10, 2024', time: 'All Day', description: 'Hackathon: Coding for Sustainability' },
 ];
 
 const Events = () => {
@@ -15,25 +13,39 @@ const Events = () => {
       <Typography variant="h6" sx={headerStyle}>
         Upcoming Events
       </Typography>
-      <Divider />
       <List sx={listStyle}>
-        {eventList.map((event) => (
-          <ListItem key={event.id} sx={listItemStyle}>
-            <Box sx={eventDateStyle}>
-              <Typography variant="body2" color="text.secondary">
-                {event.date}
-              </Typography>
-            </Box>
-            <Box sx={eventContentStyle}>
-              <Chip
-                label={event.type}
-                color={event.type === 'Exam' ? 'primary' : event.type === 'Paper' ? 'secondary' : 'default'}
-                size="small"
-                sx={chipStyle}
-              />
-              <ListItemText primary={event.description} />
-            </Box>
-          </ListItem>
+        {eventList.map((event, index) => (
+          <Box key={event.id}>
+            {/* Month-Year Divider */}
+            {index === 0 || isNewMonth(eventList, index) ? (
+              <Box sx={monthYearDividerStyle}>
+                <Typography variant="subtitle2" sx={monthYearStyle}>
+                  {getMonthYear(event.date)}
+                </Typography>
+                <Divider sx={dividerAfterMonthStyle} />
+              </Box>
+            ) : null}
+
+            {/* Event Item */}
+            <ListItem sx={listItemStyle}>
+              {/* Day Section */}
+              <Box sx={daySectionStyle}>
+                <Typography variant="body2" sx={dayNameStyle}>
+                  {getDayName(event.date)}
+                </Typography>
+                <Typography variant="h5" sx={dayNumberStyle}>
+                  {getDayNumber(event.date)}
+                </Typography>
+              </Box>
+              {/* Event Details */}
+              <Box sx={eventDetailsStyle}>
+                <Typography variant="body2" color="text.secondary">
+                  {event.time}
+                </Typography>
+                <Typography variant="body1">{event.description}</Typography>
+              </Box>
+            </ListItem>
+          </Box>
         ))}
       </List>
     </Paper>
@@ -42,69 +54,113 @@ const Events = () => {
 
 export default Events;
 
+// ---------- Helper Functions ----------
+
+// Extract the Month and Year from the date
+const getMonthYear = (dateString: string) => {
+  const date = new Date(dateString);
+  // month with first letter capitalized, full year
+  const month = date.toLocaleString('default', { month: 'long' });
+  const monthUpper = month.charAt(0).toUpperCase() + month.slice(1);
+  const year = date.getFullYear();
+  return `${monthUpper} ${year}`;
+};
+
+// Get Day Name
+const getDayName = (dateString: string) => {
+  const date = new Date(dateString);
+  return date.toLocaleString('default', { weekday: 'short' });
+};
+
+// Get Day Number
+const getDayNumber = (dateString: string) => {
+  const date = new Date(dateString);
+  return date.getDate();
+};
+
+// Check if a New Month is Starting
+const isNewMonth = (events: Event[], index: number) => {
+  const currentMonth = getMonthYear(events[index].date);
+  const previousMonth = getMonthYear(events[index - 1]?.date);
+  return currentMonth !== previousMonth;
+};
+
 // ---------- Styles ----------
 
 const paperStyle = {
-  height: '40%',
   mt: 2,
   borderRadius: 2,
   boxShadow: 2,
   bgcolor: 'background.paper',
-  p: 2,
-  overflow: 'hidden',
-  '&:hover': {
-    overflowY: 'auto',
-  },
-  scrollbarWidth: 'thin',
-  '&::-webkit-scrollbar': {
-    width: '8px',
-  },
-  '&::-webkit-scrollbar-thumb': {
-    backgroundColor: '#888',
-    borderRadius: 8,
-  },
-  '&::-webkit-scrollbar-thumb:hover': {
-    backgroundColor: '#555',
-  },
+  padding: 3,
 };
 
 const headerStyle = {
-  fontWeight: 'bold',
   mb: 1,
 };
 
 const listStyle = {
   maxHeight: '100%',
   overflowY: 'auto',
-  mt: 2,
   pl: 0,
+};
+
+const monthYearDividerStyle = {
+  display: 'flex',
+  alignItems: 'center',
+  my: 2,
+};
+
+const dividerAfterMonthStyle = {
+  flexGrow: 1,
+  borderBottom: '1px solid',
+  borderColor: 'divider',
+  ml: 2,
+};
+
+const monthYearStyle = {
+  fontWeight: 'bold',
+  color: 'text.secondary',
+  fontSize: '0.9rem',
 };
 
 const listItemStyle = {
   display: 'flex',
-  flexDirection: 'row',
   alignItems: 'flex-start',
   gap: 2,
   pl: 0,
   pb: 2,
-  position: 'relative',
-  '&:last-child': {
-    pb: 0,
-  },
 };
 
-const eventDateStyle = {
-  minWidth: '100px',
-  textAlign: 'right',
+const daySectionStyle = {
+  minWidth: '60px',
+  textAlign: 'center',
 };
 
-const eventContentStyle = {
+const dayNameStyle = {
+  fontSize: '0.75rem',
+  fontWeight: 400,
+  color: 'text.secondary',
+};
+
+const dayNumberStyle = {
+  fontSize: '1.5rem',
+  fontWeight: 'bold',
+  color: 'text.primary',
+};
+
+const eventDetailsStyle = {
   flex: 1,
   display: 'flex',
   flexDirection: 'column',
   gap: 0.5,
 };
 
-const chipStyle = {
-  mb: 0.5,
+// ---------- Types ----------
+
+type Event = {
+  id: number;
+  date: string;
+  time: string;
+  description: string;
 };
