@@ -67,7 +67,7 @@ const sideBarOptions = (pathname: string) => [
 // -------- Styles ----------
 
 const drawerStyle = (open: boolean) => ({
-  width: open ? 240 : 90,
+  width: open ? 240 : 100,
   flexShrink: 0,
   top: NAVBAR_HEIGHT,
   height: `calc(100vh - ${NAVBAR_HEIGHT})`,

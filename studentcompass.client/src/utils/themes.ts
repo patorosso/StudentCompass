@@ -13,7 +13,7 @@ export const theme = createTheme({
         },
         background: {
           default: 'white',
-          paper: 'rgba(250, 255, 252, 0.7)',
+          paper: 'rgba(250, 255, 252, 0.8)',
           paperChannel: '#ededed',
         },
       },
