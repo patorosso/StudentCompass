@@ -20,17 +20,6 @@ const CareerPlans = () => {
           <br /> <br /> Sus egresados destacan por su equilibrio entre teoría y práctica, y su habilidad para innovar y liderar proyectos
           tecnológicos.
         </Typography>
-        <Box sx={statsContainerStyle}>
-          <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
-            Total Subjects: <span style={{ fontWeight: 'normal' }}>50</span>
-          </Typography>
-          <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
-            Completed: <span style={{ fontWeight: 'normal' }}>35</span>
-          </Typography>
-          <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
-            Remaining: <span style={{ fontWeight: 'normal' }}>15</span>
-          </Typography>
-        </Box>
       </Box>
       <Box sx={{ mt: 2 }}>
         <Typography variant="body1" color="text.secondary" sx={{ mb: 1 }}>
@@ -83,13 +72,6 @@ const overviewContainerStyle = {
 
 const chipStyle = {
   color: '#fafaff',
-};
-
-const statsContainerStyle = {
-  display: 'flex',
-  justifyContent: 'space-between',
-  mt: 1,
-  flexWrap: 'wrap',
 };
 
 const progressBarStyle = {
