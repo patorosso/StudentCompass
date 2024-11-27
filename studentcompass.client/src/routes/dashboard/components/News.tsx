@@ -1,4 +1,4 @@
-import { Paper, Typography, Box, Divider, List, ListItem, ListItemText } from '@mui/material';
+import { Paper, Typography, Box, List, ListItem, ListItemText } from '@mui/material';
 
 const News = () => {
   return (
@@ -6,7 +6,6 @@ const News = () => {
       <Typography variant="h6" sx={headerStyle}>
         Latest news
       </Typography>
-      <Divider />
       <List sx={listStyle}>
         {newsItems.map((item) => (
           <ListItem key={item.id} sx={listItemStyle} disablePadding>

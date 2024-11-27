@@ -39,7 +39,6 @@ export default App;
 const boxStyle = {
   display: 'flex',
   overflowX: 'hidden',
-  alignItems: 'center',
   justifyContent: 'center',
   height: `calc(100vh - ${NAVBAR_HEIGHT})`,
 };
