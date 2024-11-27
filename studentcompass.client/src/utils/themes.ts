@@ -5,9 +5,6 @@ export const theme = createTheme({
     light: {
       palette: {
         mode: 'light',
-        success: {
-          main: '#22c55e',
-        },
         primary: {
           main: '#6561c0',
         },
@@ -27,9 +24,6 @@ export const theme = createTheme({
     dark: {
       palette: {
         mode: 'dark',
-        success: {
-          main: '#22c55e',
-        },
         primary: {
           main: '#6561c0',
         },

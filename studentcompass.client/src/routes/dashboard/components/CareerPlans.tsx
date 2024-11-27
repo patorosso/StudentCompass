@@ -1,4 +1,4 @@
-import { Paper, Typography, Box, Button, Divider, LinearProgress, Chip } from '@mui/material';
+import { Paper, Typography, Box, Button, Divider, LinearProgress, Chip, Theme } from '@mui/material';
 
 const CareerPlans = () => {
   return (
@@ -7,7 +7,7 @@ const CareerPlans = () => {
         <Typography variant="h4" sx={headerStyle}>
           Ingeniería Informática - 2022
         </Typography>
-        <Chip label="Active Plan" color="secondary" size="medium" sx={chipStyle} />
+        <Chip label="Active Plan" color="success" size="medium" sx={chipStyle} />
       </Box>
       <Divider sx={{ my: 2 }} />
       <Box sx={overviewContainerStyle}>
@@ -58,14 +58,14 @@ export default CareerPlans;
 
 // ---------- Styles ----------
 
-const paperStyle = {
+const paperStyle = (theme: Theme) => ({
   mt: 2,
-  borderRadius: 2,
-  boxShadow: 2,
-  bgcolor: 'background.paper',
   padding: 3,
-  background: 'white',
-};
+  boxShadow: 2,
+  borderRadius: 2,
+  bgcolor: 'background.paper',
+  background: theme.palette.mode === 'dark' ? '#3f3f3f' : 'white',
+});
 
 const headerContainerStyle = {
   display: 'flex',
@@ -82,7 +82,7 @@ const overviewContainerStyle = {
 };
 
 const chipStyle = {
-  color: 'white',
+  color: '#fafaff',
 };
 
 const statsContainerStyle = {
