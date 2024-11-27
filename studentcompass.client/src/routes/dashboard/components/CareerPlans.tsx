@@ -1,4 +1,5 @@
-import { Paper, Typography, Box, Button, Divider, LinearProgress, Chip, Theme } from '@mui/material';
+import { Link as RouterLink } from 'react-router-dom';
+import { Paper, Typography, Box, Button, Divider, LinearProgress, Chip, Theme, Link } from '@mui/material';
 
 const CareerPlans = () => {
   return (
@@ -33,7 +34,9 @@ const CareerPlans = () => {
       <Divider sx={{ my: 3 }} />
       <Box sx={actionsContainerStyle}>
         <Button variant="contained" color="primary" size="small">
-          View Subjects
+          <Link component={RouterLink} to="/dashboard/ingenieria-informatica-2022/progress" underline="none" color="inherit">
+            View Progress
+          </Link>
         </Button>
         <Button variant="text" color="error" size="small">
           Delete Plan
