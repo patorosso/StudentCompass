@@ -1,23 +1,43 @@
-import { Paper, Typography, Box, Divider, List, ListItem, Chip } from '@mui/material';
+import { useState } from 'react';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import { Paper, Typography, Box, Divider, List, ListItem, Chip, IconButton } from '@mui/material';
 
-const eventList: Event[] = [
-  { id: 1, date: 'Thu, Nov 28, 2024', time: '3:30 pm - 5:00 pm', description: 'Mathematics Final Exam', type: 'Exam' },
-  { id: 2, date: 'Sun, Dec 2, 2024', time: '12:30 pm - 2:00 pm', description: 'Submit Research Paper on AI', type: 'Paper' },
-  { id: 3, date: 'Wed, Dec 5, 2024', time: '7:00 am - 9:00 am', description: 'Physics Midterm Exam', type: 'Exam' },
-  { id: 4, date: 'Thu, Dec 10, 2024', time: 'All Day', description: 'Hackathon: Coding for Sustainability', type: 'Event' },
-];
+const EVENTS_PER_PAGE = 4;
 
 const Events = () => {
+  const [currentPage, setCurrentPage] = useState(0);
+  const totalPages = Math.ceil(eventList.length / EVENTS_PER_PAGE);
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages - 1) setCurrentPage(currentPage + 1);
+  };
+
+  const handlePreviousPage = () => {
+    if (currentPage > 0) setCurrentPage(currentPage - 1);
+  };
+
+  const paginatedEvents = eventList.slice(currentPage * EVENTS_PER_PAGE, (currentPage + 1) * EVENTS_PER_PAGE);
+
   return (
     <Paper sx={paperStyle}>
-      <Typography variant="h6" sx={headerStyle}>
-        Upcoming Events
-      </Typography>
+      <Box sx={headerContainerStyle}>
+        <Box sx={iconContainerStyle}>
+          <IconButton onClick={handlePreviousPage} disabled={currentPage === 0}>
+            <ChevronLeftIcon />
+          </IconButton>
+          <IconButton onClick={handleNextPage} disabled={currentPage === totalPages - 1}>
+            <ChevronRightIcon />
+          </IconButton>
+        </Box>
+        <Typography variant="h6" sx={headerStyle}>
+          Upcoming Events
+        </Typography>
+      </Box>
       <List sx={listStyle}>
-        {eventList.map((event, index) => (
+        {paginatedEvents.map((event, index) => (
           <Box key={event.id}>
-            {/* Month-Year Divider */}
-            {index === 0 || isNewMonth(eventList, index) ? (
+            {index === 0 || isNewMonth(eventList, currentPage * EVENTS_PER_PAGE + index) ? (
               <Box sx={monthYearDividerStyle}>
                 <Typography variant="subtitle2" sx={monthYearStyle}>
                   {getMonthYear(event.date)}
@@ -25,10 +45,7 @@ const Events = () => {
                 <Divider sx={dividerAfterMonthStyle} />
               </Box>
             ) : null}
-
-            {/* Event Item */}
             <ListItem sx={listItemStyle}>
-              {/* Day Section */}
               <Box sx={daySectionStyle}>
                 <Typography variant="body2" sx={dayNameStyle}>
                   {getDayName(event.date)}
@@ -37,7 +54,6 @@ const Events = () => {
                   {getDayNumber(event.date)}
                 </Typography>
               </Box>
-              {/* Event Details */}
               <Box sx={eventDetailsStyle}>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                   <Chip label={event.type} size="small" color="primary" />
@@ -57,9 +73,19 @@ const Events = () => {
 
 export default Events;
 
+// ---------- Mock Data ----------
+
+const eventList: Event[] = [
+  { id: 1, date: 'Thu, Nov 28, 2024', time: '3:30 pm - 5:00 pm', description: 'Mathematics Final Exam', type: 'Exam' },
+  { id: 2, date: 'Sun, Dec 2, 2024', time: '12:30 pm - 2:00 pm', description: 'Submit Research Paper on AI', type: 'Paper' },
+  { id: 3, date: 'Wed, Dec 5, 2024', time: '7:00 am - 9:00 am', description: 'Physics Midterm Exam', type: 'Exam' },
+  { id: 4, date: 'Thu, Dec 10, 2024', time: 'All Day', description: 'Hackathon: Coding for Sustainability', type: 'Event' },
+  { id: 5, date: 'Fri, Dec 15, 2024', time: '2:00 pm - 3:00 pm', description: 'Team Meeting', type: 'Meeting' },
+  { id: 6, date: 'Sat, Dec 20, 2024', time: '11:00 am - 1:00 pm', description: 'Volunteer Activity', type: 'Event' },
+];
+
 // ---------- Helper Functions ----------
 
-// Extract the Month and Year from the date
 const getMonthYear = (dateString: string) => {
   const date = new Date(dateString);
   const month = date.toLocaleString('default', { month: 'long' });
@@ -68,19 +94,16 @@ const getMonthYear = (dateString: string) => {
   return `${monthUpper} ${year}`;
 };
 
-// Get Day Name
 const getDayName = (dateString: string) => {
   const date = new Date(dateString);
   return date.toLocaleString('default', { weekday: 'short' });
 };
 
-// Get Day Number
 const getDayNumber = (dateString: string) => {
   const date = new Date(dateString);
   return date.getDate();
 };
 
-// Check if a New Month is Starting
 const isNewMonth = (events: Event[], index: number) => {
   const currentMonth = getMonthYear(events[index].date);
   const previousMonth = getMonthYear(events[index - 1]?.date);
@@ -97,8 +120,17 @@ const paperStyle = {
   padding: 3,
 };
 
+const headerContainerStyle = {
+  display: 'flex',
+  alignItems: 'center',
+};
+
+const iconContainerStyle = {
+  paddingRight: 2,
+};
+
 const headerStyle = {
-  mb: 1,
+  mb: 0,
 };
 
 const listStyle = {
@@ -165,5 +197,5 @@ type Event = {
   date: string;
   time: string;
   description: string;
-  type: 'Exam' | 'Paper' | 'Event';
+  type: string;
 };
