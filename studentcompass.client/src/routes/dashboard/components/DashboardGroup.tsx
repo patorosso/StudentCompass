@@ -1,6 +1,6 @@
+import Sidebar from './Sidebar';
 import { Box } from '@mui/system';
 import { Outlet } from 'react-router-dom';
-import Sidebar from './Sidebar';
 
 const DashboardGroup = () => {
   return (
