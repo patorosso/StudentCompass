@@ -1,17 +1,12 @@
-// import SubjectsTable from "./SubjectsTable";
-// import SubjectsActions from "./actions/SubjectsActions";
-import { Paper, Box, Typography } from '@mui/material';
+import { Paper } from '@mui/material';
+import SubjectsTable from './SubjectsGrid';
+import SubjectsHeader from './SubjectsHeader';
 
 const Subjects = () => {
   return (
     <Paper elevation={3} sx={paperStyle}>
-      <Box sx={boxStyle}>
-        <Typography variant="h5" sx={typographyStyle}>
-          Lista de materias
-        </Typography>
-        {/* <SubjectsActions /> */}
-      </Box>
-      {/* <SubjectsTable /> */}
+      <SubjectsHeader />
+      <SubjectsTable />
     </Paper>
   );
 };
@@ -27,17 +22,4 @@ const paperStyle = {
   p: 4,
   borderRadius: 2,
   boxShadow: 3,
-};
-
-const boxStyle = {
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  pb: 4,
-};
-
-const typographyStyle = {
-  color: 'text.primary',
-  textAlign: 'center',
-  pl: 2,
 };

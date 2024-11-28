@@ -24,8 +24,7 @@ export default LandingPage;
 
 const contentWrapperStyle = {
   display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
+  pt: 7,
 };
 
 const leftSectionStyle = {

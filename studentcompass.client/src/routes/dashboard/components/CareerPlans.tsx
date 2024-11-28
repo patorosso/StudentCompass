@@ -34,7 +34,7 @@ const CareerPlans = () => {
       <Divider sx={{ my: 3 }} />
       <Box sx={actionsContainerStyle}>
         <Button variant="contained" color="primary" size="small">
-          <Link component={RouterLink} to="/dashboard/ingenieria-informatica-2022/progress" underline="none" color="inherit">
+          <Link component={RouterLink} to="/dashboard/1/progress" underline="none" color="inherit">
             View Progress
           </Link>
         </Button>

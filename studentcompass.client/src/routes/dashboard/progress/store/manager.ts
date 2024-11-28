@@ -16,9 +16,16 @@ class ProgressStore {
 
   // ------- Esposed Properties ------
 
-  get ContentComponent() {
+  get Content() {
     return {
       title: this.title,
+    };
+  }
+
+  get SubjectsGrid() {
+    return {
+      subjectRows: this.subjectRows,
+      selectedRow: this.selectedRow,
     };
   }
 

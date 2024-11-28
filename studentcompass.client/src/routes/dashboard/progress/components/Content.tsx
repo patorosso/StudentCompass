@@ -1,16 +1,16 @@
 import { observer } from 'mobx-react';
 import { Box, Typography } from '@mui/material';
-import SubjectsContainer from './SubjectsContainer';
 import { useProgressStore } from '../store/manager';
+import SubjectsContainer from './SubjectsContainer';
 // import SummaryContainer from "./components/summary/SummaryContainer";
 
 const ContentComponent = () => {
-  const { ContentComponent } = useProgressStore();
+  const { Content } = useProgressStore();
   return (
     <Box>
       <Box sx={typographyBoxStyle}>
         <Typography variant="h4" sx={titleStyle}>
-          {ContentComponent.title}
+          {Content.title}
         </Typography>
       </Box>
       <Box sx={contentBoxStyle}>
