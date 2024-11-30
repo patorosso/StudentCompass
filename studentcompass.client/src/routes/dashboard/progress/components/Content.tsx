@@ -1,23 +1,36 @@
 import { observer } from 'mobx-react';
-import { Box, Typography } from '@mui/material';
-import { useProgressStore } from '../store/manager';
+import { Box, Typography, Link, Breadcrumbs, Divider } from '@mui/material';
+//import { useProgressStore } from '../store/manager';
 import SubjectsContainer from './SubjectsContainer';
+import React from 'react';
 // import SummaryContainer from "./components/summary/SummaryContainer";
 
 const ContentComponent = () => {
-  const { Content } = useProgressStore();
+  //const { Content } = useProgressStore();
   return (
-    <Box>
-      <Box sx={typographyBoxStyle}>
-        <Typography variant="h4" sx={titleStyle}>
-          {Content.title}
+    <React.Fragment>
+      <Breadcrumbs
+        separator={
+          <Typography variant="h6" sx={separatorStyle}>
+            ›
+          </Typography>
+        }
+        aria-label="breadcrumb"
+        sx={breadcrumbStyle}
+      >
+        <Link underline="none" color="inherit" href="/dashboard" variant="h6">
+          Dashboard
+        </Link>
+        <Typography color="text.primary" variant="h6">
+          Ingeniería Informática - 2022
         </Typography>
-      </Box>
+      </Breadcrumbs>
+      <Divider />
       <Box sx={contentBoxStyle}>
         <SubjectsContainer />
         {/* <SummaryContainer /> */}
       </Box>
-    </Box>
+    </React.Fragment>
   );
 };
 
@@ -33,18 +46,18 @@ const contentBoxStyle = {
   alignItems: 'center',
   mt: 7,
 };
+//const titleStyle = { color: 'text.primary' };
 
-const typographyBoxStyle = {
+const breadcrumbStyle = {
   display: 'flex',
   alignItems: 'center',
-  px: 4,
-  height: '80px',
-  bgcolor: 'background.paperChannel',
-  borderBottom: 1,
-  borderColor: 'divider',
-  opacity: 0.9,
-  boxShadow: 2,
-  borderRadius: 2,
+  color: 'text.secondary',
+  paddingBottom: 2,
+  paddingTop: 2.5,
+  paddingLeft: 3.5,
 };
 
-const titleStyle = { color: 'text.primary' };
+const separatorStyle = {
+  px: 2,
+  paddingBottom: 0.5,
+};

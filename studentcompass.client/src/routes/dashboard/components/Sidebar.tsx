@@ -70,7 +70,6 @@ const drawerStyle = (open: boolean) => ({
   width: open ? 240 : 100,
   flexShrink: 0,
   top: NAVBAR_HEIGHT,
-  height: `calc(100vh - ${NAVBAR_HEIGHT})`,
   overflow: 'hidden',
   transition: 'width 0.3s ease-in-out',
   [`& .MuiDrawer-paper`]: {
@@ -78,7 +77,6 @@ const drawerStyle = (open: boolean) => ({
     boxSizing: 'border-box',
     transition: 'width 0.3s ease-in-out',
     top: NAVBAR_HEIGHT,
-    height: `calc(100vh - ${NAVBAR_HEIGHT})`,
     overflow: 'hidden',
     boxShadow: '2px 0 10px rgba(0, 0, 0, 0.3)',
   },
@@ -87,7 +85,6 @@ const drawerStyle = (open: boolean) => ({
 const boxWrapperStyle = {
   display: 'flex',
   position: 'relative',
-  minHeight: `calc(100vh - ${NAVBAR_HEIGHT})`,
   backgroundColor: 'background.paper',
   overflow: 'hidden',
 };

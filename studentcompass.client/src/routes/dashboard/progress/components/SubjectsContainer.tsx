@@ -1,13 +1,13 @@
-import { Paper } from '@mui/material';
+import { Box } from '@mui/material';
 import SubjectsTable from './SubjectsGrid';
 import SubjectsHeader from './SubjectsHeader';
 
 const Subjects = () => {
   return (
-    <Paper elevation={3} sx={paperStyle}>
+    <Box sx={boxStyle}>
       <SubjectsHeader />
       <SubjectsTable />
-    </Paper>
+    </Box>
   );
 };
 
@@ -15,11 +15,7 @@ export default Subjects;
 
 // ---------- Styles ----------
 
-const paperStyle = {
-  bgcolor: 'background.paper',
-  color: 'text.primary',
+const boxStyle = {
   width: 920,
   p: 4,
-  borderRadius: 2,
-  boxShadow: 3,
 };
