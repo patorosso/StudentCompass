@@ -1,4 +1,4 @@
-USE test_studentcompass
+USE StudentCompass
 
 GO
 
@@ -45,9 +45,12 @@ CASE WHEN (j.RowNumber = 1 OR IsElective= 1) THEN @NotAvailableStatusId
 FROM approved_or_in_progress_subjects course_info
 RIGHT JOIN career_subjects s ON course_info.SubjectCode = s.Code -- all subjects with their info
 LEFT JOIN non_available_subjects j ON j.RowNumber = 1 AND j.NotAvailable = s.Code -- add available logic
+ORDER BY s.YearLevel, s.Code
 
 END
 
 GO
 
---EXEC GetProgressOverview 1, 1
+--SET STATISTICS TIME ON;
+--EXEC GetProgressOverview 1, 1;
+--SET STATISTICS TIME OFF;
