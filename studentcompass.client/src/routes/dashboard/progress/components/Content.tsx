@@ -1,14 +1,11 @@
 import { observer } from 'mobx-react';
-import { Box, Typography, Link, Breadcrumbs, Divider } from '@mui/material';
-//import { useProgressStore } from '../store/manager';
 import SubjectsContainer from './SubjectsContainer';
-import React from 'react';
-// import SummaryContainer from "./components/summary/SummaryContainer";
+import { Box, Typography, Link, Breadcrumbs, Divider } from '@mui/material';
+import { SIDEBAR_CLOSED_WIDTH } from '../../../../utils/constants';
 
 const ContentComponent = () => {
-  //const { Content } = useProgressStore();
   return (
-    <React.Fragment>
+    <Box sx={mainContainerStyle}>
       <Breadcrumbs
         separator={
           <Typography variant="h6" sx={separatorStyle}>
@@ -28,9 +25,8 @@ const ContentComponent = () => {
       <Divider />
       <Box sx={contentBoxStyle}>
         <SubjectsContainer />
-        {/* <SummaryContainer /> */}
       </Box>
-    </React.Fragment>
+    </Box>
   );
 };
 
@@ -39,14 +35,16 @@ export default Content;
 
 // -------- Styles ----------
 
+const mainContainerStyle = {
+  marginLeft: SIDEBAR_CLOSED_WIDTH,
+};
+
 const contentBoxStyle = {
   display: 'flex',
   flexDirection: { xs: 'column', sm: 'row' },
   justifyContent: { xs: 'center', sm: 'space-evenly' },
   alignItems: 'center',
-  mt: 7,
 };
-//const titleStyle = { color: 'text.primary' };
 
 const breadcrumbStyle = {
   display: 'flex',
@@ -54,7 +52,7 @@ const breadcrumbStyle = {
   color: 'text.secondary',
   paddingBottom: 2,
   paddingTop: 2.5,
-  paddingLeft: 3.5,
+  paddingLeft: 2,
 };
 
 const separatorStyle = {

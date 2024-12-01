@@ -2,6 +2,7 @@ import { refresh } from './actions';
 import { createContext, useContext } from 'react';
 import { makeAutoObservable, runInAction } from 'mobx';
 import { endpoints, request } from '../../../../utils/endpoints';
+import { CourseStatusEnum, YearLevelEnum } from '../../../../utils/enums';
 
 class ProgressStore {
   public title: string = '';
@@ -24,7 +25,7 @@ class ProgressStore {
 
   get SubjectsGrid() {
     return {
-      subjectRows: this.subjectRows,
+      subjectRows: this.subjectRows.filter((row) => !row.isElective),
       selectedRow: this.selectedRow,
     };
   }
@@ -75,15 +76,15 @@ export function useProgressStore() {
 
 export type SubjectRow = {
   code: number;
-  status: string;
   courseId: number;
   isAnnual: boolean;
-  yearLevel: number;
   finalGrade: number;
   description: string;
   isElective: boolean;
   isOptional: boolean;
   weeklyHours: number;
+  yearLevel: YearLevelEnum;
+  status: CourseStatusEnum;
 };
 
 export type RefreshAction = {

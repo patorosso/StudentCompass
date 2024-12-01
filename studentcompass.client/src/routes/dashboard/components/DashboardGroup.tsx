@@ -19,9 +19,11 @@ export default DashboardGroup;
 // -------- Styles ----------
 
 const boxWrapperStyle = {
-  display: 'flex',
   minHeight: `calc(100vh - ${NAVBAR_HEIGHT})`,
   backgroundColor: 'background.default',
+  // display: 'flex',
 };
 
-const boxContentStyle = { flexGrow: 1 };
+const boxContentStyle = {
+  overflowX: 'hidden',
+};

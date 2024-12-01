@@ -1,13 +1,7 @@
-import { Box, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 
 const SubjectsHeader = () => {
-  return (
-    <Box sx={boxStyle}>
-      <Typography variant="h5" sx={typographyStyle}>
-        Lista de materias
-      </Typography>
-    </Box>
-  );
+  return <Box sx={boxStyle}></Box>;
 };
 
 export default SubjectsHeader;
@@ -19,10 +13,4 @@ const boxStyle = {
   justifyContent: 'space-between',
   alignItems: 'center',
   pb: 4,
-};
-
-const typographyStyle = {
-  color: 'text.primary',
-  textAlign: 'center',
-  pl: 2,
 };

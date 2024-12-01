@@ -1,39 +1,37 @@
 import { useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import BarChartIcon from '@mui/icons-material/BarChart';
-import DashboardIcon from '@mui/icons-material/Dashboard';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
+import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import { Drawer, Box, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
-import { NAVBAR_HEIGHT } from '../../../utils/constants';
+import { NAVBAR_HEIGHT, SIDEBAR_CLOSED_WIDTH, SIDEBAR_OPEN_WIDTH } from '../../../utils/constants';
 
 const Sidebar = () => {
   const location = useLocation();
   const [open, setOpen] = useState(false);
 
   return (
-    <Box sx={boxWrapperStyle}>
-      <Drawer variant="permanent" open={open} sx={drawerStyle(open)}>
-        <Box sx={boxIconStyle}>
-          <IconButton onClick={() => setOpen(!open)} sx={iconButtonStyle}>
-            {open ? <ChevronLeftIcon sx={iconStyle} /> : <ChevronRightIcon sx={iconStyle} />}
-          </IconButton>
-        </Box>
-        <List disablePadding>
-          {sideBarOptions(location.pathname).map((option: SidebarOption) => (
-            <ListItem key={option.name} disablePadding>
-              <ListItemButton component={Link} to={option.path} selected={option.current} sx={listItemButtonStyle(option)}>
-                <Box sx={iconWrapperStyle}>
-                  <ListItemIcon sx={listItemIconStyle(option)}>{option.icon}</ListItemIcon>
-                </Box>
-                <ListItemText primary={option.name} sx={listItemTextStyle(open)} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-      </Drawer>
-    </Box>
+    <Drawer variant="permanent" open={open} sx={drawerStyle(open)}>
+      <Box sx={boxIconStyle}>
+        <IconButton onClick={() => setOpen(!open)} sx={iconButtonStyle}>
+          {open ? <ChevronLeftIcon sx={iconStyle} /> : <ChevronRightIcon sx={iconStyle} />}
+        </IconButton>
+      </Box>
+      <List disablePadding>
+        {sideBarOptions(location.pathname).map((option: SidebarOption) => (
+          <ListItem key={option.name} disablePadding>
+            <ListItemButton component={Link} to={option.path} selected={option.current} sx={listItemButtonStyle(option)}>
+              <Box sx={iconWrapperStyle}>
+                <ListItemIcon sx={listItemIconStyle(option)}>{option.icon}</ListItemIcon>
+              </Box>
+              <ListItemText primary={option.name} sx={listItemTextStyle(open)} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+    </Drawer>
   );
 };
 
@@ -46,7 +44,7 @@ const lastSlash = /\/[^/]*$/;
 const sideBarOptions = (pathname: string) => [
   {
     name: 'Progress',
-    icon: <DashboardIcon sx={iconStyle} />,
+    icon: <FormatListBulletedIcon sx={iconStyle} />,
     path: pathname.replace(lastSlash, '/progress'),
     current: pathname.endsWith('progress'),
   },
@@ -67,27 +65,19 @@ const sideBarOptions = (pathname: string) => [
 // -------- Styles ----------
 
 const drawerStyle = (open: boolean) => ({
-  width: open ? 240 : 100,
-  flexShrink: 0,
+  width: open ? SIDEBAR_OPEN_WIDTH : SIDEBAR_CLOSED_WIDTH,
   top: NAVBAR_HEIGHT,
   overflow: 'hidden',
   transition: 'width 0.3s ease-in-out',
   [`& .MuiDrawer-paper`]: {
-    width: open ? 240 : 100,
+    width: open ? SIDEBAR_OPEN_WIDTH : SIDEBAR_CLOSED_WIDTH,
+    backgroundColor: 'background.paperChannel',
     boxSizing: 'border-box',
     transition: 'width 0.3s ease-in-out',
     top: NAVBAR_HEIGHT,
     overflow: 'hidden',
-    boxShadow: '2px 0 10px rgba(0, 0, 0, 0.3)',
   },
 });
-
-const boxWrapperStyle = {
-  display: 'flex',
-  position: 'relative',
-  backgroundColor: 'background.paper',
-  overflow: 'hidden',
-};
 
 const boxIconStyle = {
   display: 'flex',
