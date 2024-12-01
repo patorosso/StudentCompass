@@ -1,12 +1,12 @@
 import React from 'react';
-import SubjectsGrid from './SubjectsGrid';
+import SubjectsTable from './SubjectsGrid';
 import SubjectsHeader from './SubjectsHeader';
 
 const Subjects = () => {
   return (
     <React.Fragment>
       <SubjectsHeader />
-      <SubjectsGrid />
+      <SubjectsTable />
     </React.Fragment>
   );
 };

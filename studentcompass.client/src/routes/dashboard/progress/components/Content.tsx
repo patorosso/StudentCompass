@@ -23,9 +23,7 @@ const ContentComponent = () => {
         </Typography>
       </Breadcrumbs>
       <Divider />
-      <Box sx={contentBoxStyle}>
-        <SubjectsContainer />
-      </Box>
+      <SubjectsContainer />
     </Box>
   );
 };
@@ -37,13 +35,6 @@ export default Content;
 
 const mainContainerStyle = {
   marginLeft: SIDEBAR_CLOSED_WIDTH,
-};
-
-const contentBoxStyle = {
-  display: 'flex',
-  flexDirection: { xs: 'column', sm: 'row' },
-  justifyContent: { xs: 'center', sm: 'space-evenly' },
-  alignItems: 'center',
 };
 
 const breadcrumbStyle = {

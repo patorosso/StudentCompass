@@ -67,7 +67,6 @@ const sideBarOptions = (pathname: string) => [
 const drawerStyle = (open: boolean) => ({
   width: open ? SIDEBAR_OPEN_WIDTH : SIDEBAR_CLOSED_WIDTH,
   top: NAVBAR_HEIGHT,
-  overflow: 'hidden',
   transition: 'width 0.3s ease-in-out',
   [`& .MuiDrawer-paper`]: {
     width: open ? SIDEBAR_OPEN_WIDTH : SIDEBAR_CLOSED_WIDTH,
@@ -75,7 +74,6 @@ const drawerStyle = (open: boolean) => ({
     boxSizing: 'border-box',
     transition: 'width 0.3s ease-in-out',
     top: NAVBAR_HEIGHT,
-    overflow: 'hidden',
   },
 });
 

@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react';
-import { statusStyles, yearLevelStyles } from '../../../../utils/enums';
 import { SubjectRow, useProgressStore } from '../store/manager';
+import { statusStyles, yearLevelStyles } from '../../../../utils/enums';
 import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 import CircularYear from './CircularYear';
 
@@ -8,27 +8,13 @@ const SubjectsGridComponent = () => {
   const { SubjectsGrid } = useProgressStore();
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer sx={tableContainerStyle}>
       <Table>
-        <TableHead>
+        <TableHead sx={tableHeadStyle}>
           <TableRow>
-            {columns.map((col) => (
-              <TableCell
-                key={col.field}
-                sx={{
-                  width: col.width,
-                  flex: col.flex,
-                  padding: '4px 16px', // Add consistent padding
-                  backgroundColor: 'white', // Match background color
-                }}
-              >
-                <Typography
-                  variant="caption" // Smaller font size
-                  sx={{
-                    fontWeight: 500, // Medium weight for better emphasis
-                    color: 'grey.600', // Greyish text
-                  }}
-                >
+            {columns.map((col: SubjectColumn) => (
+              <TableCell key={col.field} sx={headerTableCellsStyle(col)}>
+                <Typography variant="caption" sx={typographyHeaderStyle}>
                   {col.headerName}
                 </Typography>
               </TableCell>
@@ -68,18 +54,42 @@ export default SubjectsGrid;
 
 // ---------- Columns ----------
 
-const columns = [
-  { field: 'yearLevel', headerName: 'Year', width: 120 },
+const columns: SubjectColumn[] = [
+  { field: 'yearLevel', headerName: 'Year', width: 120, pl: 5.3 },
   { field: 'code', headerName: 'Code', width: 70 },
   { field: 'description', headerName: 'Description', flex: 1 },
   { field: 'weeklyHours', headerName: 'Hours', width: 70 },
   { field: 'finalGrade', headerName: 'Grade', width: 70 },
-  { field: 'status', headerName: 'Status', width: 200 },
+  { field: 'status', headerName: 'Status', width: 300 },
 ];
 
 // ---------- Styles ----------
 
-const tableRowStyle = { '& td, & th': { padding: '1.5px 16px' } };
+const tableContainerStyle = {
+  borderRadius: 0,
+  overflow: 'visible',
+};
+
+const tableHeadStyle = {
+  top: '65px',
+  position: 'sticky',
+};
+
+const tableRowStyle = { '& td, & th': { padding: '8px 16px' } };
+
+const headerTableCellsStyle = (col: SubjectColumn) => ({
+  width: col.width,
+  flex: col.flex,
+  paddingLeft: col.pl,
+  paddingRight: 4,
+  py: 0.5,
+  backgroundColor: 'background.default',
+});
+
+const typographyHeaderStyle = {
+  fontWeight: 500,
+  color: 'grey.600',
+};
 
 const tableCellStyle = {
   textShadow: '0.02em 0.02em 0 rgba(0, 0, 0, 0.8)',
@@ -88,8 +98,18 @@ const tableCellStyle = {
 const statusPaperStyle = (row: SubjectRow) => ({
   display: 'inline-block',
   padding: '4px 20px',
-  borderRadius: 2,
+  borderRadius: 1,
   backgroundColor: statusStyles[row.status]?.color || '#e0e0e0',
 });
 
-const typographyStatusStyle = { color: '#fff' };
+const typographyStatusStyle = { color: '#fff', textShadow: '0.02em 0.02em 0 rgba(0, 0, 0, 0.8)' };
+
+// ---------- Types ----------
+
+type SubjectColumn = {
+  field: string;
+  headerName: string;
+  width?: number;
+  flex?: number;
+  pl?: number;
+};
