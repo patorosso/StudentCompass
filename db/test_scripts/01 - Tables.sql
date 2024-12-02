@@ -2,19 +2,19 @@ USE master
 GO
 
 -- Conditional database removal
-IF EXISTS (SELECT name FROM sys.databases WHERE name = 'test_studentcompass')
+IF EXISTS (SELECT name FROM sys.databases WHERE name = 'StudentCompass')
 BEGIN
-	DROP DATABASE test_studentcompass
+	DROP DATABASE StudentCompass
 END
 
 GO
 
 -- Database creation
-CREATE DATABASE test_studentcompass
+CREATE DATABASE StudentCompass
 
 GO
 
-USE test_studentcompass
+USE StudentCompass
 
 -- Conditional table removal for the app schema
 
