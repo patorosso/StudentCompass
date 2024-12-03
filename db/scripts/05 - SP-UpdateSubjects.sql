@@ -26,8 +26,8 @@ CREATE TYPE SubjectsToUpdateDto AS TABLE
 GO
 
 CREATE OR ALTER PROCEDURE UpdateSubjects
-@StudentId SMALLINT,
-@StudentCareerPlanId TINYINT,
+@UserId SMALLINT,
+@UserCareerPlanId TINYINT,
 @SubjectsToUpdate SubjectsToUpdateDto READONLY
 AS
 BEGIN
@@ -39,7 +39,7 @@ DECLARE @FinalGrade TINYINT;
 DECLARE @CourseId INT;
 DECLARE @StatusExists BIT;
 DECLARE @Subject_Exists BIT;
-DECLARE @Student_Exists BIT;
+DECLARE @User_Exists BIT;
 DECLARE @ValidGrade BIT;
 DECLARE @CourseExists BIT;
 DECLARE @IsStatusDuplicated BIT;
@@ -76,14 +76,14 @@ BEGIN TRAN
 		;THROW 50001, @ErrorMessage, 1;
     END
 
-	-- Check student
-	SELECT @Student_Exists = CASE WHEN EXISTS(
-		SELECT 1 FROM enrolled WHERE StudentId = @StudentId 
+	-- Check user
+	SELECT @User_Exists = CASE WHEN EXISTS(
+		SELECT 1 FROM enrolled WHERE UserId = @UserId 
 		AND (CareerPlanId = @CareerPlanId OR @CareerPlanId = @TransversalCareerPlanId)
 		) THEN 1 ELSE 0 END;
-	IF @Student_Exists = 0
+	IF @User_Exists = 0
 	BEGIN 
-		SET @ErrorMessage = CONCAT('Student with Id = ', CAST(@StudentId AS NVARCHAR), 
+		SET @ErrorMessage = CONCAT('User with Id = ', CAST(@UserId AS NVARCHAR), 
 		' does not exist or is not enrolled in the provided career plan with Id = ', CAST(@CareerPlanId AS NVARCHAR));
 		;THROW 50002, @ErrorMessage, 1;
     END;
@@ -113,7 +113,7 @@ BEGIN TRAN
 
 		-- Check course
 		SELECT TOP 1 @ExistingCourseStatus = StatusId FROM course WHERE Id = @CourseId
-		AND StudentId = @StudentId AND CareerPlanId = @CareerPlanId AND SubjectCode = @SubjectCode
+		AND UserId = @UserId AND CareerPlanId = @CareerPlanId AND SubjectCode = @SubjectCode
 		IF @ExistingCourseStatus = 0
 		BEGIN 
 			SET @ErrorMessage = CONCAT('Invalid course with Id = ', CAST(@CourseId AS NVARCHAR),
@@ -125,10 +125,10 @@ BEGIN TRAN
 			BEGIN
 				-- Use function to remove dependant subjects courses
 				DELETE FROM course 
-				WHERE StudentId = @StudentId AND CareerPlanId IN (@CareerPlanId, @TransversalCareerPlanId)
+				WHERE UserId = @UserId AND CareerPlanId IN (@CareerPlanId, @TransversalCareerPlanId)
 				AND SubjectCode IN (
 									  SELECT * FROM 
-									  GetDependantSubjects(@StudentId,@CareerPlanId,@SubjectCode))
+									  GetDependantSubjects(@UserId,@CareerPlanId,@SubjectCode))
 
 				IF(@StatusId = @AvailableStatusId)
 				BEGIN
@@ -156,7 +156,7 @@ BEGIN TRAN
 							  WHERE SubjectCode = @SubjectCode
 							  AND SubjectCareerPlanId = @CareerPlanId
 							  HAVING COUNT(*) = (SELECT qty FROM (SELECT COUNT(*) as qty FROM course 
-												WHERE StudentId = @StudentId
+												WHERE UserId = @UserId
 												AND CareerPlanId = @CareerPlanId
 												AND StatusId = @ApprovedStatusId
 												AND SubjectCode IN (	SELECT CorrelativeCode
@@ -170,7 +170,7 @@ BEGIN TRAN
 				-- Check no two approved or in-progress courses happen simultaneously
 				SELECT @IsStatusDuplicated = CASE WHEN EXISTS(
 					SELECT 1 FROM course 
-					WHERE @StudentId = StudentId AND @CareerPlanId = CareerPlanId 
+					WHERE @UserId = UserId AND @CareerPlanId = CareerPlanId 
 					AND @SubjectCode = SubjectCode AND StatusId = @StatusId
 					) THEN 1 ELSE 0 END;
 				IF @IsStatusDuplicated = 1
@@ -182,8 +182,8 @@ BEGIN TRAN
 				-- si lo está, creo CourseId.
 				IF (@IsApprovable = 1)
 				BEGIN
-					INSERT INTO course(StudentId,SubjectCode,CareerPlanId,StatusId,FinalGrade)
-					VALUES (@StudentId, @SubjectCode, @CareerPlanId, @StatusId, @FinalGrade)
+					INSERT INTO course(UserId,SubjectCode,CareerPlanId,StatusId,FinalGrade)
+					VALUES (@UserId, @SubjectCode, @CareerPlanId, @StatusId, @FinalGrade)
 				END
 				ELSE
 				BEGIN
@@ -210,7 +210,7 @@ BEGIN TRAN
 
 	COMMIT TRAN;
 	DROP TABLE #subjects_to_update
-	EXEC GetProgressOverview @StudentId, @StudentCareerPlanId
+	EXEC GetProgressOverview @UserId, @UserCareerPlanId
 
     END TRY
     BEGIN CATCH

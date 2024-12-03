@@ -4,7 +4,7 @@ GO
 
 CREATE OR ALTER FUNCTION GetDependantSubjects
 (
-    @StudentId SMALLINT,
+    @UserId SMALLINT,
     @CareerPlanId TINYINT,
     @SubjectCode SMALLINT
 )
@@ -33,7 +33,7 @@ BEGIN
         AND Cou.StatusId = @ApprovedStatusId
         WHERE Cor.CorrelativeCode = @SubjectCode
         AND Cor.SubjectCareerPlanId = @CareerPlanId
-        AND Cou.StudentId = @StudentId
+        AND Cou.UserId = @UserId
         
         UNION ALL
         
@@ -45,7 +45,7 @@ BEGIN
         AND Cou.CareerPlanId = c.SubjectCareerPlanId
         AND Cou.StatusId = @ApprovedStatusId
         WHERE c.SubjectCareerPlanId = @CareerPlanId
-        AND Cou.StudentId = @StudentId
+        AND Cou.UserId = @UserId
     )
     INSERT INTO @TempTable
     SELECT * FROM RecursiveCorrelatives;

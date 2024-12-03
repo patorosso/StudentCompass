@@ -3,7 +3,7 @@ USE StudentCompass
 GO
 
 CREATE OR ALTER PROCEDURE GetCoursesWithExams
-@StudentId SMALLINT,
+@UserId SMALLINT,
 @CareerPlanId TINYINT,
 @SubjectCode SMALLINT
 AS
@@ -16,7 +16,7 @@ SELECT C.Id, C.SubjectCode, C.CareerPlanId, C.TermId, C.StatusId, C.Year, C.Fina
 Ex.ExamId, Ex.Grade, Ex.TakenOn
 FROM CourseExam Ex
 LEFT JOIN Course C ON C.Id = Ex.CourseId
-WHERE C.StudentId = @StudentId AND C.CareerPlanId IN (@CareerPlanId, @TransversalCareerPlanId)
+WHERE C.UserId = @UserId AND C.CareerPlanId IN (@CareerPlanId, @TransversalCareerPlanId)
 ORDER BY Year DESC, TermId DESC
 
 END

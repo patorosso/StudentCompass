@@ -3,7 +3,7 @@ USE StudentCompass
 GO
 
 CREATE OR ALTER PROCEDURE GetProgressOverview 
-@StudentId SMALLINT,
+@UserId SMALLINT,
 @CareerPlanId TINYINT
 AS
 BEGIN
@@ -18,7 +18,7 @@ WITH
 approved_or_in_progress_subjects AS ( -- get approved or in progress subjects of course table using SP params
 		SELECT SubjectCode, CareerPlanId, StatusId, FinalGrade, Id 
 		FROM Course c
-		WHERE StudentId = @StudentId AND StatusId IN (@ApprovedStatusId, @AttendingStatusId)
+		WHERE UserId = @UserId AND StatusId IN (@ApprovedStatusId, @AttendingStatusId)
 		AND CareerPlanId IN (@CareerPlanId, @TransversalCareerPlanId)
 ), 
 career_subjects AS ( -- get all subjects info from the career plan parameter and transversal ones
@@ -45,9 +45,12 @@ CASE WHEN (j.RowNumber = 1 OR IsElective= 1) THEN @NotAvailableStatusId
 FROM approved_or_in_progress_subjects course_info
 RIGHT JOIN career_subjects s ON course_info.SubjectCode = s.Code -- all subjects with their info
 LEFT JOIN non_available_subjects j ON j.RowNumber = 1 AND j.NotAvailable = s.Code -- add available logic
+ORDER BY s.YearLevel, s.Code
 
 END
 
 GO
 
---EXEC GetProgressOverview 1, 1
+--SET STATISTICS TIME ON;
+--EXEC GetProgressOverview 1, 1;
+--SET STATISTICS TIME OFF;

@@ -30,28 +30,27 @@ IF OBJECT_ID('CareerPlan', 'U') IS NOT NULL DROP TABLE CareerPlan;
 IF OBJECT_ID('Career', 'U') IS NOT NULL DROP TABLE Career;
 IF OBJECT_ID('Department', 'U') IS NOT NULL DROP TABLE Department;
 IF OBJECT_ID('StudentPreferences', 'U') IS NOT NULL DROP TABLE StudentPreferences;
-IF OBJECT_ID('Student', 'U') IS NOT NULL DROP TABLE Student;
+IF OBJECT_ID('User', 'U') IS NOT NULL DROP TABLE [User];
 
 -- Table creation for the app schema
 
 BEGIN TRY
 BEGIN TRAN
 
-CREATE TABLE Student (
+CREATE TABLE [User] (
 	Id SMALLINT IDENTITY(1,1),
 	Username NVARCHAR(30) NOT NULL,
 	Pass NVARCHAR(50) NOT NULL,
 	IsActive BIT NOT NULL, 
-	CONSTRAINT PK_Student PRIMARY KEY (Id),
+	CONSTRAINT PK_User PRIMARY KEY (Id),
 	--CONSTRAINT CK_Pass CHECK (LEN(Pass) >= 8)
 );
 
-CREATE TABLE StudentPreferences (
-	StudentId SMALLINT,
-	DarkTheme BIT,
+CREATE TABLE UserPreferences (
+	UserId SMALLINT,
 	EditStyle BIT,
-	CONSTRAINT PK_StudentPreferences PRIMARY KEY (StudentId),
-	CONSTRAINT FK_StudentPreferences_Student FOREIGN KEY (StudentId) REFERENCES Student(Id)
+	CONSTRAINT PK_UserPreferences PRIMARY KEY (UserId),
+	CONSTRAINT FK_UserPreferences_User FOREIGN KEY (UserId) REFERENCES [User](Id)
 );
 
 CREATE TABLE Department (
@@ -77,11 +76,11 @@ CREATE TABLE CareerPlan (
 );
 
 CREATE TABLE Enrolled (
-	StudentId SMALLINT,
+	UserId SMALLINT,
 	CareerPlanId TINYINT,
 	EnrollmentYear SMALLINT NOT NULL,
-	CONSTRAINT PK_Enrolled PRIMARY KEY (StudentId, CareerPlanId),
-	CONSTRAINT FK_Enrolled_Student FOREIGN KEY (StudentId) REFERENCES Student(Id),
+	CONSTRAINT PK_Enrolled PRIMARY KEY (UserId, CareerPlanId),
+	CONSTRAINT FK_Enrolled_User FOREIGN KEY (UserId) REFERENCES [User](Id),
 	CONSTRAINT FK_Enrolled_CareerPlan FOREIGN KEY (CareerPlanId) REFERENCES CareerPlan(Id)
 );
 
@@ -122,7 +121,7 @@ CREATE TABLE CourseStatus (
 
 CREATE TABLE Course (
 	Id INT IDENTITY(1,1),
-	StudentId SMALLINT NOT NULL,
+	UserId SMALLINT NOT NULL,
 	SubjectCode SMALLINT NOT NULL,
 	CareerPlanId TINYINT NOT NULL,
 	TermId TINYINT,
@@ -130,12 +129,12 @@ CREATE TABLE Course (
 	Year SMALLINT,
 	FinalGrade TINYINT,
 	CONSTRAINT PK_Course PRIMARY KEY (Id),
-	CONSTRAINT FK_Course_Student FOREIGN KEY (StudentId) REFERENCES Student(Id),
+	CONSTRAINT FK_Course_User FOREIGN KEY (UserId) REFERENCES [User](Id),
 	CONSTRAINT FK_Course_Subject FOREIGN KEY (SubjectCode, CareerPlanId) REFERENCES Subject(Code, CareerPlanId),
 	CONSTRAINT FK_Course_Term FOREIGN KEY (TermId) REFERENCES Term(Id),
 	CONSTRAINT FK_Course_CourseStatus FOREIGN KEY (StatusId) REFERENCES CourseStatus(Id),
 	CONSTRAINT CK_FinalGrade CHECK (FinalGrade > 0 AND FinalGrade <= 10),
-	UNIQUE (StudentId, SubjectCode, CareerPlanId, TermId, Year)
+	UNIQUE (UserId, SubjectCode, CareerPlanId, TermId, Year)
 );
 
 CREATE TABLE Exam (
