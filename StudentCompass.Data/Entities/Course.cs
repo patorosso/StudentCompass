@@ -11,7 +11,7 @@ namespace StudentCompass.Data.Entities
         public int Id { get; set; }
 
         [Required]
-        public short StudentId { get; set; }
+        public short UserId { get; set; }
 
         [Required]
         public short SubjectCode { get; set; }
@@ -29,8 +29,8 @@ namespace StudentCompass.Data.Entities
         [Range(1, 10)]
         public byte? FinalGrade { get; set; }
 
-        [ForeignKey("StudentId")]
-        public Student Student { get; set; } = null!;
+        [ForeignKey("UserId")]
+        public User User { get; set; } = null!;
 
         [ForeignKey("SubjectCode, CareerPlanId")]
         public Subject Subject { get; set; } = null!;

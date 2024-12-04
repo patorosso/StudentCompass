@@ -230,7 +230,7 @@ namespace StudentCompass.TestsServices.Dashboard
         public async void GetProgressOverview_NoCorrelativesAndAttendingSubject_ReturnsAttendingAndAvailables()
         {
             // Arrange
-            var student = new Student { Username = "Test", Pass = "Test" };
+            var student = new User { Username = "Test", Pass = "Test" };
             var chosenDepartment = new Department { Id = (byte)DepartmentEnum.Ingenieria, Description = "Test" };
             _context.SaveChanges();
             var chosenCareer = new Career { Id = (byte)CareerEnum.IngenieriaInformatica, Description = "Test", DepartmentId = chosenDepartment.Id, Department = chosenDepartment };
@@ -246,9 +246,9 @@ namespace StudentCompass.TestsServices.Dashboard
             _context.Subject.Add(new Subject { Code = 3, Description = "Test", CareerPlanId = chosenCareerPlan.Id, CareerPlan = chosenCareerPlan });
             _context.SaveChanges();
 
-            _context.Student.Add(student);
+            _context.User.Add(student);
             _context.SaveChanges();
-            _context.Course.Add( new Course { StudentId = student.Id, SubjectCode = 1, CareerPlanId = chosenCareerPlan.Id, StatusId = (byte)CourseStatusEnum.Attending });
+            _context.Course.Add( new Course { UserId = student.Id, SubjectCode = 1, CareerPlanId = chosenCareerPlan.Id, StatusId = (byte)CourseStatusEnum.Attending });
             _context.SaveChanges();
 
             // Act
@@ -265,7 +265,7 @@ namespace StudentCompass.TestsServices.Dashboard
         public async void GetProgressOverview_UnrelatedCorrelativesAndInProgressSubject_ReturnsInProgress()
         {
             // Arrange
-            var student = new Student { Username = "Test", Pass = "Test" };
+            var student = new User { Username = "Test", Pass = "Test" };
             var chosenDepartment = new Department { Id = (byte)DepartmentEnum.Ingenieria, Description = "Test" };
             _context.SaveChanges();
             var chosenCareer = new Career { Id = (byte)CareerEnum.IngenieriaInformatica, Description = "Test", DepartmentId = chosenDepartment.Id, Department = chosenDepartment };
@@ -284,9 +284,9 @@ namespace StudentCompass.TestsServices.Dashboard
             _context.Correlative.Add(new Correlative { SubjectCode = 3, SubjectCareerPlanId = chosenCareerPlan.Id, CorrelativeCode = 2, CorrelativeCareerPlanId = chosenCareerPlan.Id });
             _context.SaveChanges();
 
-            _context.Student.Add(student);
+            _context.User.Add(student);
             _context.SaveChanges();
-            _context.Course.Add(new Course { StudentId = student.Id, SubjectCode = 1, CareerPlanId = chosenCareerPlan.Id, StatusId = (byte)CourseStatusEnum.Attending });
+            _context.Course.Add(new Course { UserId = student.Id, SubjectCode = 1, CareerPlanId = chosenCareerPlan.Id, StatusId = (byte)CourseStatusEnum.Attending });
             _context.SaveChanges();
 
             // Act
@@ -303,7 +303,7 @@ namespace StudentCompass.TestsServices.Dashboard
         public async void GetProgressOverview_CorrelativesAndInProgressSubject_ReturnsInProgress()
         {
             // Arrange
-            var student = new Student { Username = "Test", Pass = "Test" };
+            var student = new User { Username = "Test", Pass = "Test" };
             var chosenDepartment = new Department { Id = (byte)DepartmentEnum.Ingenieria, Description = "Test" };
             _context.SaveChanges();
             var chosenCareer = new Career { Id = (byte)CareerEnum.IngenieriaInformatica, Description = "Test", DepartmentId = chosenDepartment.Id, Department = chosenDepartment };
@@ -327,9 +327,9 @@ namespace StudentCompass.TestsServices.Dashboard
             _context.Correlative.Add(new Correlative { SubjectCode = 4, SubjectCareerPlanId = chosenCareerPlan.Id, CorrelativeCode = 3, CorrelativeCareerPlanId = chosenCareerPlan.Id });
             _context.SaveChanges();
 
-            _context.Student.Add(student);
+            _context.User.Add(student);
             _context.SaveChanges();
-            _context.Course.Add(new Course { StudentId = student.Id, SubjectCode = 1, CareerPlanId = chosenCareerPlan.Id, StatusId = (byte)CourseStatusEnum.Attending });
+            _context.Course.Add(new Course { UserId = student.Id, SubjectCode = 1, CareerPlanId = chosenCareerPlan.Id, StatusId = (byte)CourseStatusEnum.Attending });
             _context.SaveChanges();
 
             // Act
@@ -347,7 +347,7 @@ namespace StudentCompass.TestsServices.Dashboard
         public async void GetProgressOverview_CorrelativesAndOneApprovedSubject_ReturnsStatus()
         {
             // Arrange
-            var student = new Student { Username = "Test", Pass = "Test" };
+            var student = new User { Username = "Test", Pass = "Test" };
             var chosenDepartment = new Department { Id = (byte)DepartmentEnum.Ingenieria, Description = "Test" };
             _context.SaveChanges();
             var chosenCareer = new Career { Id = (byte)CareerEnum.IngenieriaInformatica, Description = "Test", DepartmentId = chosenDepartment.Id, Department = chosenDepartment };
@@ -369,10 +369,10 @@ namespace StudentCompass.TestsServices.Dashboard
             _context.Correlative.Add(new Correlative { SubjectCode = 4, SubjectCareerPlanId = chosenCareerPlan.Id, CorrelativeCode = 2, CorrelativeCareerPlanId = chosenCareerPlan.Id });
             _context.SaveChanges();
 
-            _context.Student.Add(student);
+            _context.User.Add(student);
             _context.SaveChanges();
-            _context.Course.Add(new Course { StudentId = student.Id, SubjectCode = 1, CareerPlanId = chosenCareerPlan.Id, StatusId = (byte)CourseStatusEnum.Approved });
-            _context.Course.Add(new Course { StudentId = student.Id, SubjectCode = 2, CareerPlanId = chosenCareerPlan.Id, StatusId = (byte)CourseStatusEnum.Attending });
+            _context.Course.Add(new Course { UserId = student.Id, SubjectCode = 1, CareerPlanId = chosenCareerPlan.Id, StatusId = (byte)CourseStatusEnum.Approved });
+            _context.Course.Add(new Course { UserId = student.Id, SubjectCode = 2, CareerPlanId = chosenCareerPlan.Id, StatusId = (byte)CourseStatusEnum.Attending });
             _context.SaveChanges();
 
             // Act
@@ -390,7 +390,7 @@ namespace StudentCompass.TestsServices.Dashboard
         public async void GetProgressOverview_NoCorrelativesAndAllApprovedSubjects_ReturnsAllApproved()
         {
             // Arrange
-            var student = new Student { Username = "Test", Pass = "Test" };
+            var student = new User { Username = "Test", Pass = "Test" };
             var chosenDepartment = new Department { Id = (byte)DepartmentEnum.Ingenieria, Description = "Test" };
             _context.SaveChanges();
             var chosenCareer = new Career { Id = (byte)CareerEnum.IngenieriaInformatica, Description = "Test", DepartmentId = chosenDepartment.Id, Department = chosenDepartment };
@@ -405,10 +405,10 @@ namespace StudentCompass.TestsServices.Dashboard
             _context.Subject.Add(new Subject { Code = 2, Description = "Test", CareerPlanId = chosenCareerPlan.Id, CareerPlan = chosenCareerPlan });
             _context.SaveChanges();
 
-            _context.Student.Add(student);
+            _context.User.Add(student);
             _context.SaveChanges();
-            _context.Course.Add(new Course { StudentId = student.Id, SubjectCode = 1, CareerPlanId = chosenCareerPlan.Id, StatusId = (byte)CourseStatusEnum.Approved });
-            _context.Course.Add(new Course { StudentId = student.Id, SubjectCode = 2, CareerPlanId = chosenCareerPlan.Id, StatusId = (byte)CourseStatusEnum.Approved });
+            _context.Course.Add(new Course { UserId = student.Id, SubjectCode = 1, CareerPlanId = chosenCareerPlan.Id, StatusId = (byte)CourseStatusEnum.Approved });
+            _context.Course.Add(new Course { UserId = student.Id, SubjectCode = 2, CareerPlanId = chosenCareerPlan.Id, StatusId = (byte)CourseStatusEnum.Approved });
             _context.SaveChanges();
 
             // Act
@@ -424,7 +424,7 @@ namespace StudentCompass.TestsServices.Dashboard
         public async void GetProgressOverview_CorrelativesAndAllApprovedSubjects_ReturnsAllApproved()
         {
             // Arrange
-            var student = new Student { Username = "Test", Pass = "Test" };
+            var student = new User { Username = "Test", Pass = "Test" };
             var chosenDepartment = new Department { Id = (byte)DepartmentEnum.Ingenieria, Description = "Test" };
             _context.SaveChanges();
             var chosenCareer = new Career { Id = (byte)CareerEnum.IngenieriaInformatica, Description = "Test", DepartmentId = chosenDepartment.Id, Department = chosenDepartment };
@@ -448,12 +448,12 @@ namespace StudentCompass.TestsServices.Dashboard
             _context.Correlative.Add(new Correlative { SubjectCode = 4, SubjectCareerPlanId = chosenCareerPlan.Id, CorrelativeCode = 3, CorrelativeCareerPlanId = chosenCareerPlan.Id });
             _context.SaveChanges();
 
-            _context.Student.Add(student);
+            _context.User.Add(student);
             _context.SaveChanges();
-            _context.Course.Add(new Course { StudentId = student.Id, SubjectCode = 1, CareerPlanId = chosenCareerPlan.Id, StatusId = (byte)CourseStatusEnum.Approved });
-            _context.Course.Add(new Course { StudentId = student.Id, SubjectCode = 2, CareerPlanId = chosenCareerPlan.Id, StatusId = (byte)CourseStatusEnum.Approved });
-            _context.Course.Add(new Course { StudentId = student.Id, SubjectCode = 3, CareerPlanId = chosenCareerPlan.Id, StatusId = (byte)CourseStatusEnum.Approved });
-            _context.Course.Add(new Course { StudentId = student.Id, SubjectCode = 4, CareerPlanId = chosenCareerPlan.Id, StatusId = (byte)CourseStatusEnum.Approved });
+            _context.Course.Add(new Course { UserId = student.Id, SubjectCode = 1, CareerPlanId = chosenCareerPlan.Id, StatusId = (byte)CourseStatusEnum.Approved });
+            _context.Course.Add(new Course { UserId = student.Id, SubjectCode = 2, CareerPlanId = chosenCareerPlan.Id, StatusId = (byte)CourseStatusEnum.Approved });
+            _context.Course.Add(new Course { UserId = student.Id, SubjectCode = 3, CareerPlanId = chosenCareerPlan.Id, StatusId = (byte)CourseStatusEnum.Approved });
+            _context.Course.Add(new Course { UserId = student.Id, SubjectCode = 4, CareerPlanId = chosenCareerPlan.Id, StatusId = (byte)CourseStatusEnum.Approved });
             _context.SaveChanges();
 
             // Act
@@ -471,7 +471,7 @@ namespace StudentCompass.TestsServices.Dashboard
         public async void GetProgressOverview_TwoCorrelativesAndNoApprovedSubjectsFromSameSubjects_ReturnsStatu()
         {
             // Arrange
-            var student = new Student { Username = "Test", Pass = "Test" };
+            var student = new User { Username = "Test", Pass = "Test" };
             var chosenDepartment = new Department { Id = (byte)DepartmentEnum.Ingenieria, Description = "Test" };
             _context.SaveChanges();
             var chosenCareer = new Career { Id = (byte)CareerEnum.IngenieriaInformatica, Description = "Test", DepartmentId = chosenDepartment.Id, Department = chosenDepartment };
@@ -489,9 +489,9 @@ namespace StudentCompass.TestsServices.Dashboard
             _context.Correlative.Add(new Correlative { SubjectCode = 2, SubjectCareerPlanId = chosenCareerPlan.Id, CorrelativeCode = 1, CorrelativeCareerPlanId = chosenCareerPlan.Id });
             _context.SaveChanges();
 
-            _context.Student.Add(student);
+            _context.User.Add(student);
             _context.SaveChanges();
-            _context.Course.Add(new Course { StudentId = student.Id, SubjectCode = 1, CareerPlanId = chosenCareerPlan.Id, StatusId = (byte)CourseStatusEnum.Approved });
+            _context.Course.Add(new Course { UserId = student.Id, SubjectCode = 1, CareerPlanId = chosenCareerPlan.Id, StatusId = (byte)CourseStatusEnum.Approved });
             _context.SaveChanges();
 
             // Act
@@ -507,7 +507,7 @@ namespace StudentCompass.TestsServices.Dashboard
         public async void GetProgressOverview_CorrelativesAndApprovedAndInProgressSubjects_ReturnsStatus()
         {
             // Arrange
-            var student = new Student { Username = "Test", Pass = "Test" };
+            var student = new User { Username = "Test", Pass = "Test" };
             var chosenDepartment = new Department { Id = (byte)DepartmentEnum.Ingenieria, Description = "Test" };
             _context.SaveChanges();
             var chosenCareer = new Career { Id = (byte)CareerEnum.IngenieriaInformatica, Description = "Test", DepartmentId = chosenDepartment.Id, Department = chosenDepartment };
@@ -541,13 +541,13 @@ namespace StudentCompass.TestsServices.Dashboard
             _context.Correlative.Add(new Correlative { SubjectCode = 8, SubjectCareerPlanId = chosenCareerPlan.Id, CorrelativeCode = 5, CorrelativeCareerPlanId = chosenCareerPlan.Id });
             _context.SaveChanges();
 
-            _context.Student.Add(student);
+            _context.User.Add(student);
             _context.SaveChanges();
-            _context.Course.Add(new Course { StudentId = student.Id, SubjectCode = 1, CareerPlanId = chosenCareerPlan.Id, StatusId = (byte)CourseStatusEnum.Approved });
-            _context.Course.Add(new Course { StudentId = student.Id, SubjectCode = 2, CareerPlanId = chosenCareerPlan.Id, StatusId = (byte)CourseStatusEnum.Approved });
-            _context.Course.Add(new Course { StudentId = student.Id, SubjectCode = 3, CareerPlanId = chosenCareerPlan.Id, StatusId = (byte)CourseStatusEnum.Approved });
-            _context.Course.Add(new Course { StudentId = student.Id, SubjectCode = 4, CareerPlanId = chosenCareerPlan.Id, StatusId = (byte)CourseStatusEnum.Attending });
-            _context.Course.Add(new Course { StudentId = student.Id, SubjectCode = 5, CareerPlanId = chosenCareerPlan.Id, StatusId = (byte)CourseStatusEnum.Attending });
+            _context.Course.Add(new Course { UserId = student.Id, SubjectCode = 1, CareerPlanId = chosenCareerPlan.Id, StatusId = (byte)CourseStatusEnum.Approved });
+            _context.Course.Add(new Course { UserId = student.Id, SubjectCode = 2, CareerPlanId = chosenCareerPlan.Id, StatusId = (byte)CourseStatusEnum.Approved });
+            _context.Course.Add(new Course { UserId = student.Id, SubjectCode = 3, CareerPlanId = chosenCareerPlan.Id, StatusId = (byte)CourseStatusEnum.Approved });
+            _context.Course.Add(new Course { UserId = student.Id, SubjectCode = 4, CareerPlanId = chosenCareerPlan.Id, StatusId = (byte)CourseStatusEnum.Attending });
+            _context.Course.Add(new Course { UserId = student.Id, SubjectCode = 5, CareerPlanId = chosenCareerPlan.Id, StatusId = (byte)CourseStatusEnum.Attending });
             _context.SaveChanges();
 
             // Act

@@ -1,10 +1,11 @@
+using NLog;
 using NLog.Web;
 using System.Text;
 using StudentCompass.Server.Helpers;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 
-NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+var logger = LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 
 try
 {
@@ -19,7 +20,7 @@ try
 
     // NLog
     builder.Logging.ClearProviders();
-    builder.Logging.SetMinimumLevel(LogLevel.Trace);
+    builder.Logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
     builder.Host.UseNLog();
 
     // CORS

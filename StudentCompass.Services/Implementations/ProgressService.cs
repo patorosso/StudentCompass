@@ -28,7 +28,7 @@ namespace StudentCompass.Services.Implementations
                 var subjects = await _dbContext
                     .Set<GetProgressOverviewDto>()
                     .FromSqlRaw(StoredProcedure
-                    .GetProgressOverview("StudentId", studentId, "CareerPlanId", careerPlanId))
+                    .GetProgressOverview("UserId", studentId, "CareerPlanId", careerPlanId))
                     .ToListAsync();
 
                 return subjects;
@@ -64,7 +64,7 @@ namespace StudentCompass.Services.Implementations
                 var result = await _dbContext
                     .Set<GetProgressOverviewDto>()
                     .FromSqlRaw(StoredProcedure
-                    .UpdateSubjects("StudentId", studentId, "StudentCareerPlanId", careerPlanId, "SubjectsToUpdate", tvpParameter))
+                    .UpdateSubjects("UserId", studentId, "StudentCareerPlanId", careerPlanId, "SubjectsToUpdate", tvpParameter))
                     .ToListAsync();
 
                 return result;
@@ -80,7 +80,7 @@ namespace StudentCompass.Services.Implementations
         {
             try
             {
-                var courses = await _dbContext.Course.Where(x => x.StudentId == studentId && x.CareerPlanId == careerPlanId).ToListAsync();
+                var courses = await _dbContext.Course.Where(x => x.UserId == studentId && x.CareerPlanId == careerPlanId).ToListAsync();
                 return courses;
             }
             catch (Exception e) {
@@ -135,10 +135,10 @@ namespace StudentCompass.Services.Implementations
             try 
             {
                 var enrolled = await _dbContext.Enrolled
-                    .Where(x => x.StudentId == studentId && x.CareerPlanId == careerPlanId)
+                    .Where(x => x.UserId == studentId && x.CareerPlanId == careerPlanId)
                     .FirstOrDefaultAsync();
 
-                return enrolled != null ? (enrolled.StudentId, enrolled.CareerPlanId) : null;
+                return enrolled != null ? (enrolled.UserId, enrolled.CareerPlanId) : null;
             }
             catch (Exception e)
             {
@@ -173,7 +173,7 @@ namespace StudentCompass.Services.Implementations
                 {
                     var subjectDto = _dbContext.Set<SubjectDto>()
                                      .FromSqlRaw(StoredProcedure
-                                     .CreateAttendingCourse("SubjectCode", subject.Code, "StudentId", 
+                                     .CreateAttendingCourse("SubjectCode", subject.Code, "UserId", 
                                      studentId, "CareerPlanId", subject.CareerPlanId));
                 }
 
@@ -195,7 +195,7 @@ namespace StudentCompass.Services.Implementations
             {
                 var coursesWithExamsDto = await _dbContext.Set<CourseWithExamsDto>()
                                 .FromSqlRaw(StoredProcedure
-                                .CourseToAttending("StudentId", studentId, "SubjectCode", subjectCode, "CareerPlanId", careerPlanId))
+                                .CourseToAttending("UserId", studentId, "SubjectCode", subjectCode, "CareerPlanId", careerPlanId))
                                 .ToListAsync();
 
                 return coursesWithExamsDto;
