@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace StudentCompass.Services
+namespace StudentCompass.Services.Helpers
 {
     internal class StoredProcedure
     {
@@ -14,7 +14,7 @@ namespace StudentCompass.Services
                 sb.Append($"@{parameters[i]} = {parameters[i + 1]}, ");
             }
             return sb.ToString().TrimEnd(' ', ',');
-        }  
+        }
 
         public static string UpdateSubjects(params object[] parameters)
         {

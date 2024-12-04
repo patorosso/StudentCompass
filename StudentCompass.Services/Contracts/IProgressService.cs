@@ -11,7 +11,7 @@ namespace StudentCompass.Services.Contracts
         Task<List<Subject>> GetSubjectsByCareer(byte careerPlanId);
         Task<Dictionary<short, List<short>>> GetCorrelativesByCareer(byte careerPlanId);
         Task<List<SubjectDto>> CreateAttendingCourse(List<Subject> subjects, short studentId);
-        Task CourseToAttending(int? courseId);
+        Task CourseToAttending(int courseId);
         Task<(short, byte)?> GetEnrollByStudentAndCareer(short studentId, byte careerPlanId);
         Task<List<CourseWithExamsDto>> GetCoursesWithExams(short studentId, byte careerPlanId, short subjectCode);
     }

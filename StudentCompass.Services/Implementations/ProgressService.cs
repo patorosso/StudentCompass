@@ -7,6 +7,7 @@ using StudentCompass.Data.Entities;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using StudentCompass.Services.Contracts;
+using StudentCompass.Services.Helpers;
 
 namespace StudentCompass.Services.Implementations
 {
@@ -147,7 +148,7 @@ namespace StudentCompass.Services.Implementations
             }
         }
 
-        public async Task CourseToAttending(int? courseId)
+        public async Task CourseToAttending(int courseId)
         {
             try
             {
