@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using StudentCompass.Data.Dtos;
 using StudentCompass.Services.Contracts;
-using StudentCompass.Services.Implementations;
 
 namespace StudentCompass.Server.Controllers.Auth
 {
@@ -10,12 +9,12 @@ namespace StudentCompass.Server.Controllers.Auth
     public class AuthController : ControllerBase
     {
         private readonly ILogger<AuthController> _logger;
-        private readonly IAuthService<AuthLocalService> _authLocalService;
+        private readonly IAuthService _authService;
 
-        public AuthController(ILogger<AuthController> logger, IAuthService<AuthLocalService> authLocalService)
+        public AuthController(ILogger<AuthController> logger, IAuthService authService)
         {
             _logger = logger;
-            _authLocalService = authLocalService;
+            _authService = authService;
         }
 
         [HttpPost]
@@ -24,7 +23,7 @@ namespace StudentCompass.Server.Controllers.Auth
         {
             try
             {
-                var (success, result) = await _authLocalService.Login(loginDto);
+                var (success, result) = await _authService.Login(loginDto);
 
                 if (!success) 
                     return BadRequest(result);
@@ -43,7 +42,7 @@ namespace StudentCompass.Server.Controllers.Auth
         {
             try
             {
-                var (success, result) = await _authLocalService.Register(registerDto);
+                var (success, result) = await _authService.Register(registerDto);
 
                 if (!success)
                     return BadRequest(result);

@@ -7,7 +7,7 @@ public static class ServiceRegistration
 {
     public static IServiceCollection AddCustomServices(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddScoped<IAuthService<AuthLocalService>>();
+        services.AddScoped<IAuthLocalService, AuthLocalService>();
         //services.AddAutoMapper(typeof(AutoMappingProfiles).Assembly);
         //services.AddHttpClient();
 

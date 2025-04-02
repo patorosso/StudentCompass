@@ -10,7 +10,7 @@ using System.Text;
 
 namespace StudentCompass.Services.Implementations
 {
-    public class AuthLocalService : IAuthService<AuthLocalService>
+    public class AuthLocalService : IAuthLocalService
     {
         private readonly AppDbContext _context;
         private readonly IConfiguration _configuration;
